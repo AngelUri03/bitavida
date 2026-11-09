@@ -1,0 +1,61 @@
+<resources>
+    <string name="app_name">Bitavida</string>
+    <string name="today_date_context">Jueves · 7 de noviembre</string>
+    <string name="today_greeting">Buenos días, Ana</string>
+    <string name="today_patient_context">Acompañando a María</string>
+    <string name="today_subtitle">Tu bitácora de cuidado para hoy</string>
+
+    <string name="today_journey_title">El hilo de hoy</string>
+    <string name="today_upcoming">PRÓXIMO ACONTECIMIENTO · 8:00 A. M.</string>
+    <string name="today_medication_origin">Indicación médica transcrita</string>
+    <string name="today_demo_medication">Metformina</string>
+    <string name="today_demo_dose">850 mg · 1 tableta</string>
+    <string name="today_demo_time">8:00 a. m.</string>
+    <string name="today_unconfirmed">Sin confirmar</string>
+    <string name="today_confirmed">Confirmación de demo</string>
+    <string name="today_confirm_action">Confirmar toma de demostración</string>
+    <string name="today_confirmed_action">Confirmación registrada en demo</string>
+    <string name="today_confirmation_announcement">La toma ficticia quedó confirmada solo en esta demostración. No se guardó información clínica.</string>
+
+    <string name="today_day_title">Registros del día</string>
+    <string name="today_records_eyebrow">DECLARADOS POR EL CUIDADOR</string>
+    <string name="today_meals">Comidas</string>
+    <string name="today_meals_value">1 de 3 registradas</string>
+    <string name="today_meals_state">Un registro declarado</string>
+    <string name="today_urination">Micciones</string>
+    <string name="today_urination_value">2 registros</string>
+    <string name="today_urination_state">Información disponible</string>
+    <string name="today_feet">Observación de pies</string>
+    <string name="today_feet_value">Sin registro todavía</string>
+    <string name="today_feet_state">Pendiente de registrar</string>
+
+    <string name="today_appointments_title">Citas y estudios</string>
+    <string name="today_appointments_eyebrow">PRÓXIMO EN EL RECORRIDO</string>
+    <string name="today_appointment">Consulta general</string>
+    <string name="today_appointment_status">Cita confirmada · dato ficticio</string>
+    <string name="today_appointment_expand">Ver contexto de la demo</string>
+    <string name="today_appointment_collapse">Ocultar contexto</string>
+    <string name="today_appointment_expanded">Esta cita es un ejemplo visual. No existe una agenda, recordatorio ni persistencia asociados.</string>
+
+    <string name="today_quick_title">Continuar la bitácora</string>
+    <string name="today_quick_eyebrow">REGISTRO RÁPIDO · DEMOSTRACIÓN</string>
+    <string name="today_quick_consultation">Consulta</string>
+    <string name="today_quick_medication">Medicamento</string>
+    <string name="today_quick_glucose">Glucosa</string>
+    <string name="today_quick_note">Observación</string>
+    <string name="today_demo_feedback">%1$s aún no está disponible en esta demostración.</string>
+
+    <string name="today_empty_badge">BITÁCORA SIN ACONTECIMIENTOS</string>
+    <string name="today_empty_heading">Tu hilo comienza con el primer registro</string>
+    <string name="today_empty_body">Cuando registres una consulta y sus indicaciones, Bitavida organizará aquí los acontecimientos del día.</string>
+    <string name="today_empty_notice_title">Sin datos no significa sin tratamiento</string>
+    <string name="today_empty_notice_body">Bitavida muestra únicamente lo que declara el cuidador. Consulta siempre la indicación médica original.</string>
+    <string name="today_empty_primary">Crear plan de cuidados</string>
+    <string name="today_empty_secondary">Registrar una consulta</string>
+
+    <string name="nav_today">Mi día</string>
+    <string name="nav_plan">Plan</string>
+    <string name="nav_appointments">Citas</string>
+    <string name="nav_report">Informe</string>
+    <string name="nav_current_section">Sección actual: %1$s</string>
+</resources>

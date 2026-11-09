@@ -1,6 +1,6 @@
 # Gradle files
 .gradle/
-build/
+**/build/
 .kotlin/
 
 # Local configuration file (sdk path, etc)
@@ -24,12 +24,51 @@ misc.xml
 deploymentTargetDropDown.xml
 render.experimental.xml
 
-# Keystore files
+# Private environment and credentials
+.env
+.env.*
+!.env.example
+key.properties
+credentials/
+secrets/
+*.credentials
+*.token
+service-account*.json
+
+# Private signing material
 *.jks
 *.keystore
+*.p12
+*.pem
 
 # Google Services (e.g. APIs or Firebase)
 google-services.json
+
+# Experimental evidence and local backups
+screenshots/
+recordings/
+docs/evidence/
+.restore-backups/
+*.mp4
+*.mov
+*.webm
+*.bak
+*.backup
+*.zip
+
+# Personal data must never be versioned
+personal-data/
+patient-data/
+data/private/
+
+# IDE, OS and temporary files
+*.tmp
+*.swp
+*~
+.DS_Store
+Thumbs.db
+.agents/
+.codex/
 
 # Android Profiling
 *.hprof

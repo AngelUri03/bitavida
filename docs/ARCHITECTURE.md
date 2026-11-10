@@ -2,7 +2,7 @@
 
 ## Estado actual
 
-El proyecto contiene una sola aplicación Android y el módulo `:app`. La implementación vigente mantiene la demo Compose offline y añade una prueba técnica aislada de persistencia cifrada; todavía no existe un repositorio funcional, inyección de dependencias ni navegación por rutas. La prueba no está conectada a las pantallas ni almacena datos clínicos.
+El proyecto contiene una sola aplicación Android y el módulo `:app`. La implementación vigente mantiene la demo Compose offline, integra la infraestructura técnica de persistencia cifrada sin conectarla a datos funcionales y añade el primer flujo funcional de perfiles exclusivamente demostrativo. Este flujo usa casos de uso, ViewModel y un repositorio en memoria; no almacena datos personales o clínicos, no requiere cuenta y no incorpora navegación por rutas.
 
 Estructura real:
 
@@ -11,8 +11,11 @@ Estructura real:
 - `ui.components`: componentes, hilo, microinteracciones y superficies.
 - `ui.brand`: monograma, geometría y política de movimiento.
 - `ui.theme`: color, tipografía, formas y espaciado.
-- `domain.model`: tipos de dominio Kotlin puros ya introducidos.
-- `data.local.secure`: prueba técnica de Room/SQLCipher, gestión de la clave envuelta y una entidad exclusivamente ficticia.
+- `domain.model` y `domain.validation`: perfiles, consentimiento, procedencia y reglas en Kotlin puro.
+- `domain.repository` y `domain.usecase`: contrato de perfiles y casos de uso de creación/consulta.
+- `data.careprofile`: repositorio transitorio en memoria, limitado a un perfil.
+- `ui.careprofile`: estado inmutable, acciones, efectos, ViewModel y scaffold Compose continuo para la configuración del perfil.
+- `data.local.secure`: infraestructura técnica integrada de Room/SQLCipher, gestión de la clave envuelta y una entidad exclusivamente ficticia.
 
 La selección inferior distinta de “Mi día” es demostrativa y no cambia de destino.
 
@@ -29,15 +32,15 @@ UI Compose → ViewModel → casos de uso → interfaces de repositorio
 - Las interfaces de repositorio vivirán hacia el dominio; Room será un detalle de datos.
 - Los mapeos entre entidades persistidas y dominio serán explícitos.
 
-Esta arquitectura objetivo aún no está implementada y no debe presentarse como existente.
+La rebanada de perfiles implementa esta dirección de dependencias sin inyección de dependencias externa. Las demás áreas continúan como arquitectura objetivo y no deben presentarse como existentes.
 
 ## Estado, escritura y auditoría
 
 La demo usa estado Compose efímero y restaurable para interacciones visuales. Los datos reales requerirán ViewModel y casos de uso. Las correcciones clínicas o administrativas serán append-only: conservarán la versión previa, actor, motivo y fecha. No habrá sobrescritura destructiva silenciosa.
 
-## Prueba técnica de persistencia cifrada
+## Infraestructura técnica de persistencia cifrada
 
-La rama `feature/secure-persistence-spike` valida una integración mínima, todavía no adoptada para datos reales:
+La integración incorporada en `main` mediante `fa5f9ff` valida el mecanismo mínimo, todavía no adoptado para perfiles ni datos reales:
 
 - Room 3.0.3 estable con generación Kotlin mediante KSP 2.3.12 y API `SQLiteDriver`.
 - AndroidX SQLite 2.7.0 y `net.zetetic:sqlcipher-android:4.20.0` Community mediante `SQLCipherDriver`; no se usa el artefacto deprecado `android-database-sqlcipher`.
@@ -51,7 +54,7 @@ Room/AndroidX SQLite usan Apache-2.0; SQLCipher Community y sus componentes comu
 
 ## Navegación
 
-La barra inferior actual pertenece a la demo. La navegación real, rutas, back stack, deep links y autorización siguen pendientes. No se añadirá una biblioteca de navegación hasta definir esos flujos.
+La barra inferior actual pertenece a la demo y permanece intacta. `MainActivity` muestra primero el flujo demostrativo de perfiles y, al cancelar o terminar, presenta “Mi día” sin modificar sus destinos. La navegación real, rutas, back stack y deep links siguen pendientes; no se añade una biblioteca de navegación.
 
 ## Offline y concurrencia
 
@@ -60,10 +63,11 @@ Las funciones esenciales operarán localmente. No se añadirá `INTERNET` sin ca
 ## Pruebas
 
 - JVM: geometría de marca, continuidad del hilo y formato versionado del sobre criptográfico (round trip y rechazo de entradas truncadas/versiones desconocidas).
-- Android preparada, no ejecutada automáticamente: creación cifrada, lectura/escritura, cierre/reapertura, clave incorrecta, rechazo por SQLite sin cifrar, pérdida de clave Keystore y conservación del archivo ante error.
-- Android pendientes: ejecutar esas verificaciones en dispositivo API 26 y API 33+, revisar ausencia de secretos en logs y confirmar alineación/carga nativa con páginas de 16 KB.
-- Pendientes funcionales: casos de uso, repositorios de dominio, migraciones, autorización, accesibilidad con dispositivo y pruebas end-to-end.
+- Android ejecutada el 9 de noviembre de 2026 en Android 16: creación cifrada, lectura/escritura, cierre/reapertura, recuperación mediante Keystore, rechazo de clave incorrecta y conservación del archivo original.
+- Android pendientes: pérdida del alias Keystore, API 26, revisión de secretos en logs y alineación/carga nativa con páginas de 16 KB.
+- Perfiles: pruebas JVM puntuales de validación, autorización declarada, consentimiento vigente, normalización y límite de un perfil en memoria.
+- Pendientes funcionales: persistencia protegida de perfiles, migraciones, accesibilidad con dispositivo y pruebas end-to-end.
 
 ## Dependencias y evolución
 
-Toda dependencia nueva exige necesidad, alternativa, compatibilidad, licencia y costo de tamaño. La prueba incorpora Room 3, KSP, AndroidX SQLite y SQLCipher únicamente para evaluar persistencia cifrada; no constituye aprobación para datos clínicos hasta completar la validación Android y la política de claves. Se mantiene un solo módulo hasta que métricas reales justifiquen modularizar. Las decisiones todavía no implementadas se documentan como previstas, no como capacidades disponibles.
+Toda dependencia nueva exige necesidad, alternativa, compatibilidad, licencia y costo de tamaño. La infraestructura incorporada usa Room 3, KSP, AndroidX SQLite y SQLCipher únicamente para evaluar persistencia cifrada; no constituye aprobación para datos clínicos hasta completar la validación Android y la política de claves. El flujo de perfiles no añade dependencias y no usa esa infraestructura. Se mantiene un solo módulo hasta que métricas reales justifiquen modularizar. Las decisiones todavía no implementadas se documentan como previstas, no como capacidades disponibles.

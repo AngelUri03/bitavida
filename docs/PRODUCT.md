@@ -2,7 +2,7 @@
 
 ## Fuentes y estado
 
-El reporte maestro de `docs/reference` define el problema y el alcance funcional. La referencia visual oficial es **BITAVIDA UI BASELINE 0.5.4**. Bitavida está actualmente en estado de **demostración de interfaz**: presenta datos ficticios y no debe describirse como producto clínicamente funcional.
+El reporte maestro de `docs/reference` define el problema y el alcance funcional. La referencia visual oficial es **BITAVIDA UI BASELINE 0.5.4**. Bitavida incorpora una primera experiencia funcional de configuración de perfil con estado local transitorio; todavía no debe describirse como producto clínicamente completo ni como persistencia protegida de datos de cuidado.
 
 ## Propósito y público
 
@@ -16,7 +16,7 @@ Toda información futura debe indicar su procedencia:
 2. registro declarado por la persona cuidadora;
 3. información educativa general verificada.
 
-Una alerta ignorada no demuestra omisión ni cumplimiento. Una confirmación en la demo no constituye evidencia clínica.
+Una alerta ignorada no demuestra omisión ni cumplimiento. Una confirmación dentro de la aplicación no constituye evidencia clínica.
 
 ## Alcance contemplado
 
@@ -30,6 +30,12 @@ Una alerta ignorada no demuestra omisión ni cumplimiento. Una confirmación en 
 
 Estas funciones son planificación, salvo lo marcado como implementado.
 
+## Alcance aprobado para la fase 3.1
+
+Se incorpora la experiencia de producto para crear y consultar, durante la vida del proceso, un solo perfil compuesto por una persona cuidadora y una persona atendida. El repositorio permanece en memoria y no se conecta todavía a Room ni a la infraestructura cifrada; por ello el perfil se pierde al finalizar el proceso de la aplicación. La información corresponde a la declaración de la persona cuidadora. Bitavida registra la autorización declarada, pero no verifica ni afirma representación legal. El consentimiento se modela explícitamente como vigente o revocado y este flujo no captura información clínica.
+
+Los términos de uso y el aviso de privacidad son consultables sin conexión y muestran su versión. El flujo exige por separado la aceptación de términos y el reconocimiento de disponibilidad del aviso; la declaración de autorización del cuidador y el consentimiento expreso para datos sensibles permanecen como actos distintos. Las selecciones legales actuales viven solo en el estado transitorio y no constituyen todavía un registro jurídico persistente. La identidad, domicilio y canales reales del responsable, la política de conservación y los procedimientos ARCO son bloqueantes de publicación. El acceso local mediante credencial segura del dispositivo y biometría fuerte opcional se implementará en la fase 3.2; no se simula en la interfaz actual.
+
 ## Implementado
 
 - Una aplicación Android Compose y un módulo `:app`.
@@ -38,10 +44,17 @@ Estas funciones son planificación, salvo lo marcado como implementado.
 - Temas claro/oscuro, navegación inferior demostrativa, accesibilidad y movimiento reducido.
 - Sistema visual y motion de la baseline 0.5.4.
 - Modelo mínimo de procedencia en Kotlin puro.
+- Infraestructura técnica de persistencia cifrada integrada y todavía aislada de los flujos funcionales.
+- Modelos puros de cuidador, persona atendida, perfil y consentimiento.
+- Creación y consulta de un único perfil mediante casos de uso y repositorio transitorio en memoria.
+- Flujo final de bienvenida, privacidad, autorización declarada, identificación, revisión, corrección, cancelación y confirmación.
+- Navegación contextual integrada al hilo, compatible con IME e insets, y documentos legales versionados consultables sin conexión.
+- Aceptación de términos y reconocimiento del aviso diferenciados, obligatorios y transitorios, sin confundirse con autorización del cuidador ni consentimiento sensible.
+- Captura de nombres con mínimo de 2 letras significativas, máximo de 80 grafemas, soporte Unicode, normalización diferida y rechazo de controles o caracteres ajenos a un nombre.
 
 ## Pendiente
 
-Persistencia segura, repositorios, casos de uso, ViewModel, auditoría, permisos por perfil, exportación, respaldo, restauración, pruebas de seguridad y todas las funciones reales de asistencia. No se ha aprobado backend, cuenta ni sincronización.
+Conexión protegida de perfiles a persistencia, acceso local efectivo, registro persistente y auditable de versiones, momentos, aceptaciones y consentimiento, repositorios y casos de uso para las demás áreas, auditoría, revocación operable, derechos ARCO, retención y eliminación, permisos por perfil, exportación, respaldo, restauración, revisión legal profesional, pruebas de seguridad restantes y todas las funciones reales de asistencia. No se ha aprobado backend, cuenta ni sincronización.
 
 ## Decisiones vigentes posteriores al reporte maestro
 

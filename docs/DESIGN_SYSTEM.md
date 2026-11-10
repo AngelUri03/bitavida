@@ -35,6 +35,14 @@ Kodchasan es la familia oficial y se distribuye bajo OFL. Se usan estilos Materi
 - Fondo fluido claro/oscuro.
 - Estados normal y vacío, además de previews claro, oscuro, 320 dp, texto 200 % y movimiento reducido.
 
+## Configuración del perfil
+
+El flujo de configuración mantiene un encabezado y progreso estables dentro de un único recorrido. Atrás permanece junto al indicador de paso y Salir como acción discreta del encabezado; si existe información capturada, la salida requiere confirmación. No existe footer ni botonera fija. La única acción de avance vive al final de la tarjeta y se conecta mediante un nodo discreto al lenguaje de “El hilo de la vida”.
+
+La pantalla consume `safeDrawing` una sola vez y aplica el IME al contenido desplazable, sin alturas ni compensaciones fijas para las barras del sistema. La acción permanece dentro de la tarjeta: responde de inmediato y el punto recorre el enlace; al llegar, una única ola ancha petróleo/turquesa avanza por la superficie recortada del botón, detrás del texto y sin líneas luminosas. Después comienza la transición de tarjeta. El viewport no persigue al CTA; solo los campos enfocados solicitan visibilidad con el teclado. Con movimiento reducido se aplica directamente el color final y se omiten ola, compresión y desplazamientos decorativos.
+
+Las superficies, contornos, sombras e indicaciones de toque comparten exactamente su `Shape`. En particular, la declaración de autorización recorta fondo, borde y estado presionado con la misma forma redondeada. Los documentos legales se presentan en una superficie desplazable, disponible sin conexión, con versión visible, redacción de producto y texto escalable.
+
 ## Motion oficial
 
 ### Curva superior

@@ -2,7 +2,7 @@
 
 ## Estado
 
-El único tipo de dominio implementado actualmente es la procedencia de información en Kotlin puro. La pantalla “Mi día” usa datos ficticios de presentación; no crea ni persiste entidades clínicas. El resto de este documento define el modelo previsto y sus invariantes.
+La procedencia de información y la primera rebanada de perfiles están implementadas en Kotlin puro. El flujo crea en memoria un único `CareProfile` con una persona cuidadora, una persona atendida y un registro de consentimiento; no persiste datos ni habilita información clínica real. También existe el modelo futuro `LegalAcceptanceRecord`, pero el onboarding actual no lo crea ni persiste. El resto de este documento define el modelo previsto y sus invariantes.
 
 ## Procedencia obligatoria
 
@@ -16,9 +16,11 @@ La procedencia no se infiere por el texto ni puede cambiarse automáticamente.
 
 ## Agregados previstos
 
-- **CareProfile**: contexto local y preferencias no sensibles.
-- **PersonUnderCare**: persona atendida y relaciones autorizadas.
-- **Caregiver**: persona que registra o revisa información.
+- **CareProfile**: relación local entre el cuidador, la persona atendida y su consentimiento; mientras no se conecte a persistencia protegida su uso es `TRANSIENT_LOCAL`.
+- **PersonUnderCare**: identidad ficticia declarada por el cuidador.
+- **Caregiver**: identidad ficticia de quien realiza la declaración.
+- **ConsentRecord**: conserva por separado la autorización declarada —no verificada legalmente por Bitavida— y el estado de consentimiento `ACTIVE` o `REVOKED`.
+- **LegalAcceptanceRecord**: modelo futuro para registrar actor, documento, versión, decisión diferenciada y momento; aceptar términos y reconocer el aviso no equivalen a consentimiento sensible.
 - **MedicalIndication** y sus revisiones: texto transcrito, profesional/fuente declarados y vigencia.
 - **MedicationPlan** y **ScheduledDose**: organización de una indicación, nunca cálculo de dosis.
 - **CareRecord**: toma declarada, alimento, eliminación, observación o medición.
@@ -35,6 +37,7 @@ Los nombres y campos finales permanecen sujetos a validación funcional y profes
 - No diagnosticar, interpretar mediciones, calcular dosis ni recomendar tratamientos.
 - Nunca deducir cumplimiento a partir de una notificación.
 - Una toma es un registro declarado; debe conservar autor y fecha.
+- Los nombres requieren al menos 2 letras significativas y como máximo 80 grafemas; admiten letras Unicode, espacios, apóstrofos y guiones. Los espacios se normalizan solo al confirmar y nunca se aceptan controles, saltos de línea o formatos invisibles.
 - Autocompletar medicamentos solo desde nombres previamente registrados y nunca completar dosis, unidad u horario.
 - Las correcciones crean una nueva revisión y conservan la anterior.
 - Las operaciones sensibles requieren autorización y auditoría.
@@ -45,7 +48,7 @@ Los nombres y campos finales permanecen sujetos a validación funcional y profes
 
 ## Estados y transiciones
 
-Los catálogos definitivos de estados aún no están implementados. Como regla, cada transición deberá ser explícita, validada por un caso de uso y auditable. “Pendiente”, “registrado” o “corregido” describirán el dato; no valorarán la salud ni el desempeño de la persona cuidadora.
+El consentimiento de perfiles distingue `ACTIVE` y `REVOKED`; un registro revocado debe conservar el instante de revocación y uno vigente no lo presenta. La creación inicial produce consentimiento vigente solo después de una declaración explícita del cuidador. Los demás catálogos de estados aún no están implementados. Cada transición futura deberá ser explícita, validada por un caso de uso y auditable. “Pendiente”, “registrado” o “corregido” describirán el dato; no valorarán la salud ni el desempeño de la persona cuidadora.
 
 ## Identidad, tiempo y versiones
 
@@ -56,9 +59,11 @@ Las entidades usarán identificadores locales estables. Los hechos conservarán 
 | Área | Estado |
 |---|---|
 | Procedencia en Kotlin puro | Implementada |
-| Demo con datos ficticios | Implementada en UI, sin dominio persistido |
-| Entidades, casos de uso y repositorios | Pendientes |
+| “Mi día” con datos ficticios | Implementada en UI; perfiles transitorios en memoria |
+| `Caregiver`, `PersonUnderCare`, `CareProfile` y `ConsentRecord` | Implementados |
+| `LegalAcceptanceRecord` | Modelo implementado; creación y persistencia pendientes |
+| Creación/consulta y repositorio de perfiles | Implementados de forma transitoria en memoria |
 | Auditoría y revisiones | Pendientes |
-| Persistencia cifrada | Pendiente |
+| Infraestructura cifrada | Integrada y aislada; perfiles aún no conectados |
 | Exportación y respaldo | Pendientes |
 | Asistencia local | Pendiente |

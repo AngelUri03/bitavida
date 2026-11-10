@@ -2,9 +2,9 @@
 
 ## Estado actual
 
-La baseline 0.5.4 sigue siendo una demo con datos ficticios. La rama `feature/secure-persistence-spike` añade infraestructura técnica aislada para evaluar una base cifrada, sin conectarla a la UI ni persistir información de cuidado. No hay cuenta, backend, sincronización, analítica, telemetría ni permiso `INTERNET`. El manifiesto conserva `allowBackup=false` y las reglas que excluyen copias y transferencias.
+La baseline 0.5.4 permanece protegida. La infraestructura Room/SQLCipher/Keystore ya está integrada en el proyecto, pero continúa aislada de los flujos funcionales: el perfil de cuidado de la fase 3.1 reside únicamente en memoria. No hay cuenta, backend, sincronización, analítica, telemetría ni permiso `INTERNET`. El manifiesto conserva `allowBackup=false` y las reglas que excluyen copias y transferencias.
 
-Esta prueba no equivale a una validación criptográfica ni autoriza almacenar información sensible hasta completar las comprobaciones Android y definir las políticas pendientes.
+La integración técnica fue probada de forma dirigida en Android, pero no equivale a una auditoría criptográfica ni autoriza almacenar información personal o sensible hasta completar el control de acceso, las políticas y las comprobaciones pendientes.
 
 ## Activos y amenazas
 
@@ -29,7 +29,27 @@ Activos previstos: datos personales y de cuidado, indicaciones transcritas, regi
 - Datos sensibles fuera de logs, analytics, excepciones y nombres de archivos.
 - Compartición solo mediante acción explícita, destino acotado y advertencia.
 
-## Prueba técnica de persistencia cifrada
+## Decisión de acceso local para la fase 3.2
+
+Bitavida usará la credencial segura del dispositivo —PIN, patrón o contraseña— como alternativa de acceso y permitirá biometría compatible de clase fuerte como opción. La implementación se hará con AndroidX `BiometricPrompt` y `BiometricManager`; no se guardarán ni procesarán plantillas biométricas y no se creará un inicio de sesión de servidor para una aplicación offline.
+
+Para operaciones ligadas a material criptográfico se exigirán `BIOMETRIC_STRONG` o credencial segura del dispositivo. En API 30 a 37 podrá ofrecerse la combinación soportada por el sistema. En API 26 a 29 se comprobará la credencial con `KeyguardManager.isDeviceSecure()` y se diseñará el flujo según las capacidades de cada versión, sin asumir combinaciones de autenticadores que Android no soporta. Un reconocimiento facial que no alcance la clase requerida no se considerará suficiente para liberar claves protegidas.
+
+La experiencia prevista comprende:
+
+- configuración explícita del acceso y explicación de la credencial alternativa;
+- pantalla de desbloqueo del sistema al abrir Bitavida cuando la sesión esté bloqueada;
+- bloqueo al volver desde segundo plano conforme a una política documentada de sesión;
+- reautenticación para exportar, revelar o modificar operaciones sensibles;
+- cancelación o fallo que mantenga el contenido bloqueado, sin alterar datos;
+- alternativa con credencial del dispositivo cuando esté disponible y sea compatible;
+- ocultamiento del contenido sensible en recientes y mientras la app permanezca bloqueada.
+
+La pérdida de acceso no tendrá atajos, credenciales maestras ni sustitución silenciosa de claves. Antes de conectar datos reales se definirá si la recuperación implica restauración desde un respaldo cifrado autorizado o pérdida irrecuperable de los datos locales. La clave Keystore del prototipo actual no exige autenticación del usuario; vincularla al control de acceso requerirá migración o rotación explícita y pruebas de bloqueo, cambio de credencial e invalidación biométrica.
+
+Esta fase solo documenta la decisión. No añade AndroidX Biometric, no presenta una pantalla decorativa de contraseña y no conecta los perfiles a la base cifrada.
+
+## Infraestructura técnica de persistencia cifrada
 
 La prueba selecciona Room 3.0.3 con el driver de SQLCipher for Android 4.20.0 Community. La base usa una clave aleatoria de 32 bytes; no hay contraseña fija ni derivación desde datos de usuario. Android Keystore crea una clave AES-256 no exportable, restringida a GCM sin padding y con IV aleatorio, que envuelve la clave de SQLCipher. El almacenamiento privado conserva únicamente una envoltura versionada con IV y ciphertext autenticado dentro de `noBackupFilesDir`.
 
@@ -67,4 +87,4 @@ La auditoría no contendrá el dato clínico completo cuando baste un identifica
 
 ## Pendientes obligatorios
 
-Validación Android de la combinación Room/SQLCipher/Keystore, rotación y recuperación de claves, sesión/bloqueo, perfiles y autorización, política de retención/borrado, formato de respaldo, revisión legal y profesional, y pruebas de seguridad. La prueba técnica implementa solo el mecanismo mínimo descrito; ninguno de los controles funcionales pendientes se considera resuelto por esta documentación.
+Implementación y validación del acceso con `BiometricPrompt`, política de sesión y bloqueo, vinculación o rotación de claves autenticadas, recuperación ante pérdida de acceso, pruebas de invalidación y cambio de credencial, conexión autorizada de perfiles, política de retención/borrado, formato de respaldo, revisión legal/profesional y pruebas de seguridad restantes. La infraestructura actual implementa solo el mecanismo criptográfico mínimo descrito; ninguno de los controles funcionales pendientes se considera resuelto por esta documentación.

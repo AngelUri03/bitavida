@@ -29,25 +29,17 @@ Activos previstos: datos personales y de cuidado, indicaciones transcritas, regi
 - Datos sensibles fuera de logs, analytics, excepciones y nombres de archivos.
 - Compartición solo mediante acción explícita, destino acotado y advertencia.
 
-## Decisión de acceso local para la fase 3.2
+## Acceso local implementado en la fase 3.2
 
-Bitavida usará la credencial segura del dispositivo —PIN, patrón o contraseña— como alternativa de acceso y permitirá biometría compatible de clase fuerte como opción. La implementación se hará con AndroidX `BiometricPrompt` y `BiometricManager`; no se guardarán ni procesarán plantillas biométricas y no se creará un inicio de sesión de servidor para una aplicación offline.
+Bitavida usa AndroidX `BiometricPrompt` y `BiometricManager` para biometría `BIOMETRIC_STRONG` —incluido reconocimiento facial únicamente cuando Android lo clasifica como fuerte— y `KeyguardManager` para la credencial segura del dispositivo. No guarda ni recibe PIN, patrón, contraseña o plantillas biométricas. El único permiso añadido es `USE_BIOMETRIC`; no existe `INTERNET`, cuenta, servidor ni credencial propia.
 
-Para operaciones ligadas a material criptográfico se exigirán `BIOMETRIC_STRONG` o credencial segura del dispositivo. En API 30 a 37 podrá ofrecerse la combinación soportada por el sistema. En API 26 a 29 se comprobará la credencial con `KeyguardManager.isDeviceSecure()` y se diseñará el flujo según las capacidades de cada versión, sin asumir combinaciones de autenticadores que Android no soporta. Un reconocimiento facial que no alcance la clase requerida no se considerará suficiente para liberar claves protegidas.
+En API 30 a 37 el prompt permite `BIOMETRIC_STRONG | DEVICE_CREDENTIAL`. Android 10 o anterior no soporta esa combinación: en API 26–29 el adaptador ofrece primero biometría fuerte y usa su acción negativa para abrir `createConfirmDeviceCredentialIntent`; si no hay biometría fuerte, abre directamente la confirmación nativa cuando `isDeviceSecure()` es verdadero. Si el dispositivo no tiene bloqueo seguro, la pantalla enlaza a la configuración de seguridad de Android y nunca omite la autenticación.
 
-La experiencia prevista comprende:
+`AppAccessSessionController` mantiene `LOCKED`, `AUTHENTICATING` y `UNLOCKED`. La sesión protegida inicia bloqueada; solo el callback exitoso puede desbloquear. Cancelar, rechazar o agotar intentos conserva o restaura el bloqueo. El tiempo usa `SystemClock.elapsedRealtime()`: al regresar después de 60 segundos o más en segundo plano se bloquea, mientras una rotación no cuenta como ausencia ni relanza el prompt. Atrás dentro del área protegida ejecuta bloqueo manual inmediato y no atraviesa el acceso. El bloqueo conserva ViewModel, borrador y repositorio en memoria.
 
-- configuración explícita del acceso y explicación de la credencial alternativa;
-- pantalla de desbloqueo del sistema al abrir Bitavida cuando la sesión esté bloqueada;
-- bloqueo al volver desde segundo plano conforme a una política documentada de sesión;
-- reautenticación para exportar, revelar o modificar operaciones sensibles;
-- cancelación o fallo que mantenga el contenido bloqueado, sin alterar datos;
-- alternativa con credencial del dispositivo cuando esté disponible y sea compatible;
-- ocultamiento del contenido sensible en recientes y mientras la app permanezca bloqueada.
+Para recientes, la ventana activa `FLAG_SECURE` al perder primer plano y mientras la sesión está bloqueada. Cuando vuelve a estar desbloqueada y enfocada retira la bandera, de modo que el snapshot protegido no revela contenido pero las capturas normales del usuario siguen disponibles durante el uso autorizado. Esta política deberá validarse en el Samsung objetivo porque el momento exacto del snapshot depende del fabricante.
 
-La pérdida de acceso no tendrá atajos, credenciales maestras ni sustitución silenciosa de claves. Antes de conectar datos reales se definirá si la recuperación implica restauración desde un respaldo cifrado autorizado o pérdida irrecuperable de los datos locales. La clave Keystore del prototipo actual no exige autenticación del usuario; vincularla al control de acceso requerirá migración o rotación explícita y pruebas de bloqueo, cambio de credencial e invalidación biométrica.
-
-Esta fase solo documenta la decisión. No añade AndroidX Biometric, no presenta una pantalla decorativa de contraseña y no conecta los perfiles a la base cifrada.
+La pérdida de acceso no tiene atajos, credenciales maestras ni sustitución silenciosa de claves. La clave Keystore del prototipo actual todavía no exige autenticación del usuario; esta fase protege la sesión visual y funcional, pero no vincula la autenticación a SQLCipher. Hacerlo requerirá migración o rotación explícita, una política de recuperación y pruebas de cambio de credencial e invalidación biométrica antes de almacenar perfiles.
 
 ## Infraestructura técnica de persistencia cifrada
 
@@ -55,7 +47,7 @@ La prueba selecciona Room 3.0.3 con el driver de SQLCipher for Android 4.20.0 Co
 
 La apertura se serializa y ocurre fuera del hilo principal. SQLCipher deshabilita su salida Java mediante `NoopTarget`; el código no registra claves, contenido ni rutas. Las copias temporales controladas del sobre y del material cifrado se sobrescriben cuando dejan de ser necesarias. El driver necesita conservar la clave de base durante la vida de la conexión; la eliminación determinista de todas las copias administradas por JVM/driver no puede garantizarse y es una limitación explícita.
 
-No se ejecutan migraciones destructivas ni `fallbackToDestructiveMigration`. Si falta la base, la envoltura o el alias Keystore de forma incoherente, si falla la autenticación GCM o si SQLCipher rechaza la apertura, se devuelve un error controlado. La prueba nunca reemplaza silenciosamente una clave, recrea la base ni borra datos para recuperarse. Todavía no existe rotación, recuperación, autenticación biométrica ni política de restablecimiento; no se inventará ninguna hasta definir sus consecuencias de pérdida de datos.
+No se ejecutan migraciones destructivas ni `fallbackToDestructiveMigration`. Si falta la base, la envoltura o el alias Keystore de forma incoherente, si falla la autenticación GCM o si SQLCipher rechaza la apertura, se devuelve un error controlado. La prueba nunca reemplaza silenciosamente una clave, recrea la base ni borra datos para recuperarse. Todavía no existe rotación, recuperación, autenticación de la clave Keystore ni política de restablecimiento; no se inventará ninguna hasta definir sus consecuencias de pérdida de datos.
 
 Room por sí solo no se considera cifrado. DataStore continúa limitado a preferencias no sensibles. Los adjuntos requerirán nombres opacos, almacenamiento privado y cifrado autenticado separado.
 
@@ -87,4 +79,4 @@ La auditoría no contendrá el dato clínico completo cuando baste un identifica
 
 ## Pendientes obligatorios
 
-Implementación y validación del acceso con `BiometricPrompt`, política de sesión y bloqueo, vinculación o rotación de claves autenticadas, recuperación ante pérdida de acceso, pruebas de invalidación y cambio de credencial, conexión autorizada de perfiles, política de retención/borrado, formato de respaldo, revisión legal/profesional y pruebas de seguridad restantes. La infraestructura actual implementa solo el mecanismo criptográfico mínimo descrito; ninguno de los controles funcionales pendientes se considera resuelto por esta documentación.
+Validación del acceso con `BiometricPrompt` en API 26 y en el Samsung objetivo, vinculación o rotación de claves autenticadas, recuperación ante pérdida de acceso, pruebas de invalidación y cambio de credencial, conexión autorizada de perfiles, política de retención/borrado, formato de respaldo, revisión legal/profesional y pruebas de seguridad restantes. La infraestructura actual implementa solo el mecanismo criptográfico mínimo descrito; ninguno de los controles funcionales pendientes se considera resuelto por esta documentación.

@@ -98,11 +98,13 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.bitavida.app.domain.access.LocalAuthenticationAvailability
 import com.bitavida.app.domain.validation.CARE_PROFILE_NAME_COUNTER_THRESHOLD
 import com.bitavida.app.domain.validation.CARE_PROFILE_NAME_MAX_LENGTH
 import com.bitavida.app.domain.validation.CareProfileField
 import com.bitavida.app.domain.validation.CareProfileValidationError
 import com.bitavida.app.domain.validation.CareProfileValidator
+import com.bitavida.app.ui.access.AppProtectionPreference
 import com.bitavida.app.ui.brand.BitavidaMark
 import com.bitavida.app.ui.brand.rememberBitavidaMotionAllowed
 import com.bitavida.app.ui.components.BitavidaFluidBackground
@@ -121,6 +123,10 @@ private const val FlowStepCount = 6
 fun CareProfileFlowRoute(
     viewModel: CareProfileViewModel,
     onExit: (CareProfileEffect) -> Unit,
+    protectionEnabled: Boolean,
+    protectionAvailability: LocalAuthenticationAvailability,
+    onProtectionEnabledChange: (Boolean) -> Unit,
+    onOpenSecuritySetup: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val state by viewModel.uiState.collectAsState()
@@ -135,6 +141,10 @@ fun CareProfileFlowRoute(
         state = state,
         onAction = viewModel::onAction,
         modifier = modifier,
+        protectionEnabled = protectionEnabled,
+        protectionAvailability = protectionAvailability,
+        onProtectionEnabledChange = onProtectionEnabledChange,
+        onOpenSecuritySetup = onOpenSecuritySetup,
     )
 }
 
@@ -144,6 +154,11 @@ fun CareProfileFlowScreen(
     onAction: (CareProfileAction) -> Unit,
     modifier: Modifier = Modifier,
     motionEnabledOverride: Boolean? = null,
+    protectionEnabled: Boolean = false,
+    protectionAvailability: LocalAuthenticationAvailability =
+        LocalAuthenticationAvailability.AVAILABLE,
+    onProtectionEnabledChange: (Boolean) -> Unit = {},
+    onOpenSecuritySetup: () -> Unit = {},
 ) {
     val motionAllowed = rememberBitavidaMotionAllowed(motionEnabledOverride)
     CareProfileFlowScaffold(
@@ -151,6 +166,10 @@ fun CareProfileFlowScreen(
         onAction = onAction,
         modifier = modifier,
         motionAllowed = motionAllowed,
+        protectionEnabled = protectionEnabled,
+        protectionAvailability = protectionAvailability,
+        onProtectionEnabledChange = onProtectionEnabledChange,
+        onOpenSecuritySetup = onOpenSecuritySetup,
     )
 }
 
@@ -159,6 +178,10 @@ private fun CareProfileFlowScaffold(
     state: CareProfileUiState,
     onAction: (CareProfileAction) -> Unit,
     motionAllowed: Boolean,
+    protectionEnabled: Boolean,
+    protectionAvailability: LocalAuthenticationAvailability,
+    onProtectionEnabledChange: (Boolean) -> Unit,
+    onOpenSecuritySetup: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val scrollState = rememberScrollState()
@@ -229,6 +252,10 @@ private fun CareProfileFlowScaffold(
                         onAction(action)
                     },
                     motionAllowed = motionAllowed,
+                    protectionEnabled = protectionEnabled,
+                    protectionAvailability = protectionAvailability,
+                    onProtectionEnabledChange = onProtectionEnabledChange,
+                    onOpenSecuritySetup = onOpenSecuritySetup,
                 )
             }
         }
@@ -411,6 +438,10 @@ private fun CareProfileContentSurface(
     onAction: (CareProfileAction) -> Unit,
     onAdvance: (CareProfileAction) -> Unit,
     motionAllowed: Boolean,
+    protectionEnabled: Boolean,
+    protectionAvailability: LocalAuthenticationAvailability,
+    onProtectionEnabledChange: (Boolean) -> Unit,
+    onOpenSecuritySetup: () -> Unit,
 ) {
     Surface(
         modifier = Modifier.fillMaxWidth(),
@@ -466,6 +497,19 @@ private fun CareProfileContentSurface(
                     state = state,
                     onAction = onAction,
                     motionAllowed = false,
+                )
+            }
+            if (state.step == CareProfileStep.COMPLETED) {
+                AppProtectionPreference(
+                    checked = protectionEnabled,
+                    availability = protectionAvailability,
+                    onCheckedChange = onProtectionEnabledChange,
+                    onOpenSecuritySetup = onOpenSecuritySetup,
+                    modifier = Modifier.padding(
+                        start = BitavidaSpacing.Large,
+                        end = BitavidaSpacing.Large,
+                        bottom = BitavidaSpacing.Default,
+                    ),
                 )
             }
             CareProfileAdvanceAction(

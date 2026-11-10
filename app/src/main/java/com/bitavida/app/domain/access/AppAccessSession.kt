@@ -45,21 +45,37 @@ data class AppAccessPolicy(
 class AppAccessSessionController(
     private val policy: AppAccessPolicy = AppAccessPolicy(),
 ) {
-    private val mutableState = MutableStateFlow(AppAccessSessionState.LOCKED)
+    private val mutableState = MutableStateFlow(AppAccessSessionState.UNLOCKED)
     val state: StateFlow<AppAccessSessionState> = mutableState.asStateFlow()
 
     private var backgroundedAtMillis: Long? = null
+    var isProtectionEnabled: Boolean = false
+        private set
     var isProtectionActive: Boolean = false
         private set
 
+    fun setProtectionEnabled(enabled: Boolean) {
+        isProtectionEnabled = enabled
+        if (!enabled) {
+            isProtectionActive = false
+            backgroundedAtMillis = null
+            mutableState.value = AppAccessSessionState.UNLOCKED
+        }
+    }
+
     fun startProtectedSession() {
-        isProtectionActive = true
         backgroundedAtMillis = null
+        if (!isProtectionEnabled) {
+            isProtectionActive = false
+            mutableState.value = AppAccessSessionState.UNLOCKED
+            return
+        }
+        isProtectionActive = true
         mutableState.value = AppAccessSessionState.LOCKED
     }
 
     fun beginAuthentication(): Boolean {
-        if (!isProtectionActive) return false
+        if (!isProtectionEnabled || !isProtectionActive) return false
         if (mutableState.value != AppAccessSessionState.LOCKED) return false
         mutableState.value = AppAccessSessionState.AUTHENTICATING
         return true
@@ -78,11 +94,16 @@ class AppAccessSessionController(
     }
 
     fun lockImmediately() {
+        if (!isProtectionEnabled || !isProtectionActive) {
+            mutableState.value = AppAccessSessionState.UNLOCKED
+            return
+        }
         mutableState.value = AppAccessSessionState.LOCKED
     }
 
     fun onBackgrounded(elapsedRealtimeMillis: Long) {
         if (
+            isProtectionEnabled &&
             isProtectionActive &&
             mutableState.value == AppAccessSessionState.UNLOCKED
         ) {
@@ -91,7 +112,7 @@ class AppAccessSessionController(
     }
 
     fun onForegrounded(elapsedRealtimeMillis: Long): Boolean {
-        if (!isProtectionActive) return false
+        if (!isProtectionEnabled || !isProtectionActive) return false
         val backgroundedAt = backgroundedAtMillis ?: return false
         backgroundedAtMillis = null
         if (!policy.hasExpired(backgroundedAt, elapsedRealtimeMillis)) return false

@@ -38,9 +38,9 @@ Los términos de uso y el aviso de privacidad son consultables sin conexión y m
 
 ## Alcance aprobado para la fase 3.2
 
-Se añade un control de acceso local antes de mostrar “Mi día” una vez que termina o se abandona el onboarding. Android verifica la identidad mediante biometría fuerte compatible o la credencial segura del dispositivo; Bitavida no crea credenciales propias, no conserva secretos biométricos y no incorpora cuentas ni red. En API 30 o superior se ofrece la combinación nativa de ambos mecanismos. En API 26–29 la biometría fuerte y la confirmación de PIN, patrón o contraseña se presentan mediante flujos nativos separados para respetar las restricciones de la plataforma.
+El acceso local es una preferencia opcional, desactivada por defecto, elegida en la etapa final del onboarding mediante “Proteger Bitavida”. Solo se conserva este booleano no sensible en preferencias privadas. Desactivada, Bitavida abre directamente, no invoca autenticación y no bloquea al volver. Activada, Android verifica la identidad mediante biometría fuerte compatible o la credencial segura del dispositivo; Bitavida no crea ni conserva credenciales, secretos biométricos, cuentas o datos de red. En API 30 o superior se ofrece la combinación nativa; en API 26–29 se usan flujos nativos separados.
 
-La sesión protegida comienza bloqueada, permanece bloqueada ante cancelación o error, se vuelve a bloquear después de 60 segundos reales en segundo plano y puede bloquearse inmediatamente con Atrás. El contenido protegido se oculta en recientes sin impedir capturas normales mientras la sesión está desbloqueada y en primer plano. Este control no persiste perfiles, no verifica representación legal, no autoriza por sí solo operaciones sensibles y no modifica la política ni las claves SQLCipher.
+La protección solo puede activarse cuando Android informa un bloqueo viable. Una sesión protegida comienza bloqueada, permanece así ante cancelación o error y se bloquea después de 60 segundos reales en segundo plano. El prompt aparece automáticamente y la vista intermedia se limita a espera, explicación breve y reintento. Atrás conserva el comportamiento normal de Android. No se usa `FLAG_SECURE` ni otra restricción general de capturas o grabación. Esta preferencia no persiste perfiles, no verifica representación legal, no autoriza operaciones sensibles y no modifica SQLCipher, Keystore, copias de seguridad ni validaciones de dominio.
 
 ## Implementado
 
@@ -57,9 +57,10 @@ La sesión protegida comienza bloqueada, permanece bloqueada ante cancelación o
 - Navegación contextual integrada al hilo, compatible con IME e insets, y documentos legales versionados consultables sin conexión.
 - Aceptación de términos y reconocimiento del aviso diferenciados, obligatorios y transitorios, sin confundirse con autorización del cuidador ni consentimiento sensible.
 - Captura de nombres con mínimo de 2 letras significativas, máximo de 80 grafemas, soporte Unicode, normalización diferida y rechazo de controles o caracteres ajenos a un nombre.
-- Acceso local con AndroidX Biometric, biometría fuerte y credencial del dispositivo, incluyendo alternativa nativa para API 26–29.
-- Sesión central `LOCKED`/`AUTHENTICATING`/`UNLOCKED`, bloqueo inicial, manual y al volver tras 60 segundos en segundo plano.
-- Pantalla de acceso offline con la identidad oficial, movimiento finito, estados accesibles y configuración guiada del bloqueo de Android.
+- Preferencia opcional “Proteger Bitavida”, desactivada por defecto y guardada como un único booleano privado.
+- Acceso local con AndroidX Biometric, biometría fuerte y credencial del dispositivo, incluyendo alternativa nativa para API 26–29 cuando la persona activa la protección.
+- Sesión central `LOCKED`/`AUTHENTICATING`/`UNLOCKED` y bloqueo al volver tras 60 segundos, únicamente con protección activa.
+- Vista mínima de espera y reintento; capturas normales y navegación Atrás estándar.
 
 ## Pendiente
 

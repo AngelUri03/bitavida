@@ -4,7 +4,7 @@ import com.bitavida.app.domain.access.AppAccessSessionState
 import com.bitavida.app.domain.access.LocalAuthenticationAvailability
 
 data class AppAccessUiState(
-    val sessionState: AppAccessSessionState = AppAccessSessionState.LOCKED,
+    val sessionState: AppAccessSessionState = AppAccessSessionState.UNLOCKED,
     val availability: LocalAuthenticationAvailability =
         LocalAuthenticationAvailability.CHECKING,
     val notice: AppAccessNotice? = null,

@@ -10,10 +10,11 @@ class AppAccessSessionControllerTest {
     fun onlySuccessfulAuthenticationCanUnlock() {
         val controller = AppAccessSessionController()
 
-        assertEquals(AppAccessSessionState.LOCKED, controller.state.value)
+        assertEquals(AppAccessSessionState.UNLOCKED, controller.state.value)
         assertFalse(controller.beginAuthentication())
         assertFalse(controller.authenticationSucceeded())
 
+        controller.setProtectionEnabled(true)
         controller.startProtectedSession()
         assertTrue(controller.beginAuthentication())
         assertEquals(AppAccessSessionState.AUTHENTICATING, controller.state.value)
@@ -31,6 +32,7 @@ class AppAccessSessionControllerTest {
         val controller = AppAccessSessionController(
             policy = AppAccessPolicy(backgroundTimeoutMillis = 60_000L),
         )
+        controller.setProtectionEnabled(true)
         controller.startProtectedSession()
         controller.beginAuthentication()
         controller.authenticationSucceeded()
@@ -45,8 +47,23 @@ class AppAccessSessionControllerTest {
     }
 
     @Test
-    fun manualLockIsImmediate() {
+    fun disabledProtectionNeverBlocksAccess() {
         val controller = AppAccessSessionController()
+
+        controller.setProtectionEnabled(false)
+        controller.startProtectedSession()
+        controller.onBackgrounded(elapsedRealtimeMillis = 1_000L)
+        controller.lockImmediately()
+
+        assertFalse(controller.onForegrounded(elapsedRealtimeMillis = 120_000L))
+        assertFalse(controller.beginAuthentication())
+        assertEquals(AppAccessSessionState.UNLOCKED, controller.state.value)
+    }
+
+    @Test
+    fun internalLockIsImmediateWhenProtectionIsEnabled() {
+        val controller = AppAccessSessionController()
+        controller.setProtectionEnabled(true)
         controller.startProtectedSession()
         controller.beginAuthentication()
         controller.authenticationSucceeded()

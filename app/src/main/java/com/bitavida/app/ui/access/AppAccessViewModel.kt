@@ -3,7 +3,6 @@ package com.bitavida.app.ui.access
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bitavida.app.domain.access.AppAccessSessionController
-import com.bitavida.app.domain.access.AppAccessSessionState
 import com.bitavida.app.domain.access.LocalAuthenticationAvailability
 import com.bitavida.app.domain.access.LocalAuthenticationError
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -38,11 +37,15 @@ class AppAccessViewModel(
         initialValue = AppAccessUiState(),
     )
 
-    val isUnlocked: Boolean
-        get() = sessionController.state.value == AppAccessSessionState.UNLOCKED
-
     val isProtectionActive: Boolean
         get() = sessionController.isProtectionActive
+
+    fun setProtectionEnabled(enabled: Boolean) {
+        sessionController.setProtectionEnabled(enabled)
+        if (!enabled) {
+            presentationState.value = presentationState.value.copy(notice = null)
+        }
+    }
 
     fun startProtectedSession() {
         presentationState.value = presentationState.value.copy(notice = null)
@@ -95,7 +98,6 @@ class AppAccessViewModel(
     }
 
     fun onAuthenticationError(error: LocalAuthenticationError) {
-        sessionController.authenticationEndedWithoutSuccess()
         val notice = when (error) {
             LocalAuthenticationError.CANCELLED ->
                 AppAccessNotice.AUTHENTICATION_CANCELLED
@@ -111,6 +113,7 @@ class AppAccessViewModel(
                 AppAccessNotice.DEVICE_SECURITY_SETUP_REQUIRED
         }
         presentationState.value = presentationState.value.copy(notice = notice)
+        sessionController.authenticationEndedWithoutSuccess()
     }
 
     fun onBackgrounded(elapsedRealtimeMillis: Long) {
@@ -125,8 +128,4 @@ class AppAccessViewModel(
         }
     }
 
-    fun lockNow() {
-        presentationState.value = presentationState.value.copy(notice = null)
-        sessionController.lockImmediately()
-    }
 }

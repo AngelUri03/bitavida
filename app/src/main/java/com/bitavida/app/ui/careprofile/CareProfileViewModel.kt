@@ -1,26 +1,54 @@
 package com.bitavida.app.ui.careprofile
 
 import androidx.lifecycle.ViewModel
-import com.bitavida.app.data.careprofile.InMemoryCareProfileRepository
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
+import com.bitavida.app.domain.model.CURRENT_LEGAL_DOCUMENT_VERSION
+import com.bitavida.app.domain.model.CareProfile
+import com.bitavida.app.domain.model.LegalDocument
+import com.bitavida.app.domain.model.LegalDocumentDecision
+import com.bitavida.app.domain.repository.CareProfileIntegrityException
+import com.bitavida.app.domain.repository.CareProfileKeyUnavailableException
 import com.bitavida.app.domain.repository.CareProfileRepository
+import com.bitavida.app.domain.repository.CareProfileStorageUnavailableException
 import com.bitavida.app.domain.usecase.CreateCareProfileCommand
 import com.bitavida.app.domain.usecase.CreateCareProfileResult
 import com.bitavida.app.domain.usecase.CreateCareProfileUseCase
 import com.bitavida.app.domain.usecase.GetCareProfileUseCase
 import com.bitavida.app.domain.validation.CareProfileField
 import com.bitavida.app.domain.validation.CareProfileValidator
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
 class CareProfileViewModel(
-    repository: CareProfileRepository = InMemoryCareProfileRepository(),
+    repository: CareProfileRepository,
 ) : ViewModel() {
     private val createCareProfile = CreateCareProfileUseCase(repository)
     private val getCareProfile = GetCareProfileUseCase(repository)
     private val mutableUiState = MutableStateFlow(CareProfileUiState())
+    private val mutableStartupState =
+        MutableStateFlow<CareProfileStartupState>(CareProfileStartupState.Loading)
+    private val mutableOnboardingVisible = MutableStateFlow(false)
 
     val uiState: StateFlow<CareProfileUiState> = mutableUiState.asStateFlow()
+    val startupState: StateFlow<CareProfileStartupState> =
+        mutableStartupState.asStateFlow()
+    val onboardingVisible: StateFlow<Boolean> = mutableOnboardingVisible.asStateFlow()
+
+    init {
+        loadStoredProfile()
+    }
+
+    fun retryLoading() {
+        loadStoredProfile()
+    }
+
+    fun finishOnboardingNavigation() {
+        mutableOnboardingVisible.value = false
+    }
 
     fun onAction(action: CareProfileAction) {
         when (action) {
@@ -110,7 +138,43 @@ class CareProfileViewModel(
         }
     }
 
+    private fun loadStoredProfile() {
+        if (mutableStartupState.value == CareProfileStartupState.Loading &&
+            mutableOnboardingVisible.value
+        ) {
+            return
+        }
+        mutableStartupState.value = CareProfileStartupState.Loading
+        viewModelScope.launch {
+            try {
+                val profile = getCareProfile()
+                if (profile == null) {
+                    mutableOnboardingVisible.value = true
+                    mutableStartupState.value = CareProfileStartupState.NoProfile
+                } else {
+                    mutableOnboardingVisible.value = false
+                    mutableStartupState.value = profile.toReadyState()
+                }
+            } catch (error: CancellationException) {
+                throw error
+            } catch (error: CareProfileKeyUnavailableException) {
+                mutableStartupState.value = CareProfileStartupState.Error(
+                    CareProfileStartupError.KEY_UNAVAILABLE,
+                )
+            } catch (error: CareProfileIntegrityException) {
+                mutableStartupState.value = CareProfileStartupState.Error(
+                    CareProfileStartupError.INCOMPLETE_STORAGE,
+                )
+            } catch (error: CareProfileStorageUnavailableException) {
+                mutableStartupState.value = CareProfileStartupState.Error(
+                    CareProfileStartupError.STORAGE_UNAVAILABLE,
+                )
+            }
+        }
+    }
+
     private fun continueFlow() {
+        if (uiState.value.isSaving) return
         when (uiState.value.step) {
             CareProfileStep.WELCOME ->
                 updateState { copy(step = CareProfileStep.PRIVACY) }
@@ -132,7 +196,7 @@ class CareProfileViewModel(
             )
             CareProfileStep.REVIEW -> confirm()
             CareProfileStep.COMPLETED ->
-                updateState { copy(effect = CareProfileEffect.Completed) }
+                onAction(CareProfileAction.ContinueToToday)
         }
     }
 
@@ -216,39 +280,100 @@ class CareProfileViewModel(
 
     private fun confirm() {
         val state = uiState.value
-        when (
-            val result = createCareProfile(
-                CreateCareProfileCommand(
-                    caregiverName = state.caregiverName,
-                    personUnderCareName = state.personUnderCareName,
-                    authorizationDeclared = state.authorizationDeclared,
-                ),
-            )
-        ) {
-            is CreateCareProfileResult.Created ->
+        if (state.isSaving) return
+        updateState { copy(isSaving = true, globalError = null) }
+        viewModelScope.launch {
+            try {
+                when (
+                    val result = createCareProfile(
+                        CreateCareProfileCommand(
+                            caregiverName = state.caregiverName,
+                            personUnderCareName = state.personUnderCareName,
+                            authorizationDeclared = state.authorizationDeclared,
+                            termsAccepted = state.termsAccepted,
+                            privacyNoticeAcknowledged =
+                                state.privacyNoticeAcknowledged,
+                        ),
+                    )
+                ) {
+                    is CreateCareProfileResult.Created -> {
+                        val persistedProfile = getCareProfile()
+                            ?: throw CareProfileIntegrityException()
+                        mutableStartupState.value = persistedProfile.toReadyState()
+                        updateState {
+                            copy(
+                                step = CareProfileStep.COMPLETED,
+                                createdProfile = persistedProfile,
+                                fieldErrors = emptyMap(),
+                                globalError = null,
+                                isSaving = false,
+                            )
+                        }
+                    }
+                    is CreateCareProfileResult.Invalid ->
+                        updateState {
+                            copy(
+                                fieldErrors =
+                                    result.errors.associate { it.field to it.error },
+                                globalError = null,
+                                isSaving = false,
+                            )
+                        }
+                    is CreateCareProfileResult.MissingLegalDecisions ->
+                        updateState {
+                            copy(
+                                step = CareProfileStep.PRIVACY,
+                                missingLegalDecisions = result.documents.mapTo(
+                                    mutableSetOf(),
+                                ) { document ->
+                                    when (document) {
+                                        LegalDocument.TERMS_OF_USE ->
+                                            CareProfileLegalDecision.TERMS_OF_USE
+                                        LegalDocument.PRIVACY_NOTICE ->
+                                            CareProfileLegalDecision.PRIVACY_NOTICE
+                                    }
+                                },
+                                isSaving = false,
+                            )
+                        }
+                    CreateCareProfileResult.ProfileAlreadyExists ->
+                        updateState {
+                            copy(
+                                globalError =
+                                    CareProfileGlobalError.PROFILE_ALREADY_EXISTS,
+                                isSaving = false,
+                            )
+                        }
+                }
+            } catch (error: CancellationException) {
+                throw error
+            } catch (error: CareProfileKeyUnavailableException) {
                 updateState {
                     copy(
-                        step = CareProfileStep.COMPLETED,
-                        createdProfile = getCareProfile() ?: result.profile,
-                        fieldErrors = emptyMap(),
-                        globalError = null,
+                        globalError = CareProfileGlobalError.KEY_UNAVAILABLE,
+                        isSaving = false,
                     )
                 }
-            is CreateCareProfileResult.Invalid ->
+            } catch (error: CareProfileIntegrityException) {
                 updateState {
                     copy(
-                        fieldErrors = result.errors.associate { it.field to it.error },
-                        globalError = null,
+                        globalError = CareProfileGlobalError.INCOMPLETE_STORAGE,
+                        isSaving = false,
                     )
                 }
-            CreateCareProfileResult.ProfileAlreadyExists ->
+            } catch (error: CareProfileStorageUnavailableException) {
                 updateState {
-                    copy(globalError = CareProfileGlobalError.PROFILE_ALREADY_EXISTS)
+                    copy(
+                        globalError = CareProfileGlobalError.STORAGE_UNAVAILABLE,
+                        isSaving = false,
+                    )
                 }
+            }
         }
     }
 
     private fun goBack() {
+        if (uiState.value.isSaving) return
         if (uiState.value.editingFromReview) {
             updateState {
                 copy(
@@ -282,5 +407,41 @@ class CareProfileViewModel(
         transform: CareProfileUiState.() -> CareProfileUiState,
     ) {
         mutableUiState.value = mutableUiState.value.transform()
+    }
+
+    private fun CareProfile.toReadyState(): CareProfileStartupState.Ready {
+        val restrictions = buildSet {
+            if (!consent.isCurrent) {
+                add(CareProfileRestriction.CAREGIVER_AUTHORIZATION_REVOKED)
+            }
+            val currentTerms = legalAcceptances.any {
+                it.document == LegalDocument.TERMS_OF_USE &&
+                    it.decision == LegalDocumentDecision.ACCEPTED &&
+                    it.documentVersion == CURRENT_LEGAL_DOCUMENT_VERSION &&
+                    it.isCurrent
+            }
+            if (!currentTerms) add(CareProfileRestriction.TERMS_ACCEPTANCE_REQUIRED)
+            val currentPrivacy = legalAcceptances.any {
+                it.document == LegalDocument.PRIVACY_NOTICE &&
+                    it.decision == LegalDocumentDecision.ACKNOWLEDGED &&
+                    it.documentVersion == CURRENT_LEGAL_DOCUMENT_VERSION &&
+                    it.isCurrent
+            }
+            if (!currentPrivacy) {
+                add(CareProfileRestriction.PRIVACY_ACKNOWLEDGEMENT_REQUIRED)
+            }
+        }
+        return CareProfileStartupState.Ready(this, restrictions)
+    }
+
+    companion object {
+        fun factory(repository: CareProfileRepository): ViewModelProvider.Factory =
+            object : ViewModelProvider.Factory {
+                @Suppress("UNCHECKED_CAST")
+                override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                    require(modelClass.isAssignableFrom(CareProfileViewModel::class.java))
+                    return CareProfileViewModel(repository) as T
+                }
+            }
     }
 }

@@ -1,22 +1,27 @@
 package com.bitavida.app.domain.model
 
 /**
- * The single local relationship supported by the initial profile scope.
+ * The single encrypted local relationship supported by the current profile scope.
  */
 data class CareProfile(
     val id: String,
     val caregiver: Caregiver,
     val personUnderCare: PersonUnderCare,
     val consent: ConsentRecord,
-    val usage: CareProfileUsage = CareProfileUsage.TRANSIENT_LOCAL,
+    val legalAcceptances: List<LegalAcceptanceRecord>,
+    val createdAtEpochMillis: Long,
+    val usage: CareProfileUsage = CareProfileUsage.PERSISTED_ENCRYPTED_LOCAL,
 ) {
     init {
+        require(id.isNotBlank())
+        require(createdAtEpochMillis >= 0L)
         require(personUnderCare.declaredByCaregiverId == caregiver.id)
         require(consent.caregiverId == caregiver.id)
         require(consent.personUnderCareId == personUnderCare.id)
+        require(legalAcceptances.all { it.actorId == caregiver.id })
     }
 }
 
 enum class CareProfileUsage {
-    TRANSIENT_LOCAL,
+    PERSISTED_ENCRYPTED_LOCAL,
 }

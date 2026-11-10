@@ -54,6 +54,9 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 import com.bitavida.app.R
 import com.bitavida.app.ui.brand.BitavidaMark
 import com.bitavida.app.ui.brand.rememberBitavidaMotionAllowed
@@ -84,6 +87,9 @@ enum class TodayDemoState {
 @Composable
 fun TodayDemoScreen(
     modifier: Modifier = Modifier,
+    caregiverDisplayName: String = "Ana",
+    personUnderCareDisplayName: String = "María",
+    currentDate: LocalDate = LocalDate.now(),
     state: TodayDemoState = TodayDemoState.Normal,
     motionEnabledOverride: Boolean? = null,
     initialDemoConfirmed: Boolean = false,
@@ -142,7 +148,11 @@ fun TodayDemoScreen(
                 .padding(horizontal = BitavidaSpacing.ScreenHorizontal),
         ) {
             Spacer(Modifier.height(BitavidaSpacing.Medium))
-            EditorialHeader()
+            EditorialHeader(
+                caregiverDisplayName = caregiverDisplayName,
+                personUnderCareDisplayName = personUnderCareDisplayName,
+                currentDate = currentDate,
+            )
             HeaderThreadFlourish(motionAllowed = motionAllowed)
             Spacer(Modifier.height(BitavidaSpacing.Small))
 
@@ -188,8 +198,18 @@ fun TodayDemoScreen(
 }
 
 @Composable
-private fun EditorialHeader() {
+private fun EditorialHeader(
+    caregiverDisplayName: String,
+    personUnderCareDisplayName: String,
+    currentDate: LocalDate,
+) {
     val largeText = LocalDensity.current.fontScale >= 1.5f
+    val locale = Locale.forLanguageTag("es-MX")
+    val dateLabel = currentDate
+        .format(DateTimeFormatter.ofPattern("EEEE · d 'de' MMMM", locale))
+        .replaceFirstChar { it.uppercaseChar() }
+    val caregiverFirstName = caregiverDisplayName.firstNameForPresentation()
+    val personFirstName = personUnderCareDisplayName.firstNameForPresentation()
 
     BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
         val stackHeader = largeText || (maxWidth < 350.dp)
@@ -197,7 +217,7 @@ private fun EditorialHeader() {
             Column(verticalArrangement = Arrangement.spacedBy(BitavidaSpacing.ExtraSmall)) {
                 BrandLockup()
                 Text(
-                    text = stringResource(R.string.today_date_context),
+                    text = stringResource(R.string.today_date_context, dateLabel),
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -209,7 +229,7 @@ private fun EditorialHeader() {
             ) {
                 BrandLockup(modifier = Modifier.weight(1f))
                 Text(
-                    text = stringResource(R.string.today_date_context),
+                    text = stringResource(R.string.today_date_context, dateLabel),
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -219,14 +239,14 @@ private fun EditorialHeader() {
 
     Spacer(Modifier.height(BitavidaSpacing.Large))
     Text(
-        text = stringResource(R.string.today_greeting),
+        text = stringResource(R.string.today_greeting, caregiverFirstName),
         modifier = Modifier.semantics { heading() },
         style = MaterialTheme.typography.headlineLarge,
         color = MaterialTheme.colorScheme.onBackground,
     )
     Spacer(Modifier.height(BitavidaSpacing.ExtraSmall))
     Text(
-        text = stringResource(R.string.today_patient_context),
+        text = stringResource(R.string.today_patient_context, personFirstName),
         style = MaterialTheme.typography.titleSmall,
         color = MaterialTheme.colorScheme.primary,
     )
@@ -236,6 +256,9 @@ private fun EditorialHeader() {
         color = MaterialTheme.colorScheme.onSurfaceVariant,
     )
 }
+
+private fun String.firstNameForPresentation(): String =
+    trim().substringBefore(' ').ifBlank { trim() }
 
 @Composable
 private fun BrandLockup(modifier: Modifier = Modifier) {

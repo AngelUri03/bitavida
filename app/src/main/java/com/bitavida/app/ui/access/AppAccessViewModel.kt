@@ -37,6 +37,10 @@ class AppAccessViewModel(
         initialValue = AppAccessUiState(),
     )
 
+    val isUnlocked: Boolean
+        get() = sessionController.state.value ==
+            com.bitavida.app.domain.access.AppAccessSessionState.UNLOCKED
+
     val isProtectionActive: Boolean
         get() = sessionController.isProtectionActive
 

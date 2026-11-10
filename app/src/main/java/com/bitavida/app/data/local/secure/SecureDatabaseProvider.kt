@@ -56,6 +56,7 @@ internal class SecureDatabaseInitializer(
                 name = databaseFile.absolutePath,
             )
                 .setDriver(SQLCipherDriver(databaseKey, null, null))
+                .addMigrations(CareProfileMigration1To2)
                 .build()
         } catch (error: Exception) {
             databaseKey.fill(0)

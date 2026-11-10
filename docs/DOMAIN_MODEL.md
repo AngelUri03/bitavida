@@ -2,7 +2,7 @@
 
 ## Estado
 
-La procedencia de información y la primera rebanada de perfiles están implementadas en Kotlin puro. El flujo crea en memoria un único `CareProfile` con una persona cuidadora, una persona atendida y un registro de consentimiento; no persiste datos ni habilita información clínica real. También existe el modelo futuro `LegalAcceptanceRecord`, pero el onboarding actual no lo crea ni persiste. El resto de este documento define el modelo previsto y sus invariantes.
+La procedencia de información y la primera rebanada de perfiles están implementadas en Kotlin puro. El flujo crea y persiste de forma cifrada un único `CareProfile` con una persona cuidadora, una persona atendida, su relación, una declaración de autorización y decisiones legales versionadas. No captura ni habilita información clínica real. El resto de este documento define el modelo previsto y sus invariantes.
 
 ## Procedencia obligatoria
 
@@ -16,11 +16,11 @@ La procedencia no se infiere por el texto ni puede cambiarse automáticamente.
 
 ## Agregados previstos
 
-- **CareProfile**: relación local entre el cuidador, la persona atendida y su consentimiento; mientras no se conecte a persistencia protegida su uso es `TRANSIENT_LOCAL`.
-- **PersonUnderCare**: identidad ficticia declarada por el cuidador.
-- **Caregiver**: identidad ficticia de quien realiza la declaración.
-- **ConsentRecord**: conserva por separado la autorización declarada —no verificada legalmente por Bitavida— y el estado de consentimiento `ACTIVE` o `REVOKED`.
-- **LegalAcceptanceRecord**: modelo futuro para registrar actor, documento, versión, decisión diferenciada y momento; aceptar términos y reconocer el aviso no equivalen a consentimiento sensible.
+- **CareProfile**: agregado local cifrado entre cuidador, persona atendida, relación, autorización declarada y decisiones legales; su uso es `PERSISTED_ENCRYPTED_LOCAL`.
+- **PersonUnderCare**: identidad declarada por el cuidador, con identificador local estable y nombre normalizado.
+- **Caregiver**: identidad de quien realiza la declaración, con identificador local estable y nombre normalizado.
+- **ConsentRecord**: distingue el tipo `CAREGIVER_AUTHORIZATION_DECLARATION`, su estado `ACTIVE` o `REVOKED` y el instante correspondiente; no acredita representación legal.
+- **LegalAcceptanceRecord**: registra actor, documento, versión, decisión, estado y momento. Aceptar términos, reconocer el aviso, declarar autorización y consentir datos sensibles son actos diferentes; esta fase no crea consentimiento sensible.
 - **MedicalIndication** y sus revisiones: texto transcrito, profesional/fuente declarados y vigencia.
 - **MedicationPlan** y **ScheduledDose**: organización de una indicación, nunca cálculo de dosis.
 - **CareRecord**: toma declarada, alimento, eliminación, observación o medición.
@@ -48,7 +48,7 @@ Los nombres y campos finales permanecen sujetos a validación funcional y profes
 
 ## Estados y transiciones
 
-El consentimiento de perfiles distingue `ACTIVE` y `REVOKED`; un registro revocado debe conservar el instante de revocación y uno vigente no lo presenta. La creación inicial produce consentimiento vigente solo después de una declaración explícita del cuidador. Los demás catálogos de estados aún no están implementados. Cada transición futura deberá ser explícita, validada por un caso de uso y auditable. “Pendiente”, “registrado” o “corregido” describirán el dato; no valorarán la salud ni el desempeño de la persona cuidadora.
+El consentimiento y las aceptaciones legales distinguen `ACTIVE` y `REVOKED`; un registro revocado conserva el instante de revocación y uno vigente no lo presenta. La creación inicial produce autorización declarada vigente, aceptación de términos y reconocimiento del aviso solo después de decisiones explícitas. La revocación todavía no tiene interfaz operable; si se encuentra en almacenamiento, las operaciones que la requieran se restringen sin invalidar todo el perfil. Los demás catálogos de estados aún no están implementados. Cada transición futura deberá ser explícita, validada por un caso de uso y auditable. “Pendiente”, “registrado” o “corregido” describirán el dato; no valorarán la salud ni el desempeño de la persona cuidadora.
 
 ## Identidad, tiempo y versiones
 
@@ -59,11 +59,11 @@ Las entidades usarán identificadores locales estables. Los hechos conservarán 
 | Área | Estado |
 |---|---|
 | Procedencia en Kotlin puro | Implementada |
-| “Mi día” con datos ficticios | Implementada en UI; perfiles transitorios en memoria |
-| `Caregiver`, `PersonUnderCare`, `CareProfile` y `ConsentRecord` | Implementados |
-| `LegalAcceptanceRecord` | Modelo implementado; creación y persistencia pendientes |
-| Creación/consulta y repositorio de perfiles | Implementados de forma transitoria en memoria |
-| Auditoría y revisiones | Pendientes |
-| Infraestructura cifrada | Integrada y aislada; perfiles aún no conectados |
+| “Mi día” con datos ficticios | Implementada en UI; solo nombres y fecha provienen del perfil/localidad |
+| `Caregiver`, `PersonUnderCare`, `CareProfile` y `ConsentRecord` | Implementados y persistidos con mapeo explícito |
+| `LegalAcceptanceRecord` | Implementado y persistido con versión, decisión, estado y fecha |
+| Creación/consulta y repositorio de perfiles | Implementados con transacción cifrada y límite de uno por instalación |
+| Auditoría y revisiones | Pendientes; no se capturan datos clínicos |
+| Infraestructura cifrada | Integrada al perfil mediante esquema Room 2 y migración explícita 1→2 |
 | Exportación y respaldo | Pendientes |
 | Asistencia local | Pendiente |

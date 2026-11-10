@@ -2,7 +2,7 @@
 
 ## Fuentes y estado
 
-El reporte maestro de `docs/reference` define el problema y el alcance funcional. La referencia visual oficial es **BITAVIDA UI BASELINE 0.5.4**. Bitavida incorpora una primera experiencia funcional de configuración de perfil con estado local transitorio; todavía no debe describirse como producto clínicamente completo ni como persistencia protegida de datos de cuidado.
+El reporte maestro de `docs/reference` define el problema y el alcance funcional. La referencia visual oficial es **BITAVIDA UI BASELINE 0.5.4**. Bitavida incorpora configuración y persistencia local cifrada de un perfil de cuidado no clínico; todavía no debe describirse como producto clínicamente completo ni como autorización para capturar datos de salud.
 
 ## Propósito y público
 
@@ -42,6 +42,12 @@ El acceso local es una preferencia opcional, desactivada por defecto, elegida en
 
 La protección solo puede activarse cuando Android informa un bloqueo viable. Una sesión protegida comienza bloqueada, permanece así ante cancelación o error y se bloquea después de 60 segundos reales en segundo plano. El prompt aparece automáticamente y la vista intermedia se limita a espera, explicación breve y reintento. Atrás conserva el comportamiento normal de Android. No se usa `FLAG_SECURE` ni otra restricción general de capturas o grabación. Esta preferencia no persiste perfiles, no verifica representación legal, no autoriza operaciones sensibles y no modifica SQLCipher, Keystore, copias de seguridad ni validaciones de dominio.
 
+## Alcance aprobado para la fase 3.3
+
+El único perfil por instalación se conserva localmente en la base cifrada existente. Incluye cuidador, persona atendida, relación de cuidado, autorización declarada y registros separados de aceptación de términos y conocimiento del aviso, con identificadores estables, versión, fecha y estado. La creación es transaccional: una escritura incompleta no muestra “Perfil listo” ni se interpreta como instalación nueva.
+
+Al abrir, la ausencia confirmada de perfil conduce al onboarding; un perfil válido se recupera y omite el flujo; un error de base, integridad o clave muestra una explicación y reintento sin borrar datos. “Mi día” conserva la baseline 0.5.4 y solo sustituye los nombres de demostración por primeros nombres derivados del perfil y la fecha fija por la fecha local real. El cifrado es obligatorio y permanece independiente de “Proteger Bitavida”. Esta fase no captura datos clínicos, no acredita representación legal y no resuelve revocación operable, retención, ARCO ni revisión profesional.
+
 ## Implementado
 
 - Una aplicación Android Compose y un módulo `:app`.
@@ -50,21 +56,23 @@ La protección solo puede activarse cuando Android informa un bloqueo viable. Un
 - Temas claro/oscuro, navegación inferior demostrativa, accesibilidad y movimiento reducido.
 - Sistema visual y motion de la baseline 0.5.4.
 - Modelo mínimo de procedencia en Kotlin puro.
-- Infraestructura técnica de persistencia cifrada integrada y todavía aislada de los flujos funcionales.
+- Infraestructura Room/SQLCipher/Keystore conectada al perfil no clínico mediante esquema 2 y migración explícita 1→2.
 - Modelos puros de cuidador, persona atendida, perfil y consentimiento.
-- Creación y consulta de un único perfil mediante casos de uso y repositorio transitorio en memoria.
+- Creación transaccional y consulta de un único perfil mediante repositorio cifrado, con mapeos explícitos Room ↔ dominio.
 - Flujo final de bienvenida, privacidad, autorización declarada, identificación, revisión, corrección, cancelación y confirmación.
 - Navegación contextual integrada al hilo, compatible con IME e insets, y documentos legales versionados consultables sin conexión.
-- Aceptación de términos y reconocimiento del aviso diferenciados, obligatorios y transitorios, sin confundirse con autorización del cuidador ni consentimiento sensible.
+- Aceptación de términos y reconocimiento del aviso diferenciados y persistidos con versión, fecha y estado, sin confundirse con autorización del cuidador ni consentimiento sensible.
 - Captura de nombres con mínimo de 2 letras significativas, máximo de 80 grafemas, soporte Unicode, normalización diferida y rechazo de controles o caracteres ajenos a un nombre.
 - Preferencia opcional “Proteger Bitavida”, desactivada por defecto y guardada como un único booleano privado.
 - Acceso local con AndroidX Biometric, biometría fuerte y credencial del dispositivo, incluyendo alternativa nativa para API 26–29 cuando la persona activa la protección.
 - Sesión central `LOCKED`/`AUTHENTICATING`/`UNLOCKED` y bloqueo al volver tras 60 segundos, únicamente con protección activa.
 - Vista mínima de espera y reintento; capturas normales y navegación Atrás estándar.
+- Arranque diferenciado para primera instalación, perfil válido y error de almacenamiento/clave, sin reinicio ni borrado silencioso.
+- Personalización exclusiva de nombres y fecha local en “Mi día”, manteniendo intactos layout, hilo, tarjetas, navegación, colores y animaciones.
 
 ## Pendiente
 
-Conexión protegida de perfiles a persistencia, vinculación del acceso con claves autenticadas, registro persistente y auditable de versiones, momentos, aceptaciones y consentimiento, repositorios y casos de uso para las demás áreas, auditoría, revocación operable, derechos ARCO, retención y eliminación, permisos por perfil, exportación, respaldo, restauración, revisión legal profesional, pruebas de seguridad restantes y todas las funciones reales de asistencia. No se ha aprobado backend, cuenta ni sincronización.
+Vinculación del acceso con claves autenticadas, historial general de auditoría, revocación operable, derechos ARCO, retención y eliminación, permisos por perfil, repositorios y casos de uso para las demás áreas, exportación, respaldo, restauración, revisión legal profesional, pruebas de seguridad restantes y todas las funciones clínicas y reales de asistencia. No se ha aprobado backend, cuenta ni sincronización.
 
 ## Decisiones vigentes posteriores al reporte maestro
 

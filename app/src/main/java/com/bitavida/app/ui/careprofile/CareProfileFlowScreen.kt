@@ -516,6 +516,7 @@ private fun CareProfileContentSurface(
                 step = state.step,
                 onAdvance = onAdvance,
                 motionAllowed = motionAllowed,
+                saving = state.isSaving,
                 modifier = Modifier.padding(
                     start = BitavidaSpacing.Large,
                     end = BitavidaSpacing.Large,
@@ -561,9 +562,18 @@ private fun CareProfileStepBody(
             CareProfileStep.COMPLETED -> CompletedStep(state, motionAllowed)
         }
 
-        state.globalError?.let {
+        state.globalError?.let { error ->
             Text(
-                text = "Ya existe un perfil de cuidado. Continúa a Mi día para seguir.",
+                text = when (error) {
+                    CareProfileGlobalError.PROFILE_ALREADY_EXISTS ->
+                        "Ya existe un perfil de cuidado en este dispositivo."
+                    CareProfileGlobalError.STORAGE_UNAVAILABLE ->
+                        "No pudimos guardar el perfil cifrado. Tus datos no se borraron."
+                    CareProfileGlobalError.KEY_UNAVAILABLE ->
+                        "No pudimos acceder a la clave local. El perfil no se guardó."
+                    CareProfileGlobalError.INCOMPLETE_STORAGE ->
+                        "El almacenamiento protegido está incompleto. No se modificó."
+                },
                 modifier = Modifier.semantics { liveRegion = LiveRegionMode.Assertive },
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.error,
@@ -1213,6 +1223,7 @@ private fun CareProfileAdvanceAction(
     step: CareProfileStep,
     onAdvance: (CareProfileAction) -> Unit,
     motionAllowed: Boolean,
+    saving: Boolean,
     modifier: Modifier = Modifier,
 ) {
     val interactionSource = remember { MutableInteractionSource() }
@@ -1227,10 +1238,11 @@ private fun CareProfileAdvanceAction(
         bottomEnd = 28.dp,
         bottomStart = 18.dp,
     )
-    val label = when (step) {
-        CareProfileStep.WELCOME -> "Comenzar"
-        CareProfileStep.REVIEW -> "Crear perfil de cuidado"
-        CareProfileStep.COMPLETED -> "Ir a Mi día"
+    val label = when {
+        step == CareProfileStep.REVIEW && saving -> "Guardando perfil…"
+        step == CareProfileStep.WELCOME -> "Comenzar"
+        step == CareProfileStep.REVIEW -> "Crear perfil de cuidado"
+        step == CareProfileStep.COMPLETED -> "Ir a Mi día"
         else -> "Continuar"
     }
     val action = when (step) {
@@ -1250,7 +1262,7 @@ private fun CareProfileAdvanceAction(
         ActionThreadLink(activation = activation.value)
         Button(
             onClick = {
-                if (advancing) return@Button
+                if (advancing || saving) return@Button
                 focusManager.clearFocus()
                 if (!motionAllowed) {
                     advancing = true
@@ -1284,7 +1296,7 @@ private fun CareProfileAdvanceAction(
                     advancing = false
                 }
             },
-            enabled = !advancing,
+            enabled = !advancing && !saving,
             modifier = Modifier
                 .weight(1f)
                 .heightIn(min = BitavidaSpacing.PrimaryControlHeight)
@@ -1294,7 +1306,7 @@ private fun CareProfileAdvanceAction(
                 }
                 .bitavidaFluidInteraction(
                     source = interactionSource,
-                    enabled = !advancing,
+                    enabled = !advancing && !saving,
                     motionAllowed = motionAllowed,
                     shape = actionShape,
                     restingElevationDp = 0f,

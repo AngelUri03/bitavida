@@ -6,5 +6,5 @@ import com.bitavida.app.domain.repository.CareProfileRepository
 class GetCareProfileUseCase(
     private val repository: CareProfileRepository,
 ) {
-    operator fun invoke(): CareProfile? = repository.get()
+    suspend operator fun invoke(): CareProfile? = repository.get()
 }

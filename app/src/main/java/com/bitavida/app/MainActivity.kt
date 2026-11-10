@@ -19,7 +19,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModelProvider
 import com.bitavida.app.data.access.AppProtectionPreferences
+import com.bitavida.app.data.careprofile.EncryptedCareProfileRepository
 import com.bitavida.app.domain.access.AppAccessSessionState
 import com.bitavida.app.domain.access.LocalAuthenticationAvailability
 import com.bitavida.app.domain.access.LocalAuthenticationError
@@ -28,16 +30,20 @@ import com.bitavida.app.ui.access.AppAccessNotice
 import com.bitavida.app.ui.access.AppAccessViewModel
 import com.bitavida.app.ui.access.AppUnlockScreen
 import com.bitavida.app.ui.brand.rememberBitavidaMotionAllowed
+import com.bitavida.app.ui.careprofile.CareProfileEffect
 import com.bitavida.app.ui.careprofile.CareProfileFlowRoute
+import com.bitavida.app.ui.careprofile.CareProfileRestrictionDialog
+import com.bitavida.app.ui.careprofile.CareProfileStartupScreen
+import com.bitavida.app.ui.careprofile.CareProfileStartupState
 import com.bitavida.app.ui.careprofile.CareProfileViewModel
 import com.bitavida.app.ui.components.BitavidaFluidMotion
 import com.bitavida.app.ui.demo.TodayDemoScreen
 import com.bitavida.app.ui.theme.BitavidaTheme
 
 class MainActivity : FragmentActivity() {
-    private val careProfileViewModel: CareProfileViewModel by viewModels()
     private val appAccessViewModel: AppAccessViewModel by viewModels()
 
+    private lateinit var careProfileViewModel: CareProfileViewModel
     private lateinit var localAuthenticator: AndroidLocalAuthenticator
     private lateinit var appProtectionPreferences: AppProtectionPreferences
     private var protectionEnabled by mutableStateOf(false)
@@ -45,6 +51,12 @@ class MainActivity : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        careProfileViewModel = ViewModelProvider(
+            owner = this,
+            factory = CareProfileViewModel.factory(
+                EncryptedCareProfileRepository(applicationContext),
+            ),
+        )[CareProfileViewModel::class.java]
         appProtectionPreferences = AppProtectionPreferences(applicationContext)
         localAuthenticator = AndroidLocalAuthenticator(
             activity = this,
@@ -79,10 +91,15 @@ class MainActivity : FragmentActivity() {
 
         setContent {
             BitavidaTheme {
-                var showCareProfileFlow by rememberSaveable { mutableStateOf(true) }
                 val accessState by appAccessViewModel.uiState.collectAsState()
+                val startupState by careProfileViewModel.startupState.collectAsState()
+                val onboardingVisible by
+                    careProfileViewModel.onboardingVisible.collectAsState()
                 val motionAllowed = rememberBitavidaMotionAllowed(override = null)
                 val duration = if (motionAllowed) BitavidaFluidMotion.StateTransition else 0
+                var restrictionDialogDismissed by rememberSaveable {
+                    mutableStateOf(false)
+                }
 
                 LaunchedEffect(
                     protectionEnabled,
@@ -106,7 +123,12 @@ class MainActivity : FragmentActivity() {
                         accessState.sessionState != AppAccessSessionState.UNLOCKED
                 val destination = when {
                     accessRequired -> MainDestination.ACCESS
-                    showCareProfileFlow -> MainDestination.ONBOARDING
+                    startupState is CareProfileStartupState.Loading ||
+                        startupState is CareProfileStartupState.Error ->
+                        MainDestination.STARTUP
+                    startupState is CareProfileStartupState.NoProfile ||
+                        onboardingVisible ->
+                        MainDestination.ONBOARDING
                     else -> MainDestination.PROTECTED_CONTENT
                 }
                 AnimatedContent(
@@ -123,24 +145,6 @@ class MainActivity : FragmentActivity() {
                     label = "main_secure_destination",
                 ) { target ->
                     when (target) {
-                        MainDestination.ONBOARDING ->
-                            CareProfileFlowRoute(
-                                viewModel = careProfileViewModel,
-                                onExit = {
-                                    if (
-                                        protectionEnabled &&
-                                        !appAccessViewModel.isProtectionActive
-                                    ) {
-                                        appAccessViewModel.startProtectedSession()
-                                    }
-                                    showCareProfileFlow = false
-                                },
-                                protectionEnabled = protectionEnabled,
-                                protectionAvailability = accessState.availability,
-                                onProtectionEnabledChange = ::setProtectionPreference,
-                                onOpenSecuritySetup =
-                                    localAuthenticator::openSecuritySetup,
-                            )
                         MainDestination.ACCESS ->
                             AppUnlockScreen(
                                 state = accessState,
@@ -148,8 +152,62 @@ class MainActivity : FragmentActivity() {
                                 onOpenSecuritySetup =
                                     localAuthenticator::openSecuritySetup,
                             )
-                        MainDestination.PROTECTED_CONTENT -> TodayDemoScreen()
+                        MainDestination.STARTUP ->
+                            CareProfileStartupScreen(
+                                state = startupState,
+                                onRetry = careProfileViewModel::retryLoading,
+                            )
+                        MainDestination.ONBOARDING ->
+                            CareProfileFlowRoute(
+                                viewModel = careProfileViewModel,
+                                onExit = { effect ->
+                                    when (effect) {
+                                        CareProfileEffect.Cancelled -> finish()
+                                        CareProfileEffect.Completed -> {
+                                            if (
+                                                protectionEnabled &&
+                                                !appAccessViewModel.isProtectionActive
+                                            ) {
+                                                appAccessViewModel
+                                                    .startProtectedSession()
+                                            }
+                                            careProfileViewModel
+                                                .finishOnboardingNavigation()
+                                        }
+                                    }
+                                },
+                                protectionEnabled = protectionEnabled,
+                                protectionAvailability = accessState.availability,
+                                onProtectionEnabledChange =
+                                    ::setProtectionPreference,
+                                onOpenSecuritySetup =
+                                    localAuthenticator::openSecuritySetup,
+                            )
+                        MainDestination.PROTECTED_CONTENT -> {
+                            val ready = startupState as? CareProfileStartupState.Ready
+                            if (ready != null) {
+                                TodayDemoScreen(
+                                    caregiverDisplayName =
+                                        ready.profile.caregiver.displayName,
+                                    personUnderCareDisplayName =
+                                        ready.profile.personUnderCare.displayName,
+                                )
+                            }
+                        }
                     }
+                }
+
+                val ready = startupState as? CareProfileStartupState.Ready
+                if (
+                    destination == MainDestination.PROTECTED_CONTENT &&
+                    ready != null &&
+                    ready.restrictions.isNotEmpty() &&
+                    !restrictionDialogDismissed
+                ) {
+                    CareProfileRestrictionDialog(
+                        restrictions = ready.restrictions,
+                        onDismiss = { restrictionDialogDismissed = true },
+                    )
                 }
             }
         }
@@ -173,6 +231,14 @@ class MainActivity : FragmentActivity() {
     }
 
     private fun setProtectionPreference(requested: Boolean) {
+        if (
+            !requested &&
+            appAccessViewModel.isProtectionActive &&
+            !appAccessViewModel.isUnlocked
+        ) {
+            requestAuthentication()
+            return
+        }
         val availability = localAuthenticator.availability()
         appAccessViewModel.updateAvailability(availability)
         val effectivePreference =
@@ -204,8 +270,9 @@ class MainActivity : FragmentActivity() {
     }
 
     private enum class MainDestination {
-        ONBOARDING,
         ACCESS,
+        STARTUP,
+        ONBOARDING,
         PROTECTED_CONTENT,
     }
 }

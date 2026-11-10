@@ -1,6 +1,5 @@
 package com.bitavida.app.ui.careprofile
 
-import androidx.compose.runtime.Immutable
 import com.bitavida.app.domain.model.CareProfile
 import com.bitavida.app.domain.validation.CareProfileField
 import com.bitavida.app.domain.validation.CareProfileValidationError
@@ -15,7 +14,6 @@ enum class CareProfileStep {
     COMPLETED,
 }
 
-@Immutable
 data class CareProfileUiState(
     val step: CareProfileStep = CareProfileStep.WELCOME,
     val caregiverName: String = "",
@@ -28,6 +26,7 @@ data class CareProfileUiState(
     val globalError: CareProfileGlobalError? = null,
     val createdProfile: CareProfile? = null,
     val editingFromReview: Boolean = false,
+    val isSaving: Boolean = false,
     val effect: CareProfileEffect? = null,
 )
 
@@ -38,6 +37,31 @@ enum class CareProfileLegalDecision {
 
 enum class CareProfileGlobalError {
     PROFILE_ALREADY_EXISTS,
+    STORAGE_UNAVAILABLE,
+    KEY_UNAVAILABLE,
+    INCOMPLETE_STORAGE,
+}
+
+sealed interface CareProfileStartupState {
+    data object Loading : CareProfileStartupState
+    data object NoProfile : CareProfileStartupState
+    data class Ready(
+        val profile: CareProfile,
+        val restrictions: Set<CareProfileRestriction>,
+    ) : CareProfileStartupState
+    data class Error(val reason: CareProfileStartupError) : CareProfileStartupState
+}
+
+enum class CareProfileStartupError {
+    STORAGE_UNAVAILABLE,
+    KEY_UNAVAILABLE,
+    INCOMPLETE_STORAGE,
+}
+
+enum class CareProfileRestriction {
+    CAREGIVER_AUTHORIZATION_REVOKED,
+    TERMS_ACCEPTANCE_REQUIRED,
+    PRIVACY_ACKNOWLEDGEMENT_REQUIRED,
 }
 
 sealed interface CareProfileAction {
@@ -55,7 +79,9 @@ sealed interface CareProfileAction {
     data class PersonUnderCareNameChanged(val value: String) : CareProfileAction
     data class AuthorizationChanged(val declared: Boolean) : CareProfileAction
     data class TermsAcceptanceChanged(val accepted: Boolean) : CareProfileAction
-    data class PrivacyNoticeAcknowledgementChanged(val acknowledged: Boolean) : CareProfileAction
+    data class PrivacyNoticeAcknowledgementChanged(
+        val acknowledged: Boolean,
+    ) : CareProfileAction
 }
 
 sealed interface CareProfileEffect {

@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Bitavida</string>
-    <string name="today_date_context">Jueves · 7 de noviembre</string>
-    <string name="today_greeting">Buenos días, Ana</string>
-    <string name="today_patient_context">Acompañando a María</string>
+    <string name="today_date_context">%1$s</string>
+    <string name="today_greeting">Buenos días, %1$s</string>
+    <string name="today_patient_context">Acompañando a %1$s</string>
     <string name="today_subtitle">Tu bitácora de cuidado para hoy</string>
 
     <string name="today_journey_title">El hilo de hoy</string>

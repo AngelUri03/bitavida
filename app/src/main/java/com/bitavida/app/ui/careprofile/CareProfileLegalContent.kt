@@ -126,9 +126,9 @@ private val TermsDocument = CareProfileLegalDocument(
         ),
         LegalSection(
             "10. Contacto y reclamaciones",
-            "Esta versión no habilita tratamiento persistente ni un canal externo de reclamaciones. " +
-                "Antes de activar esas funciones, Bitavida mostrará la identidad, el domicilio y los " +
-                "medios efectivos del responsable dentro de estos documentos.",
+            "Esta versión conserva localmente el perfil de cuidado mediante almacenamiento cifrado. " +
+                "La publicación permanece bloqueada hasta incorporar la identidad, el domicilio y " +
+                "los medios efectivos del responsable y de atención de reclamaciones.",
         ),
     ),
 )
@@ -141,9 +141,9 @@ private val PrivacyDocument = CareProfileLegalDocument(
     sections = listOf(
         LegalSection(
             "1. Responsable",
-            "Bitavida no conserva datos personales de forma persistente en esta versión. Antes de " +
-                "habilitar esa función, este aviso identificará al responsable y su domicilio; hasta " +
-                "entonces no se utilizará para obtener consentimiento sobre datos persistentes.",
+            "Esta versión conserva localmente los datos del perfil de cuidado. La identidad y el " +
+                "domicilio definitivos del responsable siguen pendientes; por ello, la publicación " +
+                "permanece bloqueada hasta completar y revisar profesionalmente este aviso.",
         ),
         LegalSection(
             "2. Datos tratados",
@@ -165,15 +165,15 @@ private val PrivacyDocument = CareProfileLegalDocument(
         ),
         LegalSection(
             "5. Almacenamiento actual",
-            "El perfil se mantiene únicamente en memoria durante la ejecución de la aplicación. " +
-                "No está conectado al almacenamiento cifrado y no se presenta como conservación " +
-                "definitiva de datos.",
+            "El perfil, la relación de cuidado y las decisiones legales se conservan únicamente en " +
+                "el dispositivo, dentro de una base de datos cifrada. La preferencia de protección " +
+                "de acceso se almacena aparte y no sustituye el cifrado.",
         ),
         LegalSection(
             "6. Protección y límites",
-            "Bitavida opera sin permiso de Internet, excluye copias automáticas y no registra el " +
-                "contenido del perfil en logs. La infraestructura cifrada existente aún no se usa " +
-                "para estos datos. Las medidas reducen riesgos, pero no constituyen una certificación.",
+            "Bitavida opera sin permiso de Internet, excluye copias automáticas, no registra el " +
+                "contenido del perfil en logs y cifra la base local con una clave protegida por " +
+                "Android Keystore. Estas medidas reducen riesgos, pero no constituyen una certificación.",
         ),
         LegalSection(
             "7. Transferencias, exportación y compartición",
@@ -183,15 +183,15 @@ private val PrivacyDocument = CareProfileLegalDocument(
         ),
         LegalSection(
             "8. Conservación y supresión",
-            "El estado en memoria termina con el proceso de la aplicación, por lo que esta versión no " +
-                "aplica un periodo de conservación persistente. Antes de habilitar almacenamiento se " +
-                "publicarán sus criterios de conservación, bloqueo, supresión y eliminación.",
+            "El perfil permanece en el dispositivo al cerrar la aplicación. Los criterios definitivos " +
+                "de conservación, bloqueo, supresión y eliminación siguen pendientes y son un " +
+                "bloqueante de publicación; Bitavida no borra ni recrea el perfil silenciosamente.",
         ),
         LegalSection(
             "9. Derechos ARCO y revocación",
             "La persona titular o su representante acreditado podrá ejercer acceso, rectificación, " +
-                "cancelación u oposición y revocar el consentimiento cuando correspondan. Antes de " +
-                "conservar datos, Bitavida mostrará el canal y procedimiento efectivos para solicitarlos.",
+                "cancelación u oposición y revocar el consentimiento cuando correspondan. El canal " +
+                "y procedimiento efectivos siguen pendientes y deben existir antes de publicar.",
         ),
         LegalSection(
             "10. Consentimientos diferenciados",
@@ -208,9 +208,9 @@ private val PrivacyDocument = CareProfileLegalDocument(
         ),
         LegalSection(
             "12. Contacto de privacidad",
-            "Esta versión no habilita tratamiento persistente ni solicitudes externas de privacidad. " +
-                "El canal efectivo se incorporará antes de conservar datos; este aviso no habilita por " +
-                "sí mismo el tratamiento de información de salud.",
+            "El perfil se conserva localmente, pero esta versión aún no incorpora un canal externo " +
+                "efectivo para solicitudes de privacidad. Este pendiente bloquea la publicación y el " +
+                "aviso no habilita por sí mismo el tratamiento de información de salud.",
         ),
     ),
 )
@@ -292,9 +292,9 @@ internal fun CareProfileLegalAccess(
                 Text("Consultar aviso completo")
             }
             Text(
-                text = "Estas selecciones permanecen en memoria durante esta sesión. No equivalen " +
-                    "al consentimiento para tratar datos de salud, que se solicitará por separado " +
-                    "antes de habilitar su captura.",
+                text = "Estas decisiones se guardan con su versión y fecha en el perfil cifrado. No " +
+                    "equivalen al consentimiento para tratar datos de salud, que se solicitará por " +
+                    "separado antes de habilitar su captura.",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )

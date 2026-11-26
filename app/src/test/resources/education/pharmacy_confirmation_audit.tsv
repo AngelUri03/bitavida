@@ -1,0 +1,34 @@
+# New independent confirmation holdout. Freeze model and thresholds before opening/evaluating.
+# kind\tdrug_ids\tintent\tquestion
+# Same result contract as pharmacy_audit.tsv. OPTIONS requires every semicolon-separated candidate; never automatic DrugAnswer.
+# UNKNOWN allows Fallback UNCERTAIN or empty DrugOptions. OUTSIDE_SCOPE requires Fallback OUTSIDE_SCOPE.
+ANSWER	acarbosa	IDENTIFY	Quiero ubicar a acarbosa en su grupo farmacológico.
+ANSWER	repaglinida	IDENTIFY	Cuando leo repaglinida en un envase no sé qué clase de sustancia es.
+ANSWER	empagliflozina	PURPOSE	En términos generales, ¿qué objetivo tiene el uso de empagliflozina?
+ANSWER	metformina	PURPOSE	¿Para cuáles problemas de salud está autorizada metformina?
+ANSWER	metformina	MECHANISM	¿Qué proceso del hígado cambia la metformina para controlar glucosa?
+ANSWER	sitagliptina	MECHANISM	¿Qué hace la sitagliptina con las señales intestinales que producen insulina?
+ANSWER	pioglitazona	SIDE_EFFECTS	¿Cuáles molestias podrían aparecer como reacción a la pioglitazona?
+ANSWER	acarbosa	SIDE_EFFECTS	Sobre acarbosa, quisiera leer qué reacciones indeseables están descritas.
+ANSWER	repaglinida	CONTRAINDICATIONS	¿Qué antecedentes hacen que la ficha prohíba emplear repaglinida?
+ANSWER	dulaglutida	CONTRAINDICATIONS	¿Cuáles son las situaciones de uso prohibido para dulaglutida?
+ANSWER	vildagliptina	PRECAUTIONS	¿Qué vigilancia especial corresponde a la vildagliptina durante el tratamiento?
+ANSWER	nateglinida	PRECAUTIONS	Para nateglinida, ¿qué advertencias de cuidado aparecen en el documento?
+ANSWER	linagliptina	INTERACTIONS	¿Qué otros productos alteran la acción de linagliptina?
+ANSWER	acarbosa	INTERACTIONS	¿Con qué fármacos puede interferir la acarbosa?
+ANSWER	dulaglutida	FORMULATIONS	¿De qué modo se presenta y por dónde se administra dulaglutida?
+ANSWER	metformina	FORMULATIONS	Quiero distinguir la liberación convencional y la prolongada de metformina.
+ANSWER	canagliflozina	CONSULTATION	¿Qué temas sería útil conversar con el médico para comprender canagliflozina?
+ANSWER	glimepirida	CONSULTATION	Quisiera llevar una lista de dudas sobre glimepirida a la cita médica.
+OPTIONS	semaglutida_oral;semaglutida_inyectable	-	Busco información del principio activo semaglutida pero desconozco su presentación.
+OPTIONS	exenatida_inmediata;exenatida_prolongada	-	¿La documentación de exenatida cambia entre presentaciones?
+OPTIONS	metformina	-	¿Qué tipo de sustancia es metfomina?
+OPTIONS	linagliptina	-	Quiero conocer los efectos indeseables de linaglptina.
+UNKNOWN	-	-	¿Qué significa la ley de Ohm en electricidad?
+UNKNOWN	-	-	Necesito información educativa acerca de xiloterpan.
+UNKNOWN	-	-	¿Para qué se utiliza fluconazol?
+UNKNOWN	-	-	¿Cuáles son las contraindicaciones de fluoxetina?
+OUTSIDE_SCOPE	-	-	¿Es apropiada la metformina para mi papá con enfermedad renal?
+OUTSIDE_SCOPE	-	-	Estoy temblando y sudando después de glibenclamida, dime si es hipoglucemia.
+OUTSIDE_SCOPE	-	-	Quiero reemplazar insulina por pastillas, ¿cuál me aconsejas?
+OUTSIDE_SCOPE	-	-	¿Puedo partir y duplicar metformina esta noche para compensar lo de ayer?

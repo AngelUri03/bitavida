@@ -56,7 +56,40 @@ internal class SecureDatabaseInitializer(
                 name = databaseFile.absolutePath,
             )
                 .setDriver(SQLCipherDriver(databaseKey, null, null))
-                .addMigrations(CareProfileMigration1To2)
+                .addMigrations(
+                    CareProfileMigration1To2,
+                    MedicalCareMigration2To3,
+                    MedicationCompletionMigration3To4,
+                    MedicationReminderParticipationMigration4To5,
+                    MedicationOperationsMigration5To6,
+                    MedicationOccurrenceLinkMigration6To7,
+                    MedicationLifecycleEffectiveAtMigration7To8,
+                    MedicationAdministrationLogicalIdMigration8To9,
+                    MedicationPeriodSeriesMigration9To10,
+                    GlucoseMigration10To11,
+                    GlucoseRevisionMigration11To12,
+                    GlucoseFollowUpMigration12To13,
+                    GlucoseFollowUpWindowMigration13To14,
+                    GlucoseOccurrenceDecisionRevisionMigration14To15,
+                    BloodPressureMigration15To16,
+                    WeightMigration16To17,
+                    WeightTargetMigration17To18,
+                    ObservationMigration18To19,
+                    ObservationCorrectionMigration19To20,
+                    CareReminderMigration20To21,
+                    NoteMigration21To22,
+                    CareEventMigration22To23,
+                    NotificationDeliveryMigration23To24,
+                    CareProfileNameMigration24To25,
+                    CareEventReminderMigration25To26,
+                    CareEventPhotoMigration26To27,
+                    CareEventDetailsMigration27To28,
+                    CareEventWizardMigration28To29,
+                    CareEventCatalogMigration29To30,
+                    CareEventPhotoRemovalMigration30To31,
+                    CareEventPhotoOrderMigration31To32,
+                    CareEventConsultationMigration32To33,
+                )
                 .build()
         } catch (error: Exception) {
             databaseKey.fill(0)

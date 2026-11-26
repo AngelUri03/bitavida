@@ -1,0 +1,30 @@
+GLUCOSE_FASTING	Qué aporta checar el azúcar antes de desayunar
+GLUCOSE_CONTEXT	Por qué acompañar la glucemia de una nota sobre cuándo comió
+GLUCOSE_UNITS	A qué se refieren las letras mgdl
+PRESSURE_NUMBERS	Cómo se llaman el valor de arriba y el de abajo del aparato de presión
+PRESSURE_RECORDING	Tengo que anotar juntas las cifras del tensiómetro
+WEIGHT_TRACKING	Para qué me sirve ir apuntando cuánto peso
+WEIGHT_CONDITIONS	Da igual cambiar de balanza cada que me peso
+MEASUREMENT_REMINDERS	Cerrar el aviso del celular da por hecha la medición
+MEASUREMENT_HISTORY	Quiero encontrar lecturas que capturé la semana pasada
+MEASUREMENT_CORRECTIONS	Se me fue mal la fecha en un registro cómo la arreglo
+GLUCOSE_WHAT	Explícame qué es el azúcar que circula en sangre
+GLUCOSE_PURPOSE	Qué utilidad tiene checarme el azúcar de la sangre
+GLUCOSE_VARIATIONS	Por qué la glucemia no sale idéntica cada vez
+GLUCOSE_INDICATORS	Qué quiere decir que el medidor muestre lo o hi
+GLUCOSE_PLANNED	Es lo mismo una toma extra de glucosa y la que ya estaba programada
+PRESSURE_WHAT	Qué es eso de tensión arterial
+PRESSURE_PURPOSE	Qué utilidad tiene checar mi tensión
+PRESSURE_REST	Qué tiene que ver descansar antes con el resultado del tensiómetro
+PRESSURE_ACTIVITY	El ejercicio puede cambiar la tensión que se mide
+PRESSURE_VARIATIONS	Por qué no siempre salen iguales las lecturas del tensiómetro
+WEIGHT_VARIATIONS	Por qué la balanza puede cambiar lo que marca entre días
+WEIGHT_BMI	Qué información aporta el índice de masa corporal
+WEIGHT_TARGET	Quién define la referencia objetivo que muestra Peso
+WEIGHT_COMPARISON	Cómo puedo comparar pesajes de diferentes fechas
+MEASUREMENT_REGISTER	Dónde empiezo para capturar una lectura nueva
+MEASUREMENT_FOLLOWUPS	Qué hace configurar el seguimiento de una medición
+MEASUREMENT_STATES	En qué se diferencia sin confirmar de no realizada
+MEASUREMENT_CHARTS	Cómo se leen las gráficas que hay en Mediciones
+MEASUREMENT_CONSULTATION	Qué datos de mi seguimiento me conviene mostrar en la próxima consulta
+MEASUREMENT_FORGOTTEN	Ayer no apunté la lectura cómo dejo eso en el registro

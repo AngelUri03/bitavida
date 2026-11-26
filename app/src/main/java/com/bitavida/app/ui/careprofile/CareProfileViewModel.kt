@@ -28,6 +28,9 @@ class CareProfileViewModel(
 ) : ViewModel() {
     private val createCareProfile = CreateCareProfileUseCase(repository)
     private val getCareProfile = GetCareProfileUseCase(repository)
+    private val updateNames = com.bitavida.app.domain.usecase.UpdateCareProfileNames(repository)
+    private val mutableNamesState = MutableStateFlow(CareProfileNamesState())
+    val namesState: StateFlow<CareProfileNamesState> = mutableNamesState.asStateFlow()
     private val mutableUiState = MutableStateFlow(CareProfileUiState())
     private val mutableStartupState =
         MutableStateFlow<CareProfileStartupState>(CareProfileStartupState.Loading)
@@ -48,6 +51,72 @@ class CareProfileViewModel(
 
     fun finishOnboardingNavigation() {
         mutableOnboardingVisible.value = false
+    }
+
+    fun openNamesEditor() {
+        val current = (mutableStartupState.value as? CareProfileStartupState.Ready)?.profile ?: return
+        mutableNamesState.value = CareProfileNamesState(
+            open = true,
+            caregiverName = current.caregiver.displayName,
+            personName = current.personUnderCare.displayName,
+            expectedCaregiverName = current.caregiver.displayName,
+            expectedPersonName = current.personUnderCare.displayName,
+        )
+    }
+
+    fun closeNamesEditor() {
+        if (!mutableNamesState.value.saving) mutableNamesState.value = CareProfileNamesState()
+    }
+
+    fun changeCaregiverName(value: String) {
+        val current = mutableNamesState.value
+        if (!current.saving) mutableNamesState.value = current.copy(
+            caregiverName = CareProfileValidator.limitNameInput(value), errors = current.errors - CareProfileField.CAREGIVER_NAME, message = null)
+    }
+
+    fun changePersonName(value: String) {
+        val current = mutableNamesState.value
+        if (!current.saving) mutableNamesState.value = current.copy(
+            personName = CareProfileValidator.limitNameInput(value), errors = current.errors - CareProfileField.PERSON_UNDER_CARE_NAME, message = null)
+    }
+
+    fun saveNames() {
+        val draft = mutableNamesState.value
+        val profile = (mutableStartupState.value as? CareProfileStartupState.Ready)?.profile ?: return
+        if (!draft.open || draft.saving) return
+        mutableNamesState.value = draft.copy(saving = true, message = null)
+        val command = com.bitavida.app.domain.repository.UpdateCareProfileNamesCommand(
+            operationId = java.util.UUID.randomUUID().toString(), profileId = profile.id,
+            caregiverId = profile.caregiver.id, personUnderCareId = profile.personUnderCare.id,
+            expectedCaregiverName = draft.expectedCaregiverName, expectedPersonName = draft.expectedPersonName,
+            caregiverName = draft.caregiverName, personName = draft.personName,
+            capturedAtEpochMillis = System.currentTimeMillis(),
+        )
+        viewModelScope.launch {
+            try {
+                when (val result = updateNames(command)) {
+                    is com.bitavida.app.domain.usecase.UpdateNamesResult.Invalid ->
+                        mutableNamesState.value = mutableNamesState.value.copy(saving = false,
+                            errors = result.errors.associate { it.field to it.error })
+                    is com.bitavida.app.domain.usecase.UpdateNamesResult.Finished -> when (val stored = result.result) {
+                        is com.bitavida.app.domain.repository.UpdateCareProfileNamesResult.Stored -> {
+                            mutableStartupState.value = stored.profile.toReadyState()
+                            mutableNamesState.value = CareProfileNamesState()
+                        }
+                        com.bitavida.app.domain.repository.UpdateCareProfileNamesResult.Conflict ->
+                            mutableNamesState.value = mutableNamesState.value.copy(saving = false,
+                                message = "Los datos cambiaron. Cierra y vuelve a abrir la edición.")
+                        com.bitavida.app.domain.repository.UpdateCareProfileNamesResult.Unauthorized ->
+                            mutableNamesState.value = mutableNamesState.value.copy(saving = false,
+                                message = "No se pudo verificar la autorización para modificar estos datos.")
+                    }
+                }
+            } catch (cancelled: CancellationException) { throw cancelled }
+            catch (_: Exception) {
+                mutableNamesState.value = mutableNamesState.value.copy(saving = false,
+                    message = "No se pudieron guardar los cambios. Inténtalo de nuevo.")
+            }
+        }
     }
 
     fun onAction(action: CareProfileAction) {

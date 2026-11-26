@@ -1,0 +1,20 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <!-- The audit build only runs an explicitly selected instrumented check.
+         It cannot launch the product UI or register its reminder receivers. -->
+    <application android:label="Bitavida · auditoría técnica" tools:replace="android:label">
+        <activity android:name="com.bitavida.app.MainActivity" tools:node="remove" />
+        <receiver android:name="com.bitavida.app.platform.reminder.MedicationReminderReceiver" tools:node="remove" />
+        <receiver android:name="com.bitavida.app.platform.reminder.GlucoseReminderReceiver" tools:node="remove" />
+        <receiver android:name="com.bitavida.app.platform.reminder.BloodPressureReminderReceiver" tools:node="remove" />
+        <receiver android:name="com.bitavida.app.platform.reminder.ObservationReminderReceiver" tools:node="remove" />
+        <receiver android:name="com.bitavida.app.platform.reminder.WeightReminderReceiver" tools:node="remove" />
+        <receiver android:name="com.bitavida.app.platform.reminder.AppointmentReminderReceiver" tools:node="remove" />
+        <receiver android:name="com.bitavida.app.platform.reminder.AppointmentReminderSystemReceiver" tools:node="remove" />
+        <receiver android:name="com.bitavida.app.platform.reminder.CareReminderReceiver" tools:node="remove" />
+        <receiver android:name="com.bitavida.app.platform.reminder.CareReminderSystemReceiver" tools:node="remove" />
+        <receiver android:name="com.bitavida.app.platform.reminder.GlucoseReminderSystemReceiver" tools:node="remove" />
+        <receiver android:name="com.bitavida.app.platform.reminder.ObservationReminderSystemReceiver" tools:node="remove" />
+        <receiver android:name="com.bitavida.app.platform.reminder.MedicationReminderSystemReceiver" tools:node="remove" />
+    </application>
+</manifest>

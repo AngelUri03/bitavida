@@ -61,6 +61,26 @@ class AppAccessSessionControllerTest {
     }
 
     @Test
+    fun disablingDuringAuthenticationInvalidatesLateCompletionAndBackgroundLock() {
+        val controller = AppAccessSessionController()
+        controller.setProtectionEnabled(true)
+        controller.startProtectedSession()
+        assertTrue(controller.beginAuthentication())
+        controller.setProtectionEnabled(false)
+        assertFalse(controller.authenticationSucceeded())
+        controller.authenticationEndedWithoutSuccess()
+        controller.onBackgrounded(0L)
+        assertFalse(controller.onForegrounded(120_000L))
+        assertFalse(controller.beginAuthentication())
+        assertEquals(AppAccessSessionState.UNLOCKED, controller.state.value)
+
+        controller.setProtectionEnabled(true)
+        controller.startProtectedSession()
+        assertTrue(controller.beginAuthentication())
+        assertTrue(controller.authenticationSucceeded())
+    }
+
+    @Test
     fun internalLockIsImmediateWhenProtectionIsEnabled() {
         val controller = AppAccessSessionController()
         controller.setProtectionEnabled(true)

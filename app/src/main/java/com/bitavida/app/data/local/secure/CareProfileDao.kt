@@ -64,6 +64,37 @@ abstract class CareProfileDao {
         entities: List<LegalAcceptanceEntity>,
     )
 
+    @Query("SELECT * FROM care_profile_name_revisions WHERE operationId = :operationId LIMIT 1")
+    protected abstract suspend fun nameRevision(operationId: String): CareProfileNameRevisionEntity?
+
+    @Insert(onConflict = OnConflictStrategy.ABORT)
+    protected abstract suspend fun insertNameRevision(revision: CareProfileNameRevisionEntity)
+
+    @Query("UPDATE caregivers SET displayName = :name WHERE id = :id AND displayName = :expected")
+    protected abstract suspend fun updateCaregiverName(id: String, expected: String, name: String): Int
+
+    @Query("UPDATE persons_under_care SET displayName = :name WHERE id = :id AND displayName = :expected")
+    protected abstract suspend fun updatePersonName(id: String, expected: String, name: String): Int
+
+    @Transaction
+    open suspend fun updateNames(revision: CareProfileNameRevisionEntity): String {
+        val stored = load() ?: return "UNAUTHORIZED"
+        if (stored.relationship.profileId != revision.profileId ||
+            stored.relationship.caregiverId != revision.caregiverId ||
+            stored.relationship.personUnderCareId != revision.personUnderCareId ||
+            stored.consent.status != "ACTIVE") return "UNAUTHORIZED"
+        val prior = nameRevision(revision.operationId)
+        if (prior != null) return if (prior == revision) "STORED" else "CONFLICT"
+        if (stored.caregiver.displayName != revision.previousCaregiverName ||
+            stored.personUnderCare.displayName != revision.previousPersonName) return "CONFLICT"
+        if (revision.caregiverName == revision.previousCaregiverName &&
+            revision.personName == revision.previousPersonName) return "STORED"
+        insertNameRevision(revision)
+        check(updateCaregiverName(revision.caregiverId, revision.previousCaregiverName, revision.caregiverName) == 1)
+        check(updatePersonName(revision.personUnderCareId, revision.previousPersonName, revision.personName) == 1)
+        return "STORED"
+    }
+
     @Transaction
     open suspend fun create(bundle: CareProfileWriteBundle): Boolean {
         if (relationshipCount() != 0) return false

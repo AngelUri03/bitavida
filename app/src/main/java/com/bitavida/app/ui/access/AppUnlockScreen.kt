@@ -1,5 +1,7 @@
 package com.bitavida.app.ui.access
 
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,12 +14,20 @@ import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.liveRegion
@@ -25,9 +35,9 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.bitavida.app.R
 import com.bitavida.app.domain.access.AppAccessSessionState
 import com.bitavida.app.domain.access.LocalAuthenticationAvailability
-import com.bitavida.app.ui.brand.BitavidaMark
 import com.bitavida.app.ui.brand.rememberBitavidaMotionAllowed
 import com.bitavida.app.ui.components.BitavidaFluidBackground
 import com.bitavida.app.ui.theme.BitavidaSpacing
@@ -42,6 +52,13 @@ fun AppUnlockScreen(
     motionEnabledOverride: Boolean? = null,
 ) {
     val motionAllowed = rememberBitavidaMotionAllowed(motionEnabledOverride)
+    var entered by remember { mutableStateOf(!motionAllowed) }
+    LaunchedEffect(motionAllowed) { entered = true }
+    val markAlpha by animateFloatAsState(
+        targetValue = if (entered || !motionAllowed) 1f else 0f,
+        animationSpec = tween(if (motionAllowed) 180 else 0),
+        label = "unlock brand entrance",
+    )
     val setupRequired =
         state.availability == LocalAuthenticationAvailability.SETUP_REQUIRED
     val authenticating =
@@ -65,7 +82,12 @@ fun AppUnlockScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(BitavidaSpacing.Default),
             ) {
-                BitavidaMark(modifier = Modifier.size(52.dp))
+                Icon(
+                    painter = painterResource(R.drawable.ic_bitavida_mark),
+                    contentDescription = null,
+                    modifier = Modifier.size(52.dp).graphicsLayer { alpha = markAlpha },
+                    tint = MaterialTheme.colorScheme.primary,
+                )
                 Text(
                     text = "Acceso protegido",
                     modifier = Modifier.semantics { heading() },

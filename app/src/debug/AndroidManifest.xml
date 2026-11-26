@@ -1,0 +1,15 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <application>
+        <!-- Accessible only from the unlocked application in a debug build. -->
+        <activity
+            android:name="com.bitavida.app.diagnostic.DebugReportDiagnosticActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Bitavida" />
+        <!-- Only synthetic data; available exclusively in debug builds. -->
+        <activity
+            android:name="com.bitavida.app.ui.report.ReportFixtureActivity"
+            android:exported="true"
+            android:label="Informe ficticio"
+            android:theme="@style/Theme.Bitavida" />
+    </application>
+</manifest>

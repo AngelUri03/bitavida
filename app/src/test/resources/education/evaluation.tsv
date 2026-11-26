@@ -1,0 +1,110 @@
+GLUCOSE_FASTING	Qué significa checar azúcar sin desayunar todavía
+GLUCOSE_FASTING	Para qué sirve el ayuno al revisar glucemia
+GLUCOSE_FASTING	Por qué medir glucoza en ayunas
+GLUCOSE_CONTEXT	Qué aporta escribir cómo ocurrió la lectura capilar
+GLUCOSE_CONTEXT	Por qué anoto el momento real del azúcar
+GLUCOSE_CONTEXT	Para qué conservar contexto de glucoza
+GLUCOSE_UNITS	Me explicas las unidades miligramos por decilitro
+GLUCOSE_UNITS	Qué quiere decir mgdl en el medidor
+GLUCOSE_UNITS	Qué unidad expresa el glucómeto capilar
+PRESSURE_NUMBERS	Cómo entender la cifra de arriba y abajo de tensión
+PRESSURE_NUMBERS	Qué son la sistólica junto con la diastólica
+PRESSURE_NUMBERS	Qué significan números de preción arterial
+PRESSURE_RECORDING	Qué debo capturar para guardar una presión completa
+PRESSURE_RECORDING	Dónde meto los dos datos del baumanómetro
+PRESSURE_RECORDING	Cómo registrar ambos valores de preción
+WEIGHT_TRACKING	Por qué vale la pena llevar historial de pesajes
+WEIGHT_TRACKING	Qué me aporta checar y anotar kilos regularmente
+WEIGHT_TRACKING	Para qué registrar mi pezo corporal
+WEIGHT_CONDITIONS	Por qué conviene repetir hora y báscula al pesar
+WEIGHT_CONDITIONS	Importa cambiar la balanza donde me peso
+WEIGHT_CONDITIONS	Por qué pesarse en la misma báscua
+MEASUREMENT_REMINDERS	Qué hace la alarma de Mediciones si no la abro
+MEASUREMENT_REMINDERS	Si cierro el aviso del cel se registra algo
+MEASUREMENT_REMINDERS	Para qué activar recordatoros de mediciones
+MEASUREMENT_HISTORY	En qué parte veo registros de otra semana
+MEASUREMENT_HISTORY	Dónde busco una lectura viejita por fecha
+MEASUREMENT_HISTORY	Cómo consultar el historal de mediciones
+MEASUREMENT_CORRECTIONS	Qué ocurre con el dato previo si hago una corrección
+MEASUREMENT_CORRECTIONS	Dónde cambio un registro que anoté equivocado
+MEASUREMENT_CORRECTIONS	Cómo correjir una medición guardada
+GLUCOSE_WHAT	Qué quiere decir azúcar que circula por la sangre
+GLUCOSE_WHAT	Glucemia qué es eso
+GLUCOSE_WHAT	Qué es la glucoza capilar
+GLUCOSE_PURPOSE	Para qué nos sirve checar glucemia con el medidor
+GLUCOSE_PURPOSE	Por qué me tengo que checar el azúcar
+GLUCOSE_PURPOSE	Por qué medir glucoza capilar
+GLUCOSE_VARIATIONS	Por qué las lecturas de glucemia no son idénticas
+GLUCOSE_VARIATIONS	El azúcar puede cambiar durante el mismo día
+GLUCOSE_VARIATIONS	Por qué cambia la glucoza entre lecturas
+GLUCOSE_INDICATORS	Qué representan las letras HI o LO del aparato
+GLUCOSE_INDICATORS	Qué quiere decir que la pantalla diga hi
+GLUCOSE_INDICATORS	Qué significan HI LO del glucómeto
+GLUCOSE_PLANNED	Qué distingue la lectura ligada a un horario de una extra
+GLUCOSE_PLANNED	Si registro azúcar adicional se confirma la programada
+GLUCOSE_PLANNED	Qué es una lectura adiconal de glucosa
+PRESSURE_WHAT	Qué representa la fuerza sanguínea sobre las arterias
+PRESSURE_WHAT	Qué es eso de tensión de la sangre
+PRESSURE_WHAT	Qué es la preción arterial
+PRESSURE_PURPOSE	Cuál es el motivo de revisar presión arterial
+PRESSURE_PURPOSE	Para qué nos tomamos la tensión
+PRESSURE_PURPOSE	Por qué checarse la preción
+PRESSURE_REST	Qué aporta medir la presión estando en descanso
+PRESSURE_REST	Por qué descansar antes de checar la tensión
+PRESSURE_REST	Por qué estar en repozo al medir presión
+PRESSURE_ACTIVITY	Para qué anotar el esfuerzo previo al medir tensión
+PRESSURE_ACTIVITY	Caminar antes de checar presión qué relación tiene
+PRESSURE_ACTIVITY	Cómo se relacionan ejercico y presión
+PRESSURE_VARIATIONS	Por qué la tensión puede ser distinta en otra lectura
+PRESSURE_VARIATIONS	La presión cambia entre tomas de un día
+PRESSURE_VARIATIONS	Por qué varía la preción entre mediciones
+WEIGHT_VARIATIONS	Qué explica que los kilos fluctúen de un día a otro
+WEIGHT_VARIATIONS	Por qué el peso diario no sale igual
+WEIGHT_VARIATIONS	Por qué varía el pezo durante el día
+WEIGHT_BMI	Qué representa la relación de peso y talla llamada IMC
+WEIGHT_BMI	El IMC sirve como diagnóstico o tiene límites
+WEIGHT_BMI	Qué quiere decir índice de masa corpral
+WEIGHT_TARGET	Para qué es la referencia de peso que indica el doctor
+WEIGHT_TARGET	El objetivo dibujado de peso es una lectura real
+WEIGHT_TARGET	Qué significa la línea de peso objetvo
+WEIGHT_COMPARISON	Qué aspectos comparar entre pesos de distintas fechas
+WEIGHT_COMPARISON	Cómo junto mis pesajes para compararlos
+WEIGHT_COMPARISON	Cómo comparar registors de peso
+MEASUREMENT_REGISTER	Dónde comienzo la captura de un dato medido
+MEASUREMENT_REGISTER	Cómo meto una lectura nueva en la aplicación
+MEASUREMENT_REGISTER	Cómo registar una medición nueva
+MEASUREMENT_FOLLOWUPS	Qué diferencia un seguimiento de anotar un valor
+MEASUREMENT_FOLLOWUPS	Para qué pongo horarios y frecuencia de mediciones
+MEASUREMENT_FOLLOWUPS	Qué es configurar seguimento
+MEASUREMENT_STATES	No realizada quiere decir lo mismo que falta de confirmación
+MEASUREMENT_STATES	Qué diferencia hay entre sin confirmar y registrada
+MEASUREMENT_STATES	Qué significa medición sin confimar
+MEASUREMENT_CHARTS	Qué información describen mínimos y máximos de la gráfica
+MEASUREMENT_CHARTS	Cómo leo los puntitos de la semana
+MEASUREMENT_CHARTS	Cómo consultar gráfcas de mediciones
+MEASUREMENT_CONSULTATION	Qué datos de los registros sirven para mi revisión médica
+MEASUREMENT_CONSULTATION	Qué le enseño al doctor de mis mediciones
+MEASUREMENT_CONSULTATION	Qué llevar de mediciones a consuta
+MEASUREMENT_FORGOTTEN	Si ya medí pero capturo después qué fecha anoto
+MEASUREMENT_FORGOTTEN	Olvidé meter la medición que hice
+MEASUREMENT_FORGOTTEN	Qué pasa si olvdé guardar una lectura
+__UNKNOWN__	Qué tiempo hará el fin de semana
+__UNKNOWN__	Cuánto cuesta un aparato para pesar
+__UNKNOWN__	Cómo cambiar las pilas de un tensiómetro
+__UNKNOWN__	Pedir cita de laboratorio desde Bitavida
+__UNKNOWN__	Qué aplicación me recomiendas para películas
+__UNKNOWN__	Cómo cocino arroz
+__UNKNOWN__	Cómo guardar fotos de recetas
+__UNKNOWN__	Quiero comprar la mejor báscula de peso
+__UNKNOWN__	Qué significa el colesterol del estudio
+__UNKNOWN__	Cómo registrar saturación de oxígeno
+__UNKNOWN__	Cómo resetear medidor de glucosa
+__UNKNOWN__	Qué presión y qué glucosa y qué peso
+__UNKNOWN__	glucosa
+__UNKNOWN__	hola asistente
+__UNKNOWN__	canciones
+__UNKNOWN__	medir glucosa presión peso
+__UNKNOWN__	Qué es glucosa o presión
+__UNKNOWN__	Quiero presión y peso
+__UNKNOWN__	Qué significa peso o glucemia
+__UNKNOWN__	Necesito orientación general

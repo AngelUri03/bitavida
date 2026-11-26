@@ -110,7 +110,7 @@ fun BitavidaThreadLayout(
 
 @Composable
 fun BitavidaThreadSection(
-    title: String,
+    title: String?,
     modifier: Modifier = Modifier,
     eyebrow: String? = null,
     nodeStyle: BitavidaNodeStyle = BitavidaNodeStyle.Filled,
@@ -138,12 +138,14 @@ fun BitavidaThreadSection(
                     color = MaterialTheme.colorScheme.primary,
                 )
             }
-            Text(
-                text = title,
-                modifier = Modifier.semantics { heading() },
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.onBackground,
-            )
+            title?.let {
+                Text(
+                    text = it,
+                    modifier = Modifier.semantics { heading() },
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onBackground,
+                )
+            }
             content()
         }
     }
@@ -618,165 +620,15 @@ fun BitavidaThreadNavigation(
     onSelected: (Int) -> Unit,
     modifier: Modifier = Modifier,
     motionEnabledOverride: Boolean? = null,
+    isDestinationEnabled: (Int) -> Boolean = { it < 2 },
 ) {
-    val largeText = androidx.compose.ui.platform.LocalDensity.current.fontScale >= 1.5f
-    val colors = MaterialTheme.bitavidaColors
-    val trackColor = MaterialTheme.colorScheme.outline
-
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .background(colors.navigationSurface)
-            .drawBehind {
-                drawLine(
-                    color = trackColor,
-                    start = Offset(0f, 0f),
-                    end = Offset(size.width, 0f),
-                    strokeWidth = 1.dp.toPx(),
-                )
-            }
-            .navigationBarsPadding()
-            .padding(
-                horizontal = BitavidaSpacing.Small,
-                vertical = BitavidaSpacing.Small,
-            ),
-    ) {
-        if (largeText) {
-            Text(
-                text = currentSectionLabel,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = BitavidaSpacing.ExtraSmall),
-                style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.onSurface,
-                textAlign = TextAlign.Center,
-            )
-        }
-        Box(modifier = Modifier.fillMaxWidth()) {
-            Canvas(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(44.dp)
-                    .clearAndSetSemantics { },
-            ) {
-                val segment = size.width / items.size
-                drawLine(
-                    color = trackColor,
-                    start = Offset(segment / 2f, 20.dp.toPx()),
-                    end = Offset(size.width - (segment / 2f), 20.dp.toPx()),
-                    strokeWidth = 2.dp.toPx(),
-                    cap = StrokeCap.Round,
-                )
-            }
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                verticalAlignment = Alignment.Top,
-            ) {
-                items.forEachIndexed { index, item ->
-                    ThreadNavigationItem(
-                        item = item,
-                        selected = index == selectedIndex,
-                        showLabel = !largeText,
-                        motionEnabledOverride = motionEnabledOverride,
-                        onClick = { onSelected(index) },
-                    )
-                }
-            }
-        }
-    }
+    TodayAgendaNavigation(
+        items = items,
+        selectedIndex = selectedIndex,
+        onSelected = onSelected,
+        modifier = modifier,
+        isEnabled = isDestinationEnabled,
+        motionEnabledOverride = motionEnabledOverride,
+    )
 }
 
-@Composable
-private fun RowScope.ThreadNavigationItem(
-    item: BitavidaNavigationItem,
-    selected: Boolean,
-    showLabel: Boolean,
-    motionEnabledOverride: Boolean?,
-    onClick: () -> Unit,
-) {
-    val allowed = rememberBitavidaMotionAllowed(motionEnabledOverride)
-    val selection by animateFloatAsState(
-        if (selected) 1f else 0f,
-        if (allowed) tween(BitavidaFluidMotion.Selection) else snap(),
-        label = "realDestinationSelection",
-    )
-    val source = remember { MutableInteractionSource() }
-    val response = Modifier.bitavidaFluidInteraction(
-        source = source,
-        enabled = true,
-        motionAllowed = allowed,
-        shape = CircleShape,
-        restingElevationDp = 0f,
-    )
-    val color = if (selected) {
-        MaterialTheme.colorScheme.primary
-    } else {
-        MaterialTheme.colorScheme.onSurfaceVariant
-    }
-
-    Column(
-        modifier = Modifier
-            .weight(1f)
-            .widthIn(min = BitavidaSpacing.MinimumTouchTarget)
-            .heightIn(min = 60.dp)
-            .clickable(
-                interactionSource = source,
-                indication = null,
-                role = Role.Tab,
-                onClick = onClick,
-            )
-            .semantics(mergeDescendants = true) {
-                contentDescription = item.label
-                this.selected = selected
-            }
-            .padding(horizontal = 2.dp, vertical = 2.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(BitavidaSpacing.ExtraSmall),
-    ) {
-        Box(
-            modifier = Modifier
-                .size(40.dp)
-                .then(response)
-                .clip(CircleShape)
-                .indication(
-                    interactionSource = source,
-                    indication = androidx.compose.material3.ripple(
-                        color = MaterialTheme.colorScheme.primary,
-                        radius = 20.dp,
-                    ),
-                )
-                .background(
-                    if (selected) MaterialTheme.bitavidaColors.paleBlue
-                    else MaterialTheme.bitavidaColors.navigationSurface,
-                    CircleShape,
-                ),
-            contentAlignment = Alignment.Center,
-        ) {
-            if (selected) {
-                Box(
-                    modifier = Modifier
-                        .size(8.dp)
-                        .graphicsLayer { alpha = selection }
-                        .align(Alignment.TopCenter)
-                        .background(MaterialTheme.bitavidaColors.gradientStart, CircleShape),
-                )
-            }
-            Image(
-                painter = painterResource(item.iconRes),
-                contentDescription = null,
-                modifier = Modifier.size(22.dp),
-                colorFilter = ColorFilter.tint(color),
-            )
-        }
-        if (showLabel) {
-            Text(
-                text = item.label,
-                color = color,
-                style = MaterialTheme.typography.labelSmall,
-                textAlign = TextAlign.Center,
-                maxLines = 2,
-            )
-        }
-    }
-}

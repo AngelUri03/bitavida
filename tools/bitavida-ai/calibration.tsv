@@ -1,0 +1,70 @@
+GLUCOSE_FASTING	Qué aporta checar azúcar sin haber desayunado
+GLUCOSE_FASTING	Qué quiere decir ayuno en el registro capilar
+GLUCOSE_CONTEXT	Para qué anoto circunstancias de mi glucemia
+GLUCOSE_CONTEXT	Hora real y contexto sugerido de glucosa
+GLUCOSE_UNITS	Qué son mg por dl en el aparato de azúcar
+GLUCOSE_UNITS	Qué significa unidad mgdl en glucemia
+PRESSURE_NUMBERS	Cómo se llaman la cifra de arriba y la de abajo
+PRESSURE_NUMBERS	Qué diferencia hay entre la máxima y mínima de tensión
+PRESSURE_RECORDING	Cómo guardo sistólica junto a diastólica en la app
+PRESSURE_RECORDING	Dónde se capturan los números y el pulso de presión
+WEIGHT_TRACKING	Qué gano con llevar registro de los kilos
+WEIGHT_TRACKING	Por qué pesarme periódicamente
+WEIGHT_CONDITIONS	Importa usar siempre una balanza parecida
+WEIGHT_CONDITIONS	Por qué conservar ropa y hora parecidas para pesar
+MEASUREMENT_REMINDERS	Qué hace un aviso si cierro su notificación
+MEASUREMENT_REMINDERS	Necesita permiso Android para avisarme
+MEASUREMENT_HISTORY	Dónde consultar mis lecturas guardadas del mes pasado
+MEASUREMENT_HISTORY	Cómo elijo el día del historial general
+MEASUREMENT_CORRECTIONS	Dónde arreglo una fecha que capturé equivocada
+MEASUREMENT_CORRECTIONS	Qué cambia en auditoría cuando edito una lectura
+GLUCOSE_WHAT	Me explicas qué es el azúcar de la sangre
+GLUCOSE_WHAT	Qué representa la glucemia sanguínea
+GLUCOSE_PURPOSE	Cuál es la utilidad de checarme el azúcar
+GLUCOSE_PURPOSE	Por qué es importante medirse glucosa capilar
+GLUCOSE_VARIATIONS	Por qué pueden diferir dos glucemias
+GLUCOSE_VARIATIONS	La glucosa fluctúa durante el día
+GLUCOSE_INDICATORS	En el glucómetro qué son las letras hi lo
+GLUCOSE_INDICATORS	Por qué el aparato capilar muestra HI
+GLUCOSE_PLANNED	Una lectura extra confirma las programadas
+GLUCOSE_PLANNED	Qué es registrar glucosa fuera del horario previsto
+PRESSURE_WHAT	Me explicas la tensión de la sangre en arterias
+PRESSURE_WHAT	Presión sanguínea qué quiere decir
+PRESSURE_PURPOSE	Para qué nos checamos la presión arterial
+PRESSURE_PURPOSE	Por qué importa tomarse la tensión
+PRESSURE_REST	Para qué descansar un rato antes de checar tensión
+PRESSURE_REST	Qué tiene que ver reposo y medición arterial
+PRESSURE_ACTIVITY	Qué contexto aporta caminar antes del tensiómetro
+PRESSURE_ACTIVITY	Movimiento físico previo y lectura de presión
+PRESSURE_VARIATIONS	Por qué no coinciden dos lecturas del tensiómetro
+PRESSURE_VARIATIONS	La presión fluctúa entre un registro y otro
+WEIGHT_VARIATIONS	Por qué los kilos cambian cada día
+WEIGHT_VARIATIONS	El peso fluctúa por agua y circunstancias
+WEIGHT_BMI	Qué quiere decir IMC junto al registro
+WEIGHT_BMI	Limitaciones del índice de masa corporal
+WEIGHT_TARGET	La línea objetivo del peso la decide el médico
+WEIGHT_TARGET	Objetivo actual es lo mismo que una lectura de peso
+WEIGHT_COMPARISON	Cómo puedo comparar pesajes de dos fechas
+WEIGHT_COMPARISON	Cómo revisar mis registros de kilos juntos
+MEASUREMENT_REGISTER	Cómo comienzo a guardar un valor en Mediciones
+MEASUREMENT_REGISTER	Dónde introduzco fecha y hora de una lectura
+MEASUREMENT_FOLLOWUPS	Para qué me sirve configurar una programación
+MEASUREMENT_FOLLOWUPS	Qué es el seguimiento que lleva frecuencia y horarios
+MEASUREMENT_STATES	Sin confirmar quiere decir que no se realizó
+MEASUREMENT_STATES	Qué diferencia hay entre registrada y no realizada
+MEASUREMENT_CHARTS	Qué representan los puntos y los ejes
+MEASUREMENT_CHARTS	Para qué consultar el promedio de una gráfica
+MEASUREMENT_CONSULTATION	Qué información de mediciones puedo mostrar al doctor
+MEASUREMENT_CONSULTATION	Cómo preparar una conversación médica con mis registros
+MEASUREMENT_FORGOTTEN	Se me pasó capturar el dato que ya medí
+MEASUREMENT_FORGOTTEN	Puedo anotar después con la hora que ocurrió
+__UNKNOWN__	Quiero comprar un medidor de azúcar nuevo
+__UNKNOWN__	Cómo enciendo la pantalla del tensiómetro
+__UNKNOWN__	Dónde obtengo mi contraseña
+__UNKNOWN__	Qué día va a llover
+__UNKNOWN__	Me ayudas a pedir una cita
+__UNKNOWN__	Dónde puedo medir colesterol
+__UNKNOWN__	Cómo descargo canciones
+__UNKNOWN__	Qué marca de peso comprar
+__UNKNOWN__	Quiero una dieta para glucosa
+__UNKNOWN__	Cómo guardar resultados de laboratorio

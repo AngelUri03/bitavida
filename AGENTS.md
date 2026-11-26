@@ -44,6 +44,7 @@
 - Seguir `docs/DESIGN_SYSTEM.md` y `docs/ACCESSIBILITY.md`.
 - Mantener objetivos táctiles de 48 dp, texto al 200 %, TalkBack, teclado, 320 dp y estados comprensibles sin color.
 - Evitar alturas fijas para texto; conservar desplazamiento y `adjustResize`.
+- Toda nueva funcionalidad que seleccione fecha u hora debe usar exclusivamente `BitavidaDatePicker` y `BitavidaTimePicker` dentro de la vista media oficial del Design System; no usar diálogos centrados, `DatePickerDialog`, `TimePickerDialog` ni alternativas sin una necesidad técnica documentada.
 - Para nuevas pantallas, añadir previews claro, oscuro, compacto y texto 200 %.
 - Antes de entregar, ejecutar en una sola invocación `:app:assembleDebug :app:testDebugUnitTest :app:lintDebug`, salvo alcance de validación más estricto indicado por el usuario.
 - No ejecutar instrumentadas ni validación visual automática sin solicitud. Informar resultados reales.

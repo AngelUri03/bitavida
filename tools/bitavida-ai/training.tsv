@@ -1,0 +1,1120 @@
+GLUCOSE_FASTING	qué significa glucosa en ayunas
+GLUCOSE_FASTING	por qué importa medir glucosa en ayuno
+GLUCOSE_FASTING	azúcar antes del desayuno
+GLUCOSE_CONTEXT	por qué medirse antes de comer
+GLUCOSE_FASTING	sin desayunar medición capilar
+GLUCOSE_FASTING	medición de glucemia en ayuno
+GLUCOSE_FASTING	qué aporta medir sin alimentos
+GLUCOSE_FASTING	qué quiere decir estar en ayunas
+GLUCOSE_FASTING	glucosa al despertar antes de desayunar
+GLUCOSE_FASTING	para qué anotar que estaba en ayunas
+GLUCOSE_FASTING	ayuno y lectura de azúcar
+GLUCOSE_CONTEXT	por qué medir azúcar antes de alimentos
+GLUCOSE_FASTING	por qué checar glucemia sin haber comido
+GLUCOSE_FASTING	antes de desayunar qué aporta al azúcar
+GLUCOSE_FASTING	ayuno como condición del registro
+GLUCOSE_FASTING	haber desayunado y medición de glucosa
+GLUCOSE_CONTEXT	por qué registrar el contexto de glucosa
+GLUCOSE_CONTEXT	anotar momento real de glucemia
+GLUCOSE_CONTEXT	para qué escribir cuándo medí el azúcar
+GLUCOSE_CONTEXT	contexto real distinto del sugerido
+GLUCOSE_CONTEXT	relación entre alimentos y momento anotado
+GLUCOSE_CONTEXT	hora y contexto son diferentes
+GLUCOSE_CONTEXT	por qué poner antes o después de comer en registro
+GLUCOSE_CONTEXT	qué es el contexto de una lectura capilar
+GLUCOSE_CONTEXT	anotar circunstancias del azúcar
+GLUCOSE_CONTEXT	conservar el momento de la medición de glucosa
+GLUCOSE_CONTEXT	qué contexto elijo al capturar glucosa
+GLUCOSE_CONTEXT	para qué poner nota del contexto
+GLUCOSE_UNITS	qué significa mg dl
+GLUCOSE_UNITS	qué son los miligramos por decilitro
+GLUCOSE_UNITS	unidad del glucómetro mgdl
+GLUCOSE_UNITS	qué quiere decir mg dL en azúcar
+GLUCOSE_UNITS	qué unidad usa la glucosa capilar
+GLUCOSE_UNITS	concentración de glucosa y unidad
+GLUCOSE_UNITS	explicar abreviatura mgdl
+GLUCOSE_UNITS	cómo identificar unidad del medidor de azúcar
+GLUCOSE_UNITS	miligramos en un decilitro de sangre
+GLUCOSE_UNITS	qué representa la unidad de glucemia
+GLUCOSE_UNITS	para qué conservar unidad de glucosa
+GLUCOSE_UNITS	qué son las unidades del azúcar
+PRESSURE_NUMBERS	qué son los dos números de presión
+PRESSURE_NUMBERS	qué diferencia sistólica y diastólica
+PRESSURE_NUMBERS	número de arriba y abajo del tensiómetro
+PRESSURE_NUMBERS	qué significa la cifra superior de presión
+PRESSURE_NUMBERS	qué representa la diastólica
+PRESSURE_NUMBERS	qué es la sistólica
+PRESSURE_NUMBERS	por qué son dos cifras de tensión
+PRESSURE_NUMBERS	dos valores de presión qué significan
+PRESSURE_NUMBERS	presión máxima y mínima qué quieren decir
+PRESSURE_NUMBERS	cuál corresponde al latido y al descanso
+PRESSURE_NUMBERS	nombres de ambos números de presión
+PRESSURE_NUMBERS	qué significan números del baumanómetro
+PRESSURE_RECORDING	cómo registrar ambos valores de presión
+PRESSURE_RECORDING	dónde anotar sistólica y diastólica
+PRESSURE_RECORDING	por qué guardar presión como pareja
+PRESSURE_RECORDING	cómo capturar lectura del tensiómetro
+PRESSURE_RECORDING	guardar presión arterial con pulso
+PRESSURE_RECORDING	qué campos tiene registro de tensión
+PRESSURE_RECORDING	transcribir ambos números de presión
+PRESSURE_RECORDING	cómo anoto fecha y hora de presión
+PRESSURE_RECORDING	conservar juntos valores sistólico diastólico
+PRESSURE_RECORDING	dónde guardar lectura del baumanómetro
+PRESSURE_RECORDING	pulso separado del registro de presión
+PRESSURE_RECORDING	cómo ingresar una presión en Bitavida
+WEIGHT_TRACKING	por qué registrar mi peso
+WEIGHT_TRACKING	para qué sirve pesarme seguido
+WEIGHT_TRACKING	importancia del seguimiento de peso
+WEIGHT_TRACKING	por qué debo pesarme
+WEIGHT_TRACKING	qué aporta guardar kilogramos
+WEIGHT_TRACKING	para qué llevar historial de kilos
+WEIGHT_TRACKING	por qué registrar peso corporal
+WEIGHT_TRACKING	beneficio de anotar los pesajes
+WEIGHT_TRACKING	para qué sirve seguir mi peso
+WEIGHT_TRACKING	qué utilidad tiene registro de peso
+WEIGHT_TRACKING	por qué guardar lecturas de báscula
+WEIGHT_TRACKING	por qué revisar mi peso a lo largo del tiempo
+WEIGHT_TRACKING	por qué pesarme con regularidad
+WEIGHT_TRACKING	para qué sirve pesarme repetidamente
+WEIGHT_TRACKING	seguimiento periódico de kilos
+WEIGHT_CONDITIONS	por qué usar la misma báscula
+WEIGHT_CONDITIONS	misma balanza y condiciones del pesaje
+WEIGHT_CONDITIONS	importa pesarse a hora similar
+WEIGHT_CONDITIONS	por qué pesarse con ropa parecida
+WEIGHT_CONDITIONS	cómo mantener condiciones al pesar
+WEIGHT_CONDITIONS	cambiar de báscula afecta comparación
+WEIGHT_CONDITIONS	qué condiciones conviene anotar al pesarse
+WEIGHT_CONDITIONS	importancia de misma balanza
+WEIGHT_CONDITIONS	por qué usar ropa similar en cada pesaje
+WEIGHT_CONDITIONS	usar otra báscula para pesarse
+WEIGHT_CONDITIONS	hora parecida para pesarme
+WEIGHT_CONDITIONS	qué significa pesarse en condiciones similares
+MEASUREMENT_REMINDERS	para qué sirven recordatorios
+MEASUREMENT_REMINDERS	qué pasa si ignoro una notificación
+MEASUREMENT_REMINDERS	cómo funcionan avisos del celular
+MEASUREMENT_REMINDERS	recordatorio no equivale a confirmación
+MEASUREMENT_REMINDERS	por qué activar avisos de mediciones
+MEASUREMENT_REMINDERS	qué permiso necesita notificación
+MEASUREMENT_REMINDERS	la alarma registra automáticamente
+MEASUREMENT_REMINDERS	cerrar aviso no marca realizada
+MEASUREMENT_REMINDERS	por qué no llega un recordatorio
+MEASUREMENT_REMINDERS	desactivar avisos elimina seguimiento
+MEASUREMENT_REMINDERS	qué hacen las alarmas de Bitavida
+MEASUREMENT_REMINDERS	para qué son notificaciones de medición
+MEASUREMENT_REMINDERS	por qué Android necesita permiso para avisar
+MEASUREMENT_REMINDERS	qué hace Android con los recordatorios
+MEASUREMENT_REMINDERS	un aviso necesita permisos del celular
+MEASUREMENT_REMINDERS	para qué dar acceso a notificaciones
+MEASUREMENT_HISTORY	cómo consultar historial de mediciones
+MEASUREMENT_HISTORY	dónde encontrar lecturas anteriores
+MEASUREMENT_HISTORY	calendario e historial por día
+MEASUREMENT_HISTORY	cómo filtrar registros por tipo
+MEASUREMENT_HISTORY	ver mediciones de semanas pasadas
+MEASUREMENT_HISTORY	dónde están mis datos anteriores
+MEASUREMENT_HISTORY	cómo buscar una medición antigua
+MEASUREMENT_HISTORY	consultar registros de otro mes
+MEASUREMENT_HISTORY	cómo elegir otro día en calendario
+MEASUREMENT_HISTORY	para qué sirve calendario de mediciones
+MEASUREMENT_HISTORY	historial general dónde se abre
+MEASUREMENT_HISTORY	ver lecturas guardadas por fecha
+MEASUREMENT_CORRECTIONS	cómo corregir una medición
+MEASUREMENT_CORRECTIONS	editar un dato registrado incorrectamente
+MEASUREMENT_CORRECTIONS	cómo cambiar valor que escribí mal
+MEASUREMENT_CORRECTIONS	qué pasa al corregir un registro
+MEASUREMENT_CORRECTIONS	corregir fecha equivocada de lectura
+MEASUREMENT_CORRECTIONS	cómo borrar una medición errónea
+MEASUREMENT_CORRECTIONS	historial de cambios y versiones anteriores
+MEASUREMENT_CORRECTIONS	qué conserva la auditoría al editar
+MEASUREMENT_CORRECTIONS	eliminar lógicamente un registro
+MEASUREMENT_CORRECTIONS	cómo arreglar nota de una lectura
+MEASUREMENT_CORRECTIONS	se pierde versión anterior al corregir
+MEASUREMENT_CORRECTIONS	dónde está corregir datos
+MEASUREMENT_CORRECTIONS	qué se modifica al editar un dato
+MEASUREMENT_CORRECTIONS	qué cambia en auditoría al corregir
+MEASUREMENT_CORRECTIONS	dónde arreglo fechas equivocadas
+MEASUREMENT_CORRECTIONS	capturé una lectura incorrecta cómo editarla
+GLUCOSE_WHAT	qué es la glucosa
+GLUCOSE_WHAT	qué quiere decir azúcar en sangre
+GLUCOSE_WHAT	qué significa glucemia
+GLUCOSE_WHAT	glucosa y energía del cuerpo
+GLUCOSE_WHAT	qué es el azúcar sanguínea
+GLUCOSE_WHAT	concepto de glucosa capilar
+GLUCOSE_WHAT	qué mide el glucómetro exactamente
+GLUCOSE_WHAT	glucosa en sangre qué representa
+GLUCOSE_WHAT	azúcar y glucosa son lo mismo
+GLUCOSE_WHAT	de dónde viene la glucosa
+GLUCOSE_WHAT	para qué usa el cuerpo la glucosa
+GLUCOSE_WHAT	qué es glucemia capilar
+GLUCOSE_PURPOSE	para qué sirve medir el azúcar
+GLUCOSE_PURPOSE	por qué medir la glucosa
+GLUCOSE_PURPOSE	para qué checarme el azúcar
+GLUCOSE_PURPOSE	por qué debo medir mi glucemia
+GLUCOSE_PURPOSE	qué utilidad tiene medir glucosa
+GLUCOSE_PURPOSE	por qué checar glucosa capilar
+GLUCOSE_PURPOSE	importancia de revisar el azúcar en sangre
+GLUCOSE_PURPOSE	qué aporta una medición de glucosa
+GLUCOSE_PURPOSE	por qué vigilar mis mediciones de azúcar
+GLUCOSE_PURPOSE	para qué sirve medirse la glucemia
+GLUCOSE_PURPOSE	por qué checarse azúcar con glucómetro
+GLUCOSE_PURPOSE	qué se busca al medir el azúcar
+GLUCOSE_VARIATIONS	por qué varía la glucosa
+GLUCOSE_VARIATIONS	por qué cambia el azúcar entre mediciones
+GLUCOSE_VARIATIONS	variaciones de glucemia durante el día
+GLUCOSE_VARIATIONS	qué influye en cambios de glucosa
+GLUCOSE_VARIATIONS	por qué dos lecturas de azúcar son diferentes
+GLUCOSE_VARIATIONS	glucosa no siempre igual
+GLUCOSE_VARIATIONS	por qué fluctúa el azúcar sanguínea
+GLUCOSE_VARIATIONS	cambios de glucemia y circunstancias
+GLUCOSE_VARIATIONS	por qué puede variar lectura capilar
+GLUCOSE_VARIATIONS	el azúcar cambia de una vez a otra
+GLUCOSE_VARIATIONS	qué factores afectan variaciones de glucosa
+GLUCOSE_VARIATIONS	por qué difieren las mediciones de azúcar
+GLUCOSE_INDICATORS	qué significan HI y LO
+GLUCOSE_INDICATORS	qué quiere decir hi en glucómetro
+GLUCOSE_INDICATORS	qué significa lo en medidor de azúcar
+GLUCOSE_INDICATORS	letras en pantalla del glucómetro
+GLUCOSE_INDICATORS	por qué aparece indicador en vez de número
+GLUCOSE_INDICATORS	qué son los indicadores HI LO
+GLUCOSE_INDICATORS	cómo conservar un HI o LO
+GLUCOSE_INDICATORS	significado de hi y lo en glucosa
+GLUCOSE_INDICATORS	el medidor muestra letras qué representan
+GLUCOSE_INDICATORS	rango del aparato e indicadores de glucosa
+GLUCOSE_INDICATORS	qué indican símbolos HI y LO del glucómetro
+GLUCOSE_INDICATORS	letras del medidor capilar
+GLUCOSE_PLANNED	qué diferencia medición adicional y programada
+GLUCOSE_PLANNED	glucosa independiente y lectura programada
+GLUCOSE_PLANNED	qué es una lectura adicional
+GLUCOSE_PLANNED	cómo se asocia glucosa a horario programado
+GLUCOSE_PLANNED	para qué sirve registro adicional de azúcar
+GLUCOSE_PLANNED	diferencia entre primera medición y programada
+GLUCOSE_PLANNED	lectura extra fuera de horario
+GLUCOSE_PLANNED	qué significa registrar glucosa adicional
+GLUCOSE_PLANNED	qué pasa con lectura ligada a ocurrencia
+GLUCOSE_PLANNED	adicional no confirma otra programada
+GLUCOSE_PLANNED	cómo distinguir registro independiente
+GLUCOSE_PLANNED	qué es medición programada de glucosa
+PRESSURE_WHAT	qué es la presión arterial
+PRESSURE_WHAT	qué quiere decir tensión arterial
+PRESSURE_WHAT	qué es la fuerza de sangre en arterias
+PRESSURE_WHAT	concepto de presión sanguínea
+PRESSURE_WHAT	qué mide la presión arterial
+PRESSURE_WHAT	presión y tensión son lo mismo
+PRESSURE_WHAT	qué es tensión sanguínea
+PRESSURE_WHAT	cómo explicar presión arterial
+PRESSURE_WHAT	sangre arterias y presión
+PRESSURE_WHAT	qué significa presión en el cuerpo
+PRESSURE_WHAT	qué representa la tensión arterial
+PRESSURE_WHAT	definición de presión arterial
+PRESSURE_PURPOSE	para qué sirve medir presión arterial
+PRESSURE_PURPOSE	por qué debo checarme la presión
+PRESSURE_PURPOSE	importancia de revisar tensión
+PRESSURE_PURPOSE	para qué checarse la presión
+PRESSURE_PURPOSE	qué aporta una medición de presión
+PRESSURE_PURPOSE	por qué tomarse la presión arterial
+PRESSURE_PURPOSE	qué utilidad tiene medir tensión
+PRESSURE_PURPOSE	para qué sirve el control de presión
+PRESSURE_PURPOSE	por qué registrar seguimiento de tensión
+PRESSURE_PURPOSE	por qué checar presión con tensiómetro
+PRESSURE_PURPOSE	para qué medir la tensión arterial
+PRESSURE_PURPOSE	por qué importa tomarse la presión
+PRESSURE_PURPOSE	por qué medirnos la tensión importa
+PRESSURE_PURPOSE	qué nos aporta tomarnos la presión
+PRESSURE_PURPOSE	por qué tomarse la tensión de forma regular
+PRESSURE_REST	por qué importa reposar antes de presión
+PRESSURE_REST	importancia del reposo para medir tensión
+PRESSURE_REST	por qué descansar antes de usar tensiómetro
+PRESSURE_REST	estar tranquilo al medir presión
+PRESSURE_REST	qué relación tiene reposo y presión
+PRESSURE_REST	por qué sentarse en reposo antes de medir
+PRESSURE_REST	descanso previo y lectura arterial
+PRESSURE_REST	por qué medir presión tras descansar
+PRESSURE_REST	qué es el reposo en medición de presión
+PRESSURE_REST	condiciones de descanso al medir tensión
+PRESSURE_REST	por qué no medir presión con prisa
+PRESSURE_REST	reposo y postura en lectura de presión
+PRESSURE_ACTIVITY	actividad física y presión arterial
+PRESSURE_ACTIVITY	cómo influye ejercicio al medir presión
+PRESSURE_ACTIVITY	por qué anotar que caminé antes de presión
+PRESSURE_ACTIVITY	esfuerzo físico y medición de tensión
+PRESSURE_ACTIVITY	qué relación tienen movimiento y presión
+PRESSURE_ACTIVITY	actividad previa al medir tensión
+PRESSURE_ACTIVITY	por qué cambia presión al hacer ejercicio
+PRESSURE_ACTIVITY	conservar contexto de actividad física en presión
+PRESSURE_ACTIVITY	qué significa medir presión después de caminar
+PRESSURE_ACTIVITY	ejercicio y lectura de tensiómetro
+PRESSURE_ACTIVITY	movimiento previo y tensión arterial
+PRESSURE_ACTIVITY	cómo se relaciona actividad con presión
+PRESSURE_ACTIVITY	movimiento físico y lectura arterial
+PRESSURE_ACTIVITY	actividad previa aporta contexto de tensión
+PRESSURE_ACTIVITY	ejercicio previo y medición de presión
+PRESSURE_ACTIVITY	movimiento antes de tomar presión
+PRESSURE_VARIATIONS	por qué varía la presión entre lecturas
+PRESSURE_VARIATIONS	por qué cambia tensión durante el día
+PRESSURE_VARIATIONS	dos presiones distintas qué contexto tienen
+PRESSURE_VARIATIONS	variación entre mediciones de presión
+PRESSURE_VARIATIONS	por qué no se repite la misma presión
+PRESSURE_VARIATIONS	qué influye en cambios de tensión
+PRESSURE_VARIATIONS	por qué fluctúa presión arterial
+PRESSURE_VARIATIONS	lecturas del tensiómetro diferentes
+PRESSURE_VARIATIONS	por qué difieren dos mediciones arteriales
+PRESSURE_VARIATIONS	cambios cotidianos de presión
+PRESSURE_VARIATIONS	tensión no siempre igual
+PRESSURE_VARIATIONS	por qué varían sistólica y diastólica
+WEIGHT_VARIATIONS	por qué cambia el peso de un día a otro
+WEIGHT_VARIATIONS	variaciones diarias del peso
+WEIGHT_VARIATIONS	agua y cambios de kilos cotidianos
+WEIGHT_VARIATIONS	por qué dos pesajes son distintos
+WEIGHT_VARIATIONS	qué influye en fluctuaciones del peso
+WEIGHT_VARIATIONS	por qué no peso igual todos los días
+WEIGHT_VARIATIONS	cambios cotidianos de masa corporal
+WEIGHT_VARIATIONS	peso cambia con líquidos y ropa
+WEIGHT_VARIATIONS	por qué fluctúan los kilogramos
+WEIGHT_VARIATIONS	variación del peso durante el día
+WEIGHT_VARIATIONS	por qué una lectura de báscula difiere
+WEIGHT_VARIATIONS	qué significa cambio cotidiano de peso
+WEIGHT_BMI	qué es el IMC
+WEIGHT_BMI	qué representa índice de masa corporal
+WEIGHT_BMI	relación entre peso y estatura IMC
+WEIGHT_BMI	para qué sirve el IMC numérico
+WEIGHT_BMI	qué quiere decir índice de masa corporal
+WEIGHT_BMI	qué limitaciones tiene el IMC
+WEIGHT_BMI	IMC no distingue músculo y grasa
+WEIGHT_BMI	cómo entender concepto de IMC
+WEIGHT_BMI	por qué aparece IMC junto al peso
+WEIGHT_BMI	qué necesita Bitavida para mostrar IMC
+WEIGHT_BMI	IMC y altura del perfil
+WEIGHT_BMI	qué representa el cálculo de IMC
+WEIGHT_TARGET	qué es peso objetivo indicado por médico
+WEIGHT_TARGET	para qué sirve línea de objetivo en peso
+WEIGHT_TARGET	cómo funciona peso objetivo en Bitavida
+WEIGHT_TARGET	qué significa objetivo actual en gráfica
+WEIGHT_TARGET	quién define peso objetivo
+WEIGHT_TARGET	referencia de peso indicada por equipo de salud
+WEIGHT_TARGET	objetivo de peso no es lectura
+WEIGHT_TARGET	cómo se conserva referencia médica de peso
+WEIGHT_TARGET	por qué el objetivo no se calcula automáticamente
+WEIGHT_TARGET	peso objetivo y registro son diferentes
+WEIGHT_TARGET	qué representa línea discontinua objetivo
+WEIGHT_TARGET	objetivo indicado de kilogramos
+WEIGHT_COMPARISON	cómo comparar registros de peso
+WEIGHT_COMPARISON	comparar peso por fecha real
+WEIGHT_COMPARISON	cómo leer serie de kilogramos
+WEIGHT_COMPARISON	comparación entre pesajes sin interpretar
+WEIGHT_COMPARISON	cómo revisar varias lecturas de peso
+WEIGHT_COMPARISON	qué comparar al revisar historial de peso
+WEIGHT_COMPARISON	cómo organizar pesos de distintas fechas
+WEIGHT_COMPARISON	comparar registros completos de báscula
+WEIGHT_COMPARISON	qué mirar en dos registros de peso
+WEIGHT_COMPARISON	cómo observar serie de pesos
+WEIGHT_COMPARISON	comparar lecturas con sus condiciones
+WEIGHT_COMPARISON	qué significa comparación descriptiva de pesos
+MEASUREMENT_REGISTER	cómo registrar una medición en Bitavida
+MEASUREMENT_REGISTER	dónde capturar un valor medido
+MEASUREMENT_REGISTER	pasos para guardar una lectura
+MEASUREMENT_REGISTER	cómo ingreso dato de una medición
+MEASUREMENT_REGISTER	registrar fecha hora y valor reales
+MEASUREMENT_REGISTER	dónde está registrar medición
+MEASUREMENT_REGISTER	cómo guardar mediciones en la aplicación
+MEASUREMENT_REGISTER	qué datos se necesitan para capturar medición
+MEASUREMENT_REGISTER	cómo hacer un nuevo registro
+MEASUREMENT_REGISTER	cómo introducir una lectura en Bitavida
+MEASUREMENT_REGISTER	pasos de captura de mediciones
+MEASUREMENT_REGISTER	por dónde empiezo a registrar
+MEASUREMENT_FOLLOWUPS	para qué sirven los seguimientos
+MEASUREMENT_FOLLOWUPS	qué es configurar seguimiento
+MEASUREMENT_FOLLOWUPS	diferencia seguimiento y lectura
+MEASUREMENT_FOLLOWUPS	cómo se organiza programación de mediciones
+MEASUREMENT_FOLLOWUPS	para qué programar horarios de medición
+MEASUREMENT_FOLLOWUPS	qué contiene seguimiento indicado
+MEASUREMENT_FOLLOWUPS	configurar frecuencia y horarios
+MEASUREMENT_FOLLOWUPS	qué significa desactivar seguimiento
+MEASUREMENT_FOLLOWUPS	qué es una ventana horaria
+MEASUREMENT_FOLLOWUPS	indicación y programación de seguimiento
+MEASUREMENT_FOLLOWUPS	cómo funciona seguimiento en Bitavida
+MEASUREMENT_FOLLOWUPS	para qué crear un seguimiento
+MEASUREMENT_FOLLOWUPS	para qué sirve configurar programación
+MEASUREMENT_FOLLOWUPS	qué aporta una programación de seguimiento
+MEASUREMENT_FOLLOWUPS	por qué configurar frecuencia y horarios
+MEASUREMENT_FOLLOWUPS	seguimiento organizar horarios confirmados
+MEASUREMENT_STATES	qué significa registrada sin confirmar no realizada
+MEASUREMENT_STATES	diferencia entre estados de medición
+MEASUREMENT_STATES	qué quiere decir sin confirmar
+MEASUREMENT_STATES	no realizada y sin confirmar son diferentes
+MEASUREMENT_STATES	qué significa una medición registrada
+MEASUREMENT_STATES	cómo se decide estado de actividad
+MEASUREMENT_STATES	por qué falta de registro no es omisión
+MEASUREMENT_STATES	registrada requiere lectura real
+MEASUREMENT_STATES	qué estado tiene una medición pendiente
+MEASUREMENT_STATES	qué quiere decir no se realizó
+MEASUREMENT_STATES	estados del calendario de mediciones
+MEASUREMENT_STATES	cómo entender estados del seguimiento
+MEASUREMENT_CHARTS	cómo consultar las gráficas
+MEASUREMENT_CHARTS	qué muestran puntos de una gráfica
+MEASUREMENT_CHARTS	cómo leer gráfica semanal de mediciones
+MEASUREMENT_CHARTS	qué representan promedio mínimo y máximo
+MEASUREMENT_CHARTS	cómo cambiar entre semana y mes en gráfica
+MEASUREMENT_CHARTS	por qué no aparecen puntos sin lectura
+MEASUREMENT_CHARTS	gráfica describe datos sin diagnóstico
+MEASUREMENT_CHARTS	dos series en gráfica de presión
+MEASUREMENT_CHARTS	qué muestra evaluación semanal
+MEASUREMENT_CHARTS	cómo ver tendencias descriptivas en gráficas
+MEASUREMENT_CHARTS	cómo leer ejes y puntos
+MEASUREMENT_CHARTS	qué significan estadísticas del historial
+MEASUREMENT_CHARTS	para qué consultar promedio de gráfica
+MEASUREMENT_CHARTS	qué aporta ver estadísticas descriptivas
+MEASUREMENT_CHARTS	qué información aportan los ejes
+MEASUREMENT_CHARTS	qué aporta consultar gráficas de mediciones
+MEASUREMENT_CONSULTATION	qué información llevar a consulta
+MEASUREMENT_CONSULTATION	cómo preparar registros para hablar con médico
+MEASUREMENT_CONSULTATION	para qué llevar historial a revisión médica
+MEASUREMENT_CONSULTATION	qué datos mostrar al equipo de salud
+MEASUREMENT_CONSULTATION	qué registros ayudan a conversar en consulta
+MEASUREMENT_CONSULTATION	lecturas fechas contextos para consulta
+MEASUREMENT_CONSULTATION	cómo organizar información antes de revisión
+MEASUREMENT_CONSULTATION	qué llevar de mis mediciones al médico
+MEASUREMENT_CONSULTATION	cómo preparar dudas con los registros
+MEASUREMENT_CONSULTATION	qué información compartir en una consulta
+MEASUREMENT_CONSULTATION	registros para conversación con profesional
+MEASUREMENT_CONSULTATION	cómo reunir información de seguimiento para consulta
+MEASUREMENT_FORGOTTEN	qué pasa si olvidé registrar una medición
+MEASUREMENT_FORGOTTEN	se me olvidó anotar la lectura
+MEASUREMENT_FORGOTTEN	puedo registrar más tarde
+MEASUREMENT_FORGOTTEN	medí pero no lo guardé
+MEASUREMENT_FORGOTTEN	qué hacer con una medición olvidada en app
+MEASUREMENT_FORGOTTEN	no recuerdo si registré el dato
+MEASUREMENT_FORGOTTEN	olvidé capturar una lectura
+MEASUREMENT_FORGOTTEN	registro tardío de una medición
+MEASUREMENT_FORGOTTEN	cómo conservar hora real si anoto después
+MEASUREMENT_FORGOTTEN	falta de registro no demuestra olvido de medir
+MEASUREMENT_FORGOTTEN	qué pasa si no anoté una medición
+MEASUREMENT_FORGOTTEN	se me pasó guardar la medición
+MEDICATION_IDENTIFY	Identificar medicamento
+MEDICATION_IDENTIFY	Cómo identifico un medicamento
+MEDICATION_IDENTIFY	Qué significa principio activo
+MEDICATION_IDENTIFY	Cómo encuentro el nombre genérico
+MEDICATION_IDENTIFY	Qué diferencia hay entre nombre genérico y comercial
+MEDICATION_IDENTIFY	Dónde miro el principio activo del medicamento
+MEDICATION_IDENTIFY	El nombre de caja es el principio activo
+MEDICATION_IDENTIFY	Qué ingrediente contiene un medicamento
+MEDICATION_IDENTIFY	Cómo reconozco qué medicamento es
+MEDICATION_IDENTIFY	Explícame la identidad del medicamento
+MEDICATION_IDENTIFY	Cómo se llama la sustancia del medicamento
+MEDICATION_IDENTIFY	Principio activo y marca son lo mismo
+MEDICATION_IDENTIFY	Para qué sirve leer el nombre genérico
+MEDICATION_IDENTIFY	Qué es el ingrediente activo
+MEDICATION_IDENTIFY	Qué nombre busco en la biblioteca de medicamentos
+MEDICATION_IDENTIFY	Cómo distinguir nombres comerciales de genéricos
+MEDICATION_IDENTIFY	Entender el nombre del medicamento
+MEDICATION_IDENTIFY	Qué quiere decir nombre genérico de medicina
+MEDICATION_IDENTIFY	La marca identifica una sustancia
+MEDICATION_IDENTIFY	Información general del medicamento
+MEDICATION_IDENTIFY	Quiero conocer qué es el medicamento
+MEDICATION_IDENTIFY	Qué es este medicamento
+MEDICATION_IDENTIFY	Háblame del medicamento
+MEDICATION_IDENTIFY	Ficha del medicamento
+MEDICATION_IDENTIFY	Nombre genérico de la medicina
+MEDICATION_IDENTIFY	Qué tipo de fármaco es el medicamento
+MEDICATION_PURPOSE	Para qué sirve el medicamento
+MEDICATION_PURPOSE	Cuál es la utilidad del medicamento
+MEDICATION_PURPOSE	Qué usos tiene este medicamento
+MEDICATION_PURPOSE	Para qué se utiliza la medicina
+MEDICATION_PURPOSE	Cuál es la indicación del medicamento
+MEDICATION_PURPOSE	Para qué recetan este fármaco
+MEDICATION_PURPOSE	Qué objetivo tiene el medicamento
+MEDICATION_PURPOSE	En qué se emplea esta medicina
+MEDICATION_PURPOSE	Cuál es el propósito del medicamento
+MEDICATION_PURPOSE	Qué beneficios busca el medicamento
+MEDICATION_PURPOSE	Uso reconocido de un medicamento
+MEDICATION_PURPOSE	Indicaciones del medicamento
+MEDICATION_PURPOSE	Para qué está indicado el medicamento
+MEDICATION_PURPOSE	En qué enfermedades se utiliza la medicina
+MEDICATION_PURPOSE	Cuál es la función terapéutica de este medicamento
+MEDICATION_PURPOSE	Qué se busca al indicar un medicamento
+MEDICATION_PURPOSE	Por qué se prescribe este medicamento
+MEDICATION_PURPOSE	Qué fin tiene el fármaco
+MEDICATION_PURPOSE	A qué se destina el medicamento
+MEDICATION_PURPOSE	El medicamento sirve para la diabetes
+MEDICATION_PURPOSE	Qué papel tiene el medicamento en diabetes
+MEDICATION_PURPOSE	Qué otras indicaciones tiene el medicamento
+MEDICATION_PURPOSE	Cómo entender para qué se usa una medicina
+MEDICATION_PURPOSE	El medicamento tiene usos distintos de diabetes
+MEDICATION_PURPOSE	Para qué sirve esta pastilla
+MEDICATION_PURPOSE	Qué enfermedad trata el medicamento
+MEDICATION_MECHANISM	Cómo funciona el medicamento
+MEDICATION_MECHANISM	Qué hace el medicamento
+MEDICATION_MECHANISM	Cómo actúa la medicina
+MEDICATION_MECHANISM	Cuál es el mecanismo de acción del medicamento
+MEDICATION_MECHANISM	De qué manera funciona este fármaco
+MEDICATION_MECHANISM	Qué proceso cambia el medicamento
+MEDICATION_MECHANISM	Cómo trabaja la medicina en el cuerpo
+MEDICATION_MECHANISM	Explícame el mecanismo del medicamento
+MEDICATION_MECHANISM	Qué efecto produce el medicamento en el organismo
+MEDICATION_MECHANISM	Cómo consigue su efecto el medicamento
+MEDICATION_MECHANISM	Cómo ayuda el medicamento al cuerpo
+MEDICATION_MECHANISM	La acción del medicamento explicada sencillo
+MEDICATION_MECHANISM	Qué hace en el cuerpo la medicina
+MEDICATION_MECHANISM	Por dónde actúa el medicamento
+MEDICATION_MECHANISM	Qué modifica este medicamento
+MEDICATION_MECHANISM	Cómo funciona la sustancia activa
+MEDICATION_MECHANISM	Mecanismo de la medicina
+MEDICATION_MECHANISM	Cómo logra actuar el fármaco
+MEDICATION_MECHANISM	Cómo obra el medicamento
+MEDICATION_MECHANISM	Qué acción tiene el principio activo
+MEDICATION_MECHANISM	Cómo trabaja este medicamento para diabetes
+MEDICATION_MECHANISM	Qué sucede cuando actúa el medicamento
+MEDICATION_MECHANISM	Qué proceso del organismo modifica el fármaco
+MEDICATION_MECHANISM	Cómo se explica el funcionamiento del medicamento
+MEDICATION_MECHANISM	Qué hace exactamente la medicina
+MEDICATION_MECHANISM	Quiero entender cómo actúa este fármaco
+MEDICATION_SIDE_EFFECTS	Qué efectos secundarios tiene el medicamento
+MEDICATION_SIDE_EFFECTS	Cuáles son las reacciones adversas del medicamento
+MEDICATION_SIDE_EFFECTS	Qué molestias puede causar la medicina
+MEDICATION_SIDE_EFFECTS	Efectos no deseados del medicamento
+MEDICATION_SIDE_EFFECTS	Qué efectos adversos frecuentes tiene el fármaco
+MEDICATION_SIDE_EFFECTS	Qué efectos secundarios son comunes con el medicamento
+MEDICATION_SIDE_EFFECTS	Qué señales importantes aparecen en la ficha del medicamento
+MEDICATION_SIDE_EFFECTS	Qué problemas puede ocasionar la medicina
+MEDICATION_SIDE_EFFECTS	Cuáles son los riesgos documentados del medicamento
+MEDICATION_SIDE_EFFECTS	Qué reacciones puede producir el medicamento
+MEDICATION_SIDE_EFFECTS	Por qué algunas medicinas pueden bajar mucho el azúcar
+MEDICATION_SIDE_EFFECTS	Qué medicamentos pueden causar hipoglucemia
+MEDICATION_SIDE_EFFECTS	Por qué la insulina puede bajar mucho la glucosa
+MEDICATION_SIDE_EFFECTS	Reacciones del medicamento
+MEDICATION_SIDE_EFFECTS	Qué se sabe de los efectos secundarios del fármaco
+MEDICATION_SIDE_EFFECTS	Diferencia entre efectos frecuentes y efectos graves del medicamento
+MEDICATION_SIDE_EFFECTS	Qué señales adversas importantes describe la medicina
+MEDICATION_SIDE_EFFECTS	Cuáles son los efectos indeseados de este medicamento
+MEDICATION_SIDE_EFFECTS	Qué efectos del medicamento conviene reconocer
+MEDICATION_SIDE_EFFECTS	Efectos secundarios y reacciones importantes de la medicina
+MEDICATION_SIDE_EFFECTS	Qué problemas no deseados puede producir el medicamento
+MEDICATION_SIDE_EFFECTS	Qué eventos adversos menciona la ficha del medicamento
+MEDICATION_SIDE_EFFECTS	El medicamento puede provocar baja de azúcar
+MEDICATION_SIDE_EFFECTS	Qué es hipoglucemia por medicamentos
+MEDICATION_SIDE_EFFECTS	Qué efectos malos se documentan en la medicina
+MEDICATION_SIDE_EFFECTS	Qué efectos secundarios tiene esta pastilla
+MEDICATION_CONTRAINDICATIONS	Qué contraindicaciones tiene el medicamento
+MEDICATION_CONTRAINDICATIONS	Cuándo está contraindicado un medicamento
+MEDICATION_CONTRAINDICATIONS	Qué significa contraindicación
+MEDICATION_CONTRAINDICATIONS	Cuándo no debe utilizarse este medicamento
+MEDICATION_CONTRAINDICATIONS	Qué situaciones prohíben utilizar la medicina
+MEDICATION_CONTRAINDICATIONS	Contraindicaciones absolutas del medicamento
+MEDICATION_CONTRAINDICATIONS	En qué casos está prohibido el medicamento
+MEDICATION_CONTRAINDICATIONS	Qué restricciones de uso tiene el fármaco
+MEDICATION_CONTRAINDICATIONS	Cuándo no se puede usar la medicina
+MEDICATION_CONTRAINDICATIONS	Contraindicación y efecto secundario son lo mismo
+MEDICATION_CONTRAINDICATIONS	Qué diferencia hay entre contraindicación y precaución
+MEDICATION_CONTRAINDICATIONS	Qué son las contraindicaciones de un medicamento
+MEDICATION_CONTRAINDICATIONS	Qué impide utilizar el medicamento según su ficha
+MEDICATION_CONTRAINDICATIONS	Qué condiciones contraindican esta medicina
+MEDICATION_CONTRAINDICATIONS	Restricciones absolutas de un fármaco
+MEDICATION_CONTRAINDICATIONS	Cuándo el medicamento no debe emplearse
+MEDICATION_CONTRAINDICATIONS	Qué enfermedades figuran como contraindicación del medicamento
+MEDICATION_CONTRAINDICATIONS	Qué indica el apartado contraindicaciones
+MEDICATION_CONTRAINDICATIONS	Quiero leer las contraindicaciones del medicamento
+MEDICATION_CONTRAINDICATIONS	La alergia aparece como contraindicación del medicamento
+MEDICATION_CONTRAINDICATIONS	Cuáles son las prohibiciones de uso del medicamento
+MEDICATION_CONTRAINDICATIONS	Qué quiere decir contraindicado
+MEDICATION_CONTRAINDICATIONS	Qué dice la ficha sobre no utilizar este medicamento
+MEDICATION_CONTRAINDICATIONS	Cuándo se considera contraindicado el fármaco
+MEDICATION_CONTRAINDICATIONS	Contraindicaciones documentadas de esta medicina
+MEDICATION_CONTRAINDICATIONS	En qué situaciones la ficha prohíbe esta medicina
+MEDICATION_PRECAUTIONS	Qué precauciones tiene el medicamento
+MEDICATION_PRECAUTIONS	Qué cuidados se deben consultar sobre el medicamento
+MEDICATION_PRECAUTIONS	Qué advertencias tiene esta medicina
+MEDICATION_PRECAUTIONS	Qué precauciones hay en adultos mayores con el medicamento
+MEDICATION_PRECAUTIONS	Precauciones especiales del medicamento
+MEDICATION_PRECAUTIONS	Qué debe valorar el médico sobre la medicina
+MEDICATION_PRECAUTIONS	Qué cuidados necesita revisar el equipo sobre el fármaco
+MEDICATION_PRECAUTIONS	Qué información debo comentar antes de este medicamento
+MEDICATION_PRECAUTIONS	Qué advertencias importantes figuran para el medicamento
+MEDICATION_PRECAUTIONS	Cuáles son las precauciones de uso del fármaco
+MEDICATION_PRECAUTIONS	Qué se necesita revisar sobre el medicamento en personas mayores
+MEDICATION_PRECAUTIONS	Qué situaciones requieren valoración profesional con esta medicina
+MEDICATION_PRECAUTIONS	Qué advertencias conviene conocer de este medicamento
+MEDICATION_PRECAUTIONS	Precauciones y vigilancia profesional del medicamento
+MEDICATION_PRECAUTIONS	Qué antecedentes debería comentar sobre la medicina
+MEDICATION_PRECAUTIONS	Qué hay que valorar al usar el medicamento en adultos mayores
+MEDICATION_PRECAUTIONS	Qué cuidados profesionales requiere esta medicina
+MEDICATION_PRECAUTIONS	Qué precauciones se documentan para el principio activo
+MEDICATION_PRECAUTIONS	Qué datos del riñón se revisan en la ficha del medicamento
+MEDICATION_PRECAUTIONS	Qué condiciones requieren cautela con el medicamento
+MEDICATION_PRECAUTIONS	Cuándo se debe tener especial cuidado con este fármaco
+MEDICATION_PRECAUTIONS	Qué advierte la ficha del medicamento para personas mayores
+MEDICATION_PRECAUTIONS	Precauciones de esta pastilla
+MEDICATION_PRECAUTIONS	Qué vigilancia se menciona en el medicamento
+MEDICATION_PRECAUTIONS	Qué aspectos especiales se revisan con esta medicina
+MEDICATION_PRECAUTIONS	Qué precaución pide el medicamento
+MEDICATION_INTERACTIONS	Qué interacciones tiene el medicamento
+MEDICATION_INTERACTIONS	Con qué productos interactúa esta medicina
+MEDICATION_INTERACTIONS	Qué es una interacción entre medicamentos
+MEDICATION_INTERACTIONS	Qué combinaciones menciona la ficha del medicamento
+MEDICATION_INTERACTIONS	Qué alimentos interactúan con el medicamento
+MEDICATION_INTERACTIONS	Qué bebidas tienen interacciones con la medicina
+MEDICATION_INTERACTIONS	Interacciones relevantes del medicamento
+MEDICATION_INTERACTIONS	Cómo entender las interacciones del medicamento
+MEDICATION_INTERACTIONS	Qué interacciones conocidas figuran en este fármaco
+MEDICATION_INTERACTIONS	Qué suplementos se mencionan como interacciones de la medicina
+MEDICATION_INTERACTIONS	Qué otros fármacos pueden modificar el efecto del medicamento
+MEDICATION_INTERACTIONS	Qué es una interacción farmacológica
+MEDICATION_INTERACTIONS	Cómo se afectan dos medicamentos entre sí
+MEDICATION_INTERACTIONS	Dónde leo las interacciones del medicamento
+MEDICATION_INTERACTIONS	Qué interacción puede tener un medicamento con alimentos
+MEDICATION_INTERACTIONS	Interacciones del principio activo
+MEDICATION_INTERACTIONS	Qué sustancias pueden cambiar la acción del medicamento
+MEDICATION_INTERACTIONS	Cómo explican las interacciones de esta medicina
+MEDICATION_INTERACTIONS	Qué relaciones con otros medicamentos describe la ficha
+MEDICATION_INTERACTIONS	Qué lista de interacciones incluye el medicamento
+MEDICATION_INTERACTIONS	Hay interacciones documentadas con esta medicina
+MEDICATION_INTERACTIONS	Qué indica el apartado interacciones del medicamento
+MEDICATION_INTERACTIONS	Qué productos aparecen en las interacciones del fármaco
+MEDICATION_INTERACTIONS	Qué significa que dos medicinas interaccionan
+MEDICATION_INTERACTIONS	Interacción con alimentos y bebidas del medicamento
+MEDICATION_INTERACTIONS	Qué información de interacciones tiene esta pastilla
+MEDICATION_FORMULATIONS	Qué presentaciones tiene el medicamento
+MEDICATION_FORMULATIONS	Qué diferencia hay entre medicamento oral e inyectable
+MEDICATION_FORMULATIONS	Qué vías de administración tiene la medicina
+MEDICATION_FORMULATIONS	Qué es una formulación de medicamento
+MEDICATION_FORMULATIONS	Qué diferencia hay entre insulina rápida y lenta
+MEDICATION_FORMULATIONS	En qué se distingue insulina rápida de prolongada
+MEDICATION_FORMULATIONS	Qué es una insulina premezclada
+MEDICATION_FORMULATIONS	Cómo diferenciar presentaciones de insulina
+MEDICATION_FORMULATIONS	Qué significa liberación prolongada del medicamento
+MEDICATION_FORMULATIONS	Qué tipos de insulina hay
+MEDICATION_FORMULATIONS	Qué cambia entre tableta y medicamento inyectable
+MEDICATION_FORMULATIONS	Qué diferencia tiene la formulación oral del medicamento
+MEDICATION_FORMULATIONS	Cómo distinguir la presentación de una medicina
+MEDICATION_FORMULATIONS	Qué significa medicamento de liberación inmediata
+MEDICATION_FORMULATIONS	Cuáles son las formas de presentación del fármaco
+MEDICATION_FORMULATIONS	Cómo se distinguen las insulinas por duración
+MEDICATION_FORMULATIONS	Por qué importa la presentación del medicamento
+MEDICATION_FORMULATIONS	Qué significa la vía del medicamento
+MEDICATION_FORMULATIONS	Qué cambia entre insulina intermedia y rápida
+MEDICATION_FORMULATIONS	Qué es acción prolongada en insulina
+MEDICATION_FORMULATIONS	Qué diferencia tienen las formulaciones del medicamento
+MEDICATION_FORMULATIONS	Cómo distinguir pastilla y solución del medicamento
+MEDICATION_FORMULATIONS	Presentaciones verificadas del principio activo
+MEDICATION_FORMULATIONS	Qué significa premezcla de insulinas
+MEDICATION_FORMULATIONS	Qué es una pluma de insulina
+MEDICATION_FORMULATIONS	Qué significa acción corta en insulina
+MEDICATION_CONSULTATION	Qué preguntarle al médico sobre el medicamento
+MEDICATION_CONSULTATION	Qué dudas llevo a consulta sobre esta medicina
+MEDICATION_CONSULTATION	Qué preguntas puedo hacer en farmacia sobre el medicamento
+MEDICATION_CONSULTATION	Qué debo preguntar al doctor de esta medicina
+MEDICATION_CONSULTATION	Cómo preparo una consulta sobre el medicamento
+MEDICATION_CONSULTATION	Qué preguntas útiles hay sobre el medicamento
+MEDICATION_CONSULTATION	Qué cosas debo aclarar con el médico del medicamento
+MEDICATION_CONSULTATION	Cómo conversar con el profesional sobre esta medicina
+MEDICATION_CONSULTATION	Qué información conviene preguntar sobre el fármaco
+MEDICATION_CONSULTATION	Qué dudas anotar sobre el medicamento para la consulta
+MEDICATION_CONSULTATION	Qué debo preguntarle al médico sobre este medicamento
+MEDICATION_CONSULTATION	Preguntas para el médico sobre la medicina
+MEDICATION_CONSULTATION	Qué conviene confirmar en consulta del medicamento
+MEDICATION_CONSULTATION	Qué puedo pedir que me explique el doctor del medicamento
+MEDICATION_CONSULTATION	Qué cuestiones revisar con farmacia sobre esta medicina
+MEDICATION_CONSULTATION	Cómo organizar dudas del medicamento
+MEDICATION_CONSULTATION	Qué pregunto en la revisión del tratamiento
+MEDICATION_CONSULTATION	Qué información llevo a consulta de medicamentos
+MEDICATION_CONSULTATION	Qué dudas del medicamento puede aclarar el médico
+MEDICATION_CONSULTATION	Qué preguntas preparo para el doctor sobre el fármaco
+MEDICATION_CONSULTATION	Cómo preparar preguntas de esta pastilla para consulta
+MEDICATION_CONSULTATION	Qué se puede conversar con el equipo sobre la medicina
+MEDICATION_CONSULTATION	Qué datos del medicamento debo aclarar en la próxima consulta
+MEDICATION_CONSULTATION	Qué preguntas sobre el principio activo ayudan en consulta
+MEDICATION_CONSULTATION	Qué puedo preguntar al farmacéutico del medicamento
+MEDICATION_CONSULTATION	Cómo anoto mis dudas sobre la medicina
+MEDICATION_APP_USE	Cómo registro un medicamento en Bitavida
+MEDICATION_APP_USE	Cómo agregar medicamento en Bitavida
+MEDICATION_APP_USE	Dónde consulto mis medicamentos registrados
+MEDICATION_APP_USE	Para qué sirve guías y ayuda en medicamentos
+MEDICATION_APP_USE	Cómo abro una ficha desde un medicamento registrado
+MEDICATION_APP_USE	Cómo consulto la biblioteca de medicamentos de Bitavida
+MEDICATION_APP_USE	Dónde está el registro de mis tomas
+MEDICATION_APP_USE	Qué hace agregar medicamento en la aplicación
+MEDICATION_APP_USE	Cómo volver a la lista de medicamentos
+MEDICATION_APP_USE	Bitavida cambia mis indicaciones al consultar la biblioteca
+MEDICATION_APP_USE	Cómo consultar un medicamento sin crear tratamiento
+MEDICATION_APP_USE	Cómo entro a guías desde medicamentos
+MEDICATION_APP_USE	Qué hace el botón de ayuda en medicamentos
+MEDICATION_APP_USE	Dónde encuentro la ficha educativa en Bitavida
+MEDICATION_APP_USE	Qué diferencia hay entre registro y biblioteca de medicamentos
+MEDICATION_APP_USE	Cómo se abre la información educativa del medicamento registrado
+MEDICATION_APP_USE	Consultar la biblioteca confirma una toma
+MEDICATION_APP_USE	Cómo encuentro guías de medicamentos en la aplicación
+MEDICATION_APP_USE	La biblioteca modifica el plan de medicamentos
+MEDICATION_APP_USE	Dónde veo las guías farmacológicas de Bitavida
+MEDICATION_APP_USE	Cómo buscar una medicina en la biblioteca de Bitavida
+MEDICATION_APP_USE	Qué hago para leer la ayuda de medicamentos
+MEDICATION_APP_USE	Cómo entro a la biblioteca farmacológica
+MEDICATION_APP_USE	Cómo funciona la ayuda educativa en Medicamentos
+MEDICATION_APP_USE	Para qué sirve la botonera de Medicamentos
+MEDICATION_APP_USE	Cómo anoto un medicamento en la app
+MEDICATION_IDENTIFY	Cómo se reconoce la familia farmacológica del principio activo
+MEDICATION_IDENTIFY	A qué grupo de fármacos pertenece esta sustancia
+MEDICATION_IDENTIFY	Necesito identificar la clase farmacológica de la medicina
+MEDICATION_IDENTIFY	Qué datos permiten reconocer el nombre de la sustancia activa
+MEDICATION_IDENTIFY	Cómo leer el ingrediente del envase de una medicina
+MEDICATION_IDENTIFY	Familia farmacológica y denominación genérica de la sustancia
+MEDICATION_IDENTIFY	Cuáles nombres alternativos tiene el principio activo
+MEDICATION_IDENTIFY	Cómo saber cuál es el ingrediente genérico que contiene
+MEDICATION_IDENTIFY	Quiero encontrar el grupo al que pertenece la medicina
+MEDICATION_IDENTIFY	Explícame qué quiere decir la clase del fármaco
+MEDICATION_IDENTIFY	Nombre de la sustancia y grupo farmacológico
+MEDICATION_IDENTIFY	Qué información identifica la composición de una medicina
+MEDICATION_IDENTIFY	Cómo distinguir una familia de medicamentos de una marca
+MEDICATION_IDENTIFY	Necesito conocer la clasificación farmacológica de esta sustancia
+MEDICATION_IDENTIFY	Qué término genérico corresponde al ingrediente activo
+MEDICATION_IDENTIFY	Qué significa la denominación del principio activo
+MEDICATION_IDENTIFY	Cómo se agrupan los medicamentos por familia
+MEDICATION_IDENTIFY	Aprender el nombre y la categoría de una medicina
+MEDICATION_IDENTIFY	Clasificación y nombre genérico de un medicamento
+MEDICATION_IDENTIFY	Qué se entiende por familia farmacológica
+MEDICATION_PURPOSE	Quiero comprender la finalidad terapéutica del medicamento
+MEDICATION_PURPOSE	Para cuál problema está autorizado este medicamento
+MEDICATION_PURPOSE	Qué objetivo reconocido cumple la medicina
+MEDICATION_PURPOSE	En qué afecciones se indica el principio activo
+MEDICATION_PURPOSE	Cuál es el uso aprobado de esta sustancia
+MEDICATION_PURPOSE	Necesito entender las indicaciones de la medicina
+MEDICATION_PURPOSE	Qué finalidad tiene este principio activo para diabetes
+MEDICATION_PURPOSE	Qué condición se pretende atender con este medicamento
+MEDICATION_PURPOSE	Usos documentados del fármaco fuera de la diabetes
+MEDICATION_PURPOSE	Cuáles indicaciones reconoce la ficha del fármaco
+MEDICATION_PURPOSE	Qué utilidad clínica tiene la medicina según su documentación
+MEDICATION_PURPOSE	El propósito de utilizar este principio activo
+MEDICATION_PURPOSE	Para qué situaciones se prescribe la sustancia
+MEDICATION_PURPOSE	Qué uso tiene autorizado este fármaco en la ficha
+MEDICATION_PURPOSE	Explicación sencilla de los usos del medicamento
+MEDICATION_PURPOSE	En qué enfermedades tiene una indicación esta sustancia
+MEDICATION_PURPOSE	Qué papel se busca al prescribir la medicina
+MEDICATION_PURPOSE	Qué usos contempla la información oficial del fármaco
+MEDICATION_PURPOSE	Qué objetivo se persigue con este principio activo
+MEDICATION_PURPOSE	Para qué problemas se indica la medicina
+OBSERVATION_GENERAL	por qué es importante observar cambios de salud
+OBSERVATION_GENERAL	qué pasa si ignoramos cambios en su salud
+OBSERVATION_GENERAL	para qué sirve registrar observaciones
+OBSERVATION_GENERAL	por qué conviene estar atento a señales nuevas
+OBSERVATION_GENERAL	qué riesgos hay si no atendemos un cambio
+OBSERVATION_GENERAL	cómo ayuda observar al adulto mayor
+OBSERVATION_GENERAL	qué señales no conviene ignorar
+OBSERVATION_GENERAL	importancia de pequeños cambios de salud
+OBSERVATION_APP_USE	cómo funciona el módulo observaciones
+OBSERVATION_APP_USE	qué puedo registrar en observaciones
+OBSERVATION_APP_USE	diferencia entre revisión programada y espontánea
+OBSERVATION_APP_USE	cómo usar historial de observaciones
+OBSERVATION_APP_USE	para qué sirve seguimiento de observaciones
+OBSERVATION_APP_USE	qué significa sin confirmar en observaciones
+OBS_001_FEET_REVIEW	por qué revisar los pies
+OBS_001_FEET_REVIEW	porque tengo que checar los pies
+OBS_001_FEET_REVIEW	para que sirve ver los pies
+OBS_001_FEET_REVIEW	q pasa si no reviso los pies
+OBS_001_FEET_REVIEW	por qe es importante revisar pies
+OBS_001_FEET_REVIEW	qué debo observar al revisar ambos pies
+OBS_002_WOUNDS	qué pasa si una herida no se atiende
+OBS_002_WOUNDS	por qué registrar una ampolla
+OBS_002_WOUNDS	herida que no cierra por qué importa
+OBS_002_WOUNDS	qué observar en una rozadura
+OBS_002_WOUNDS	por qué cuidar una cortada del pie
+OBS_002_WOUNDS	riesgo de ignorar una llaga
+OBS_003_CALLOUSES_NAILS	por qué observar callos y grietas
+OBS_003_CALLOUSES_NAILS	qué importa de una uña diferente
+OBS_003_CALLOUSES_NAILS	qué registrar de talones agrietados
+OBS_003_CALLOUSES_NAILS	cambios en uñas de los pies por qué importan
+OBS_003_CALLOUSES_NAILS	qué observar en piel endurecida del pie
+OBS_003_CALLOUSES_NAILS	por qué atender una grieta del pie
+OBS_004_SWELLING	qué puede significar pies hinchados
+OBS_004_SWELLING	por qué observar tobillos hinchados
+OBS_004_SWELLING	qué registrar de una pierna hinchada
+OBS_004_SWELLING	importa que un pie esté más hinchado
+OBS_004_SWELLING	q significa hinchazón de pies
+OBS_004_SWELLING	cuándo consultar por hinchazón de piernas
+OBS_005_COLOR_TEMPERATURE	por qué un pie se ve morado
+OBS_005_COLOR_TEMPERATURE	qué observar si la piel está roja
+OBS_005_COLOR_TEMPERATURE	importa que un pie esté más frío
+OBS_005_COLOR_TEMPERATURE	cambio de temperatura en la piel
+OBS_005_COLOR_TEMPERATURE	qué registrar de piel pálida
+OBS_005_COLOR_TEMPERATURE	por qué observar color diferente en el pie
+OBS_006_DIZZINESS	por qué registrar un mareo
+OBS_006_DIZZINESS	qué podría significar sentirse a punto de desmayar
+OBS_006_DIZZINESS	qué observar cuando todo le da vueltas
+OBS_006_DIZZINESS	mareos repetidos por qué importan
+OBS_006_DIZZINESS	qué anotar si perdió el equilibrio
+OBS_006_DIZZINESS	cuándo consultar por sensación de desmayo
+OBS_007_TREMOR_SWEATING	por qué observar temblor y sudor frío
+OBS_007_TREMOR_SWEATING	qué puede significar sudoración repentina
+OBS_007_TREMOR_SWEATING	qué registrar cuando está temblando
+OBS_007_TREMOR_SWEATING	importa un episodio de sudor frío
+OBS_007_TREMOR_SWEATING	qué observar durante un temblor repentino
+OBS_007_TREMOR_SWEATING	cuándo buscar ayuda por temblor y sudor
+OBS_008_WEAKNESS_FATIGUE	por qué observar cansancio inusual
+OBS_008_WEAKNESS_FATIGUE	qué puede significar que esté muy débil
+OBS_008_WEAKNESS_FATIGUE	qué registrar si no tiene fuerza
+OBS_008_WEAKNESS_FATIGUE	cansancio diferente a lo normal
+OBS_008_WEAKNESS_FATIGUE	por qué importa la fatiga nueva
+OBS_008_WEAKNESS_FATIGUE	cuándo consultar por debilidad
+OBS_009_PAIN	por qué registrar un dolor nuevo
+OBS_009_PAIN	qué observar en dolor persistente
+OBS_009_PAIN	qué puede significar un dolor diferente
+OBS_009_PAIN	qué detalles anotar del dolor
+OBS_009_PAIN	por qué importa un dolor que no se quita
+OBS_009_PAIN	cuándo consultar por dolor nuevo
+OBS_010_THIRST_DRY_MOUTH	qué significa que tenga mucha sed
+OBS_010_THIRST_DRY_MOUTH	por qué observar boca seca
+OBS_010_THIRST_DRY_MOUTH	mucha sed por qué importa
+OBS_010_THIRST_DRY_MOUTH	qué registrar si pide agua seguido
+OBS_010_THIRST_DRY_MOUTH	q puede significar sed excesiva
+OBS_010_THIRST_DRY_MOUTH	cuándo consultar por resequedad de boca
+OBS_011_FREQUENT_URINATION	qué significa ir mucho al baño
+OBS_011_FREQUENT_URINATION	por qué orina más de lo habitual
+OBS_011_FREQUENT_URINATION	qué registrar si se levanta a orinar de noche
+OBS_011_FREQUENT_URINATION	orina frecuente por qué importa
+OBS_011_FREQUENT_URINATION	q pasa si va muchas veces al baño
+OBS_011_FREQUENT_URINATION	cuándo consultar por orinar mucho
+OBS_012_URINATION_DIFFICULTY	por qué observar escapes de orina
+OBS_012_URINATION_DIFFICULTY	qué significa que le cueste orinar
+OBS_012_URINATION_DIFFICULTY	qué registrar de goteo de orina
+OBS_012_URINATION_DIFFICULTY	dificultad para comenzar a orinar
+OBS_012_URINATION_DIFFICULTY	por qué importa no poder vaciar la vejiga
+OBS_012_URINATION_DIFFICULTY	cuándo consultar por incontinencia
+OBS_013_PAINFUL_URINATION	por qué importa ardor al orinar
+OBS_013_PAINFUL_URINATION	qué registrar si le duele al ir al baño
+OBS_013_PAINFUL_URINATION	qué puede significar molestia al orinar
+OBS_013_PAINFUL_URINATION	ardor de orina cuándo consultar
+OBS_013_PAINFUL_URINATION	qué observar con dolor urinario
+OBS_013_PAINFUL_URINATION	por qué no ignorar incomodidad al orinar
+OBS_014_NAUSEA_VOMITING	por qué registrar náuseas y vómitos
+OBS_014_NAUSEA_VOMITING	qué observar si vomita varias veces
+OBS_014_NAUSEA_VOMITING	qué puede pasar si no retiene líquidos
+OBS_014_NAUSEA_VOMITING	qué anotar de un vómito
+OBS_014_NAUSEA_VOMITING	náusea persistente por qué importa
+OBS_014_NAUSEA_VOMITING	cuándo consultar por vómitos
+OBS_015_BOWEL_CHANGES	por qué observar cambios al evacuar
+OBS_015_BOWEL_CHANGES	qué registrar de diarrea o estreñimiento
+OBS_015_BOWEL_CHANGES	evacuaciones diferentes por qué importan
+OBS_015_BOWEL_CHANGES	qué puede significar cambio en heces
+OBS_015_BOWEL_CHANGES	cuándo consultar por diarrea
+OBS_015_BOWEL_CHANGES	qué observar si no puede evacuar
+OBS_016_VISION	por qué observar visión borrosa
+OBS_016_VISION	qué significa que no pueda enfocar
+OBS_016_VISION	cambios de vista por qué importan
+OBS_016_VISION	qué registrar si ve diferente
+OBS_016_VISION	q pasa si pierde visión de repente
+OBS_016_VISION	cuándo consultar por cambio en los ojos
+OBS_017_TINGLING_NUMBNESS	por qué se le duermen los pies
+OBS_017_TINGLING_NUMBNESS	qué significa hormigueo en manos
+OBS_017_TINGLING_NUMBNESS	por qué observar pérdida de sensibilidad
+OBS_017_TINGLING_NUMBNESS	qué registrar de ardor en piernas
+OBS_017_TINGLING_NUMBNESS	entumecimiento por qué importa
+OBS_017_TINGLING_NUMBNESS	cuándo consultar por hormigueo
+OBS_018_APPETITE	por qué observar cambios en apetito
+OBS_018_APPETITE	qué significa que no quiera comer
+OBS_018_APPETITE	qué registrar si come mucho menos
+OBS_018_APPETITE	pérdida de interés en comida
+OBS_018_APPETITE	apetito diferente por qué importa
+OBS_018_APPETITE	cuándo consultar si no come
+OBS_019_SLEEP	por qué observar cambios en sueño
+OBS_019_SLEEP	qué registrar si despierta muchas veces
+OBS_019_SLEEP	qué significa dormir mucho más
+OBS_019_SLEEP	sueño diferente por qué importa
+OBS_019_SLEEP	por qué no descansa como antes
+OBS_019_SLEEP	cuándo consultar por cambio de sueño
+OBS_020_CONFUSION_MEMORY	por qué observar confusión repentina
+OBS_020_CONFUSION_MEMORY	qué registrar si está desorientado
+OBS_020_CONFUSION_MEMORY	problemas de memoria por qué importan
+OBS_020_CONFUSION_MEMORY	qué significa que no reconozca cosas
+OBS_020_CONFUSION_MEMORY	q hacer si está muy confundido
+OBS_020_CONFUSION_MEMORY	cuándo buscar ayuda por confusión
+OBS_021_MOOD_BEHAVIOR	por qué fijarme si cambia su comportamiento
+OBS_021_MOOD_BEHAVIOR	qué registrar de un cambio de ánimo
+OBS_021_MOOD_BEHAVIOR	qué significa estar más irritable
+OBS_021_MOOD_BEHAVIOR	comportamiento diferente por qué importa
+OBS_021_MOOD_BEHAVIOR	qué observar si está muy triste
+OBS_021_MOOD_BEHAVIOR	cuándo consultar por cambio de conducta
+OBS_022_FALL	por qué debo registrar una caída
+OBS_022_FALL	qué observar después de un golpe
+OBS_022_FALL	qué pasa si se cayó y pegó la cabeza
+OBS_022_FALL	caídas repetidas por qué importan
+OBS_022_FALL	qué detalles anotar de una caída
+OBS_022_FALL	cuándo buscar atención tras una caída
+OBS_023_WALKING_BALANCE	por qué importa dificultad para caminar
+OBS_023_WALKING_BALANCE	qué observar si pierde equilibrio
+OBS_023_WALKING_BALANCE	qué registrar cuando se tambalea
+OBS_023_WALKING_BALANCE	problemas de movilidad por qué importan
+OBS_023_WALKING_BALANCE	qué significa caminar diferente
+OBS_023_WALKING_BALANCE	cuándo consultar por inestabilidad
+OBS_024_FEVER_CHILLS	por qué registrar fiebre o escalofríos
+OBS_024_FEVER_CHILLS	qué observar si se siente muy caliente
+OBS_024_FEVER_CHILLS	escalofríos por qué importan
+OBS_024_FEVER_CHILLS	qué anotar sin inventar temperatura
+OBS_024_FEVER_CHILLS	qué puede significar sensación de fiebre
+OBS_024_FEVER_CHILLS	cuándo consultar por fiebre
+OBS_025_SKIN_CHANGES	por qué observar cambios en la piel
+OBS_025_SKIN_CHANGES	qué registrar de una irritación
+OBS_025_SKIN_CHANGES	enrojecimiento del cuerpo por qué importa
+OBS_025_SKIN_CHANGES	qué significa secreción en la piel
+OBS_025_SKIN_CHANGES	qué observar en una roncha nueva
+OBS_025_SKIN_CHANGES	cuándo consultar por lesión de piel
+OBS_026_MOUTH_GUMS	por qué observar boca y encías
+OBS_026_MOUTH_GUMS	qué registrar si le sangra la encía
+OBS_026_MOUTH_GUMS	dolor en la boca por qué importa
+OBS_026_MOUTH_GUMS	qué significa encía inflamada
+OBS_026_MOUTH_GUMS	qué observar si le cuesta masticar
+OBS_026_MOUTH_GUMS	cuándo consultar por cambios en la boca
+OBS_027_OTHER_CHANGE	cómo describir otro cambio observado
+OBS_027_OTHER_CHANGE	qué registrar si no encuentro una categoría
+OBS_027_OTHER_CHANGE	para qué sirve otro cambio observado
+OBS_027_OTHER_CHANGE	cómo anotar un cambio diferente
+OBS_027_OTHER_CHANGE	otro cambio de salud qué detalles poner
+OBS_027_OTHER_CHANGE	puedo documentar algo que no está en la lista
+OBS_001_FEET_REVIEW	para qué inspeccionar los pies todos los días
+OBS_002_WOUNDS	riesgo de dejar una ampolla sin atención
+OBS_006_DIZZINESS	qué datos anotar cuando la persona se siente mareada
+OBS_008_WEAKNESS_FATIGUE	qué observar si se siente sin energía
+OBS_008_WEAKNESS_FATIGUE	está agotado y con muy poca energía
+OBS_009_PAIN	para qué documentar una molestia nueva
+OBS_010_THIRST_DRY_MOUTH	qué significa pedir agua más seguido
+OBS_012_URINATION_DIFFICULTY	qué observar si hay goteo y cuesta iniciar
+OBS_014_NAUSEA_VOMITING	qué registrar cuando devuelve la comida
+OBS_015_BOWEL_CHANGES	qué detalles sirven ante estreñimiento
+OBS_016_VISION	qué pasa si de pronto ve borroso
+OBS_019_SLEEP	qué registrar si se despierta toda la noche
+OBS_020_CONFUSION_MEMORY	por qué importa que parezca desorientado
+OBS_021_MOOD_BEHAVIOR	qué anotar si se comporta distinto
+OBS_021_MOOD_BEHAVIOR	se está comportando diferente a lo habitual
+OBS_022_FALL	por qué importa que últimamente se caiga
+OBS_022_FALL	qué información guardar si se resbaló y cayó
+OBS_027_OTHER_CHANGE	cómo documentar una señal que no aparece en las opciones
+OBS_003_CALLOUSES_NAILS	para qué mirar grietas y uñas de los pies
+OBS_003_CALLOUSES_NAILS	por qué revisar juntas las grietas y las uñas
+OBS_009_PAIN	para qué documentar una molestia que continúa
+OBS_009_PAIN	dolor o molestia nueva que sigue presente
+__UNKNOWN__	qué clima hará mañana
+__UNKNOWN__	cómo comprar un tensiómetro
+__UNKNOWN__	qué marca de báscula recomiendas
+__UNKNOWN__	cómo reparar el glucómetro
+__UNKNOWN__	cómo cambiar pila del medidor
+__UNKNOWN__	quiero una receta de cocina
+__UNKNOWN__	resultado de laboratorio colesterol
+__UNKNOWN__	cómo guardar citas médicas
+__UNKNOWN__	qué temperatura tengo
+__UNKNOWN__	qué canción escuchar
+__UNKNOWN__	traduce una frase
+__UNKNOWN__	recuperar contraseña de correo
+__UNKNOWN__	cómo registrar sueño en calendario
+__UNKNOWN__	qué estudio diagnostica enfermedad
+__UNKNOWN__	cuánto cuesta un glucómetro
+__UNKNOWN__	pedir una cita del seguro
+__UNKNOWN__	cómo compartir fotografías
+__UNKNOWN__	recomiéndame una película
+__UNKNOWN__	cómo medir oxígeno con celular
+__UNKNOWN__	quiero saber mi diagnóstico
+__UNKNOWN__	qué comida es mejor para diabetes
+__UNKNOWN__	cómo recuperar archivos
+__UNKNOWN__	qué precio tiene báscula
+__UNKNOWN__	cómo calibrar aparato de presión
+__UNKNOWN__	glucosa presión peso
+__UNKNOWN__	hola
+__UNKNOWN__	ayuda
+__UNKNOWN__	mediciones
+__UNKNOWN__	qué es esto
+__UNKNOWN__	qué medicamento debo tomar
+GLUCOSE_FASTING	Ayuno de la noche y lectura al levantarse
+GLUCOSE_FASTING	Por qué importa distinguir que no desayuné
+GLUCOSE_FASTING	Cómo se entiende medir glucemia sin alimentos previos
+GLUCOSE_FASTING	Qué relación tiene haber cenado con decir ayunas
+GLUCOSE_CONTEXT	Por qué anotar si ya había comido al medir
+GLUCOSE_CONTEXT	La glucosa antes de la comida y después son contextos distintos
+GLUCOSE_CONTEXT	Quiero entender el momento real que acompaña al azúcar
+GLUCOSE_CONTEXT	Qué información de alimentos acompaña a una lectura capilar
+GLUCOSE_UNITS	Qué expresa la unidad que termina en dL
+GLUCOSE_UNITS	Para qué escribir mgdl junto a la lectura
+GLUCOSE_UNITS	Quiero entender la concentración en miligramos
+GLUCOSE_UNITS	Cómo se lee la abreviación de miligramos por decilitro
+PRESSURE_NUMBERS	Me confunden las cifras superior e inferior de tensión
+PRESSURE_NUMBERS	Cuál de los números del baumanómetro es la sistólica
+PRESSURE_NUMBERS	La cifra diastólica y la sistólica qué nombran
+PRESSURE_NUMBERS	En presión por qué aparece una pareja de cifras
+PRESSURE_RECORDING	En qué lugar apunto el pulso y las dos presiones
+PRESSURE_RECORDING	Qué información debo capturar del baumanómetro
+PRESSURE_RECORDING	Cómo transcribo ambas cifras de tensión a Bitavida
+PRESSURE_RECORDING	Por qué al guardar presión no se separan los dos valores
+WEIGHT_TRACKING	Qué gano dejando anotado mi peso cada vez
+WEIGHT_TRACKING	Hay algún motivo para llevar un control de pesajes
+WEIGHT_TRACKING	Para qué voy guardando los kilos de la báscula
+WEIGHT_TRACKING	Por qué pesa tanto llevar el registro corporal
+WEIGHT_CONDITIONS	Qué importancia tiene no cambiar de balanza
+WEIGHT_CONDITIONS	Qué aporta que todos los pesajes sean con ropa parecida
+WEIGHT_CONDITIONS	Básculas diferentes hacen difícil comparar pesajes
+WEIGHT_CONDITIONS	Por qué mantener la misma hora y equipo al pesar
+MEASUREMENT_REMINDERS	De qué sirve que el teléfono me avise una medición
+MEASUREMENT_REMINDERS	Si quito la notificación ya quedó registrada la actividad
+MEASUREMENT_REMINDERS	Quiero entender los avisos que manda mi celular
+MEASUREMENT_REMINDERS	Qué hace el recordatorio cuando suena una alarma
+MEASUREMENT_HISTORY	Por dónde consulto lo que medí el mes anterior
+MEASUREMENT_HISTORY	En qué pantalla encuentro las lecturas más viejas
+MEASUREMENT_HISTORY	Cómo veo todos los registros de una fecha anterior
+MEASUREMENT_HISTORY	Quiero abrir el calendario donde quedan las mediciones
+MEASUREMENT_CORRECTIONS	Apunté un valor equivocado y necesito corregirlo
+MEASUREMENT_CORRECTIONS	Cómo enmiendo la fecha de una lectura guardada
+MEASUREMENT_CORRECTIONS	Por qué Bitavida conserva lo que escribí antes de editar
+MEASUREMENT_CORRECTIONS	Dónde se revisan las versiones de una corrección
+GLUCOSE_WHAT	Qué es esa azúcar que tenemos en la sangre
+GLUCOSE_WHAT	Glucemia significa lo mismo que glucosa sanguínea
+GLUCOSE_WHAT	Quiero saber el concepto de azúcar capilar
+GLUCOSE_WHAT	De qué hablamos cuando decimos glucosa del cuerpo
+GLUCOSE_PURPOSE	Cuál es la razón de estar checando el azúcar
+GLUCOSE_PURPOSE	Para qué nos tomamos la glucosa con el medidor
+GLUCOSE_PURPOSE	Qué gano al revisar mi azúcar de manera organizada
+GLUCOSE_PURPOSE	Por qué es útil medirnos glucemia
+GLUCOSE_VARIATIONS	La glucosa me da cifras diferentes en distintos momentos por qué
+GLUCOSE_VARIATIONS	Qué circunstancias hacen variar lecturas capilares
+GLUCOSE_VARIATIONS	Por qué el azúcar no marca exactamente lo mismo siempre
+GLUCOSE_VARIATIONS	Cambios de glucemia entre ocasiones qué representan
+GLUCOSE_INDICATORS	El glucómetro escribió HI qué representa esa letra
+GLUCOSE_INDICATORS	LO en la pantalla qué significa como mensaje
+GLUCOSE_INDICATORS	Por qué a veces el medidor capilar da letras y no cifras
+GLUCOSE_INDICATORS	HI o LO son un valor o un mensaje del aparato
+GLUCOSE_PLANNED	Qué cambia si capturo una glucosa extra fuera del plan
+GLUCOSE_PLANNED	Qué distingue la lectura que hice aparte de la programada
+GLUCOSE_PLANNED	Puedo entender qué quiere decir medición independiente
+GLUCOSE_PLANNED	Qué diferencia hay entre la glucosa del horario y otra adicional
+PRESSURE_WHAT	Qué quiere decir tener presión en las arterias
+PRESSURE_WHAT	Qué es la tensión de la sangre dentro del cuerpo
+PRESSURE_WHAT	Quiero aprender el concepto de tensión sanguínea
+PRESSURE_WHAT	Cómo se define la fuerza que ejerce la sangre
+PRESSURE_PURPOSE	Qué sentido tiene tomarnos la tensión
+PRESSURE_PURPOSE	Hay algún motivo para checar la presión
+PRESSURE_PURPOSE	Checar la presión para qué ayuda
+PRESSURE_PURPOSE	Qué ganamos al medirnos la tensión
+PRESSURE_REST	Para qué estar quieto y descansado al checar presión
+PRESSURE_REST	Qué tiene de importante el descanso previo a una lectura arterial
+PRESSURE_REST	Por qué hacerlo con calma antes de usar el baumanómetro
+PRESSURE_REST	Reposar influye en cómo se toma la tensión
+PRESSURE_ACTIVITY	Haber caminado cambia las condiciones de una toma de presión
+PRESSURE_ACTIVITY	Qué aporta anotar esfuerzo reciente al checar tensión
+PRESSURE_ACTIVITY	La actividad antes de usar baumanómetro importa
+PRESSURE_ACTIVITY	Qué relación guarda el ejercicio con una lectura arterial
+PRESSURE_VARIATIONS	Por qué al repetir la tensión no sale idéntica
+PRESSURE_VARIATIONS	Cambia la lectura del baumanómetro entre ocasiones por qué
+PRESSURE_VARIATIONS	Qué influye para que dos presiones difieran
+PRESSURE_VARIATIONS	Cómo entender las variaciones de cifras arteriales entre momentos
+WEIGHT_VARIATIONS	Por qué la balanza no marca los mismos kilos todos los días
+WEIGHT_VARIATIONS	Qué causa que el peso corporal varíe durante la jornada
+WEIGHT_VARIATIONS	Cómo se relacionan líquidos y variaciones de peso
+WEIGHT_VARIATIONS	Es posible que dos días de pesaje den números distintos
+WEIGHT_BMI	Qué representa la relación entre kilos y talla
+WEIGHT_BMI	Qué quiere decir el cálculo llamado índice corporal
+WEIGHT_BMI	Qué información reúne el IMC que veo en Peso
+WEIGHT_BMI	Por qué el índice de masa corporal no resume toda la salud
+WEIGHT_TARGET	La meta de kilos quién debe indicarla
+WEIGHT_TARGET	Qué es la referencia médica de peso en la gráfica
+WEIGHT_TARGET	El objetivo del médico es lo mismo que un peso medido
+WEIGHT_TARGET	Qué significa la raya del objetivo actual de peso
+WEIGHT_COMPARISON	Qué datos revisar para comparar pesajes de fechas distintas
+WEIGHT_COMPARISON	Cómo poner en contexto dos registros de kilos
+WEIGHT_COMPARISON	De qué manera reviso varias lecturas de báscula juntas
+WEIGHT_COMPARISON	Quiero entender cómo comparar el peso que anoté antes y ahora
+MEASUREMENT_REGISTER	Cómo empiezo a ingresar una nueva lectura medida
+MEASUREMENT_REGISTER	Qué se necesita para guardar un resultado del aparato
+MEASUREMENT_REGISTER	Cuál es el proceso de captura de un dato real
+MEASUREMENT_REGISTER	Por dónde anoto fecha hora y valor de una medición
+MEASUREMENT_FOLLOWUPS	Qué gano al dejar un seguimiento configurado
+MEASUREMENT_FOLLOWUPS	Qué significa tener frecuencia y horarios de medición
+MEASUREMENT_FOLLOWUPS	Para qué sirve organizar una indicación en el seguimiento
+MEASUREMENT_FOLLOWUPS	Cómo se distingue configurar un plan de registrar un resultado
+MEASUREMENT_STATES	Por qué una actividad está sin confirmar y otra no realizada
+MEASUREMENT_STATES	Qué diferencia lo registrado de lo no confirmado
+MEASUREMENT_STATES	Qué nos dice el estado de una ocurrencia
+MEASUREMENT_STATES	Cómo entender los nombres de los estados del calendario
+MEASUREMENT_CHARTS	Qué representan los puntitos que aparecen en el gráfico
+MEASUREMENT_CHARTS	Por qué las gráficas separan las series de presión
+MEASUREMENT_CHARTS	Cómo se consultan los ejes y los resúmenes semanales
+MEASUREMENT_CHARTS	Qué información aporta la gráfica de mis lecturas
+MEASUREMENT_CONSULTATION	Qué anotaciones puedo enseñarle al médico en la revisión
+MEASUREMENT_CONSULTATION	Qué datos de Bitavida ayudan a explicar lo ocurrido en casa
+MEASUREMENT_CONSULTATION	Para ir a consulta qué información conviene reunir
+MEASUREMENT_CONSULTATION	Cómo organizar las mediciones antes de conversar con el doctor
+MEASUREMENT_FORGOTTEN	Se me pasó apuntar lo que ya había medido
+MEASUREMENT_FORGOTTEN	Cómo anotar después una lectura que sí conservo
+MEASUREMENT_FORGOTTEN	Olvidé guardar el resultado del aparato en su momento
+MEASUREMENT_FORGOTTEN	No escribí la medición ayer qué pasa con el registro
+__UNKNOWN__	Dónde venden brazaletes para baumanómetro
+__UNKNOWN__	Cuánto vale una pila de glucómetro
+__UNKNOWN__	Cómo programo una cita con el hospital
+__UNKNOWN__	Por qué la televisión no enciende
+__UNKNOWN__	Qué vitaminas necesita una persona mayor
+__UNKNOWN__	Cómo saber qué dosis tomar
+__UNKNOWN__	Qué tratamiento sirve para el peso
+__UNKNOWN__	Cómo medir la temperatura del cuarto
+__UNKNOWN__	A qué hora pasa el transporte público
+__UNKNOWN__	Dónde encuentro mi contraseña
+__UNKNOWN__	Qué tipo de dieta recomiendas
+__UNKNOWN__	Cuál es la mejor marca de glucómetro
+GLUCOSE_CONTEXT	Qué cambia si la lectura fue antes de la comida
+GLUCOSE_CONTEXT	En el registro importa distinguir el momento en que comí
+GLUCOSE_CONTEXT	Por qué vale señalar la comida previa a la glucemia
+GLUCOSE_CONTEXT	Qué significa contexto antes de alimentos y después
+GLUCOSE_CONTEXT	Para qué describir si estaba comiendo al medir
+PRESSURE_NUMBERS	En tensión cómo se nombran las dos cifras
+PRESSURE_NUMBERS	Cuáles son las dos cantidades de una presión
+PRESSURE_NUMBERS	Qué diferencia al número de encima del que está debajo
+PRESSURE_NUMBERS	Cómo se explica el par sistólica diastólica de tensión
+PRESSURE_NUMBERS	Números pareados del tensiómetro y significado
+__UNKNOWN__	Cómo se forman las nubes sobre el mar
+__UNKNOWN__	Cuánta lluvia cae en una tormenta tropical
+__UNKNOWN__	Por qué cambia el viento durante el día
+__UNKNOWN__	Qué causa la humedad del ambiente
+__UNKNOWN__	En qué estación suele nevar en la montaña
+__UNKNOWN__	Cómo reparar la puerta del refrigerador
+__UNKNOWN__	Mi lavadora deja agua en el piso
+__UNKNOWN__	Por qué se apaga la luz de la cocina
+__UNKNOWN__	Qué herramientas sirven para armar una mesa
+__UNKNOWN__	Cómo quitar una mancha del sillón
+__UNKNOWN__	Cómo compro un boleto de autobús
+__UNKNOWN__	Cuánto cuesta viajar en avión a otra ciudad
+__UNKNOWN__	Qué documentos piden para un pasaporte
+__UNKNOWN__	Cómo reservar una habitación de hotel
+__UNKNOWN__	Cuándo sale el tren de la estación
+__UNKNOWN__	Qué películas se estrenan en el cine
+__UNKNOWN__	Quién ganó el partido de futbol
+__UNKNOWN__	Cómo aprender a tocar guitarra
+__UNKNOWN__	En qué canal pasan la novela
+__UNKNOWN__	Qué libros de aventuras me aconsejas
+__UNKNOWN__	Cómo abrir una cuenta de banco
+__UNKNOWN__	Cuánto dinero necesito ahorrar para una casa
+__UNKNOWN__	Cuál es el interés de una tarjeta de crédito
+__UNKNOWN__	Cómo pagar un impuesto por Internet
+__UNKNOWN__	Cómo invertir el dinero de una jubilación
+__UNKNOWN__	Cómo cambiar la contraseña de mi correo
+__UNKNOWN__	Por qué falla la señal de mi celular
+__UNKNOWN__	Cómo recuperar fotos borradas del teléfono
+__UNKNOWN__	Qué computadora compro para estudiar
+__UNKNOWN__	Cómo conectar una impresora a la red
+__UNKNOWN__	Cómo cuidar las plantas del jardín
+__UNKNOWN__	Por qué un perro ladra durante la noche
+__UNKNOWN__	Qué alimento necesita una tortuga
+__UNKNOWN__	Cómo sembrar semillas de tomate
+__UNKNOWN__	Cuándo florecen los árboles de naranja
+__UNKNOWN__	Quién fue el primer astronauta
+__UNKNOWN__	Cómo se calcula el área de un círculo
+__UNKNOWN__	Qué significa una palabra en francés
+__UNKNOWN__	Cómo preparo una tarea de historia
+__UNKNOWN__	Qué materias lleva la escuela secundaria
+__UNKNOWN__	Cómo hornear pan casero
+__UNKNOWN__	Qué ingredientes lleva una sopa de verduras
+__UNKNOWN__	Cómo conservar fruta para cocinar
+__UNKNOWN__	Cuánto dura un pastel en el horno
+__UNKNOWN__	Cómo lavar los platos sin detergente
+__UNKNOWN__	Dónde puedo tramitar una credencial
+__UNKNOWN__	Qué horario tiene la oficina de correos
+__UNKNOWN__	Cómo solicito un certificado de estudios
+__UNKNOWN__	Qué fecha es el próximo día festivo
+__UNKNOWN__	Quién gobierna mi municipio
+__UNKNOWN__	Cuándo empieza el concierto del parque
+__UNKNOWN__	Qué museo tiene entrada gratuita
+__UNKNOWN__	Dónde venden zapatos para caminar
+__UNKNOWN__	Cómo organizar una fiesta de cumpleaños
+__UNKNOWN__	Qué regalo puedo llevar a una boda
+__UNKNOWN__	Cuáles son los resultados de la lotería
+__UNKNOWN__	Cómo aprender a bailar una canción
+__UNKNOWN__	Cómo se juega ajedrez con un principiante
+__UNKNOWN__	Por qué se descarga la batería del automóvil
+__UNKNOWN__	Qué combustible necesita una motocicleta

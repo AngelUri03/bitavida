@@ -1,0 +1,1088 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 3,
+    "identityHash": "e3dbc397966ab44a4ef3df46eaa02e64",
+    "entities": [
+      {
+        "tableName": "technical_probe",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `value` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value",
+            "columnName": "value",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "caregivers",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `displayName` TEXT NOT NULL, `declarationSource` TEXT NOT NULL, `createdAtEpochMillis` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "displayName",
+            "columnName": "displayName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "declarationSource",
+            "columnName": "declarationSource",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAtEpochMillis",
+            "columnName": "createdAtEpochMillis",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "persons_under_care",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `displayName` TEXT NOT NULL, `declaredByCaregiverId` TEXT NOT NULL, `declarationSource` TEXT NOT NULL, `createdAtEpochMillis` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`declaredByCaregiverId`) REFERENCES `caregivers`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "displayName",
+            "columnName": "displayName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "declaredByCaregiverId",
+            "columnName": "declaredByCaregiverId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "declarationSource",
+            "columnName": "declarationSource",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAtEpochMillis",
+            "columnName": "createdAtEpochMillis",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_persons_under_care_declaredByCaregiverId",
+            "unique": false,
+            "columnNames": [
+              "declaredByCaregiverId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_persons_under_care_declaredByCaregiverId` ON `${TABLE_NAME}` (`declaredByCaregiverId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "caregivers",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "declaredByCaregiverId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "care_relationships",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`profileId` TEXT NOT NULL, `caregiverId` TEXT NOT NULL, `personUnderCareId` TEXT NOT NULL, `usage` TEXT NOT NULL, `createdAtEpochMillis` INTEGER NOT NULL, PRIMARY KEY(`profileId`), FOREIGN KEY(`caregiverId`) REFERENCES `caregivers`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`personUnderCareId`) REFERENCES `persons_under_care`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "profileId",
+            "columnName": "profileId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "caregiverId",
+            "columnName": "caregiverId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "personUnderCareId",
+            "columnName": "personUnderCareId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "usage",
+            "columnName": "usage",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAtEpochMillis",
+            "columnName": "createdAtEpochMillis",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "profileId"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_care_relationships_caregiverId",
+            "unique": false,
+            "columnNames": [
+              "caregiverId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_care_relationships_caregiverId` ON `${TABLE_NAME}` (`caregiverId`)"
+          },
+          {
+            "name": "index_care_relationships_personUnderCareId",
+            "unique": false,
+            "columnNames": [
+              "personUnderCareId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_care_relationships_personUnderCareId` ON `${TABLE_NAME}` (`personUnderCareId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "caregivers",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "caregiverId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "persons_under_care",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "personUnderCareId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "consent_records",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `profileId` TEXT NOT NULL, `caregiverId` TEXT NOT NULL, `personUnderCareId` TEXT NOT NULL, `kind` TEXT NOT NULL, `authorizationDeclaration` TEXT NOT NULL, `status` TEXT NOT NULL, `recordedAtEpochMillis` INTEGER NOT NULL, `revokedAtEpochMillis` INTEGER, PRIMARY KEY(`id`), FOREIGN KEY(`profileId`) REFERENCES `care_relationships`(`profileId`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`caregiverId`) REFERENCES `caregivers`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`personUnderCareId`) REFERENCES `persons_under_care`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "profileId",
+            "columnName": "profileId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "caregiverId",
+            "columnName": "caregiverId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "personUnderCareId",
+            "columnName": "personUnderCareId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "kind",
+            "columnName": "kind",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "authorizationDeclaration",
+            "columnName": "authorizationDeclaration",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "status",
+            "columnName": "status",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "recordedAtEpochMillis",
+            "columnName": "recordedAtEpochMillis",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "revokedAtEpochMillis",
+            "columnName": "revokedAtEpochMillis",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_consent_records_profileId",
+            "unique": false,
+            "columnNames": [
+              "profileId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_consent_records_profileId` ON `${TABLE_NAME}` (`profileId`)"
+          },
+          {
+            "name": "index_consent_records_caregiverId",
+            "unique": false,
+            "columnNames": [
+              "caregiverId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_consent_records_caregiverId` ON `${TABLE_NAME}` (`caregiverId`)"
+          },
+          {
+            "name": "index_consent_records_personUnderCareId",
+            "unique": false,
+            "columnNames": [
+              "personUnderCareId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_consent_records_personUnderCareId` ON `${TABLE_NAME}` (`personUnderCareId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "care_relationships",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "profileId"
+            ],
+            "referencedColumns": [
+              "profileId"
+            ]
+          },
+          {
+            "table": "caregivers",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "caregiverId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "persons_under_care",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "personUnderCareId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "legal_acceptance_records",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `profileId` TEXT NOT NULL, `actorId` TEXT NOT NULL, `document` TEXT NOT NULL, `documentVersion` TEXT NOT NULL, `decision` TEXT NOT NULL, `status` TEXT NOT NULL, `recordedAtEpochMillis` INTEGER NOT NULL, `revokedAtEpochMillis` INTEGER, PRIMARY KEY(`id`), FOREIGN KEY(`profileId`) REFERENCES `care_relationships`(`profileId`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`actorId`) REFERENCES `caregivers`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "profileId",
+            "columnName": "profileId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "actorId",
+            "columnName": "actorId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "document",
+            "columnName": "document",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "documentVersion",
+            "columnName": "documentVersion",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "decision",
+            "columnName": "decision",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "status",
+            "columnName": "status",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "recordedAtEpochMillis",
+            "columnName": "recordedAtEpochMillis",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "revokedAtEpochMillis",
+            "columnName": "revokedAtEpochMillis",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_legal_acceptance_records_profileId",
+            "unique": false,
+            "columnNames": [
+              "profileId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_legal_acceptance_records_profileId` ON `${TABLE_NAME}` (`profileId`)"
+          },
+          {
+            "name": "index_legal_acceptance_records_actorId",
+            "unique": false,
+            "columnNames": [
+              "actorId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_legal_acceptance_records_actorId` ON `${TABLE_NAME}` (`actorId`)"
+          },
+          {
+            "name": "index_legal_acceptance_records_document_documentVersion",
+            "unique": false,
+            "columnNames": [
+              "document",
+              "documentVersion"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_legal_acceptance_records_document_documentVersion` ON `${TABLE_NAME}` (`document`, `documentVersion`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "care_relationships",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "profileId"
+            ],
+            "referencedColumns": [
+              "profileId"
+            ]
+          },
+          {
+            "table": "caregivers",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "actorId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "medical_indications",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `personUnderCareId` TEXT NOT NULL, `origin` TEXT NOT NULL, `createdAtEpochMillis` INTEGER NOT NULL, `createdByActorId` TEXT NOT NULL, `contentMode` TEXT NOT NULL, `currentRevisionNumber` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`personUnderCareId`) REFERENCES `persons_under_care`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`createdByActorId`) REFERENCES `caregivers`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "personUnderCareId",
+            "columnName": "personUnderCareId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "origin",
+            "columnName": "origin",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAtEpochMillis",
+            "columnName": "createdAtEpochMillis",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdByActorId",
+            "columnName": "createdByActorId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "contentMode",
+            "columnName": "contentMode",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "currentRevisionNumber",
+            "columnName": "currentRevisionNumber",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_medical_indications_personUnderCareId",
+            "unique": false,
+            "columnNames": [
+              "personUnderCareId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_medical_indications_personUnderCareId` ON `${TABLE_NAME}` (`personUnderCareId`)"
+          },
+          {
+            "name": "index_medical_indications_createdByActorId",
+            "unique": false,
+            "columnNames": [
+              "createdByActorId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_medical_indications_createdByActorId` ON `${TABLE_NAME}` (`createdByActorId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "persons_under_care",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "personUnderCareId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "caregivers",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "createdByActorId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "medical_indication_revisions",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `indicationId` TEXT NOT NULL, `revisionNumber` INTEGER NOT NULL, `originalText` TEXT NOT NULL, `indicatedOnEpochDay` INTEGER NOT NULL, `capturedAtEpochMillis` INTEGER NOT NULL, `declaredProfessionalOrSource` TEXT, `validFromEpochDay` INTEGER, `validUntilEpochDay` INTEGER, `status` TEXT NOT NULL, `changeKind` TEXT NOT NULL, `changeReason` TEXT, `authorActorId` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`indicationId`) REFERENCES `medical_indications`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`authorActorId`) REFERENCES `caregivers`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "indicationId",
+            "columnName": "indicationId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "revisionNumber",
+            "columnName": "revisionNumber",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "originalText",
+            "columnName": "originalText",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "indicatedOnEpochDay",
+            "columnName": "indicatedOnEpochDay",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "capturedAtEpochMillis",
+            "columnName": "capturedAtEpochMillis",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "declaredProfessionalOrSource",
+            "columnName": "declaredProfessionalOrSource",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "validFromEpochDay",
+            "columnName": "validFromEpochDay",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "validUntilEpochDay",
+            "columnName": "validUntilEpochDay",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "status",
+            "columnName": "status",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "changeKind",
+            "columnName": "changeKind",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "changeReason",
+            "columnName": "changeReason",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "authorActorId",
+            "columnName": "authorActorId",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_medical_indication_revisions_indicationId",
+            "unique": false,
+            "columnNames": [
+              "indicationId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_medical_indication_revisions_indicationId` ON `${TABLE_NAME}` (`indicationId`)"
+          },
+          {
+            "name": "index_medical_indication_revisions_authorActorId",
+            "unique": false,
+            "columnNames": [
+              "authorActorId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_medical_indication_revisions_authorActorId` ON `${TABLE_NAME}` (`authorActorId`)"
+          },
+          {
+            "name": "index_medical_indication_revisions_indicationId_revisionNumber",
+            "unique": true,
+            "columnNames": [
+              "indicationId",
+              "revisionNumber"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_medical_indication_revisions_indicationId_revisionNumber` ON `${TABLE_NAME}` (`indicationId`, `revisionNumber`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "medical_indications",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "indicationId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "caregivers",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "authorActorId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "medication_plans",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `personUnderCareId` TEXT NOT NULL, `medicalIndicationId` TEXT NOT NULL, `medicalContentOrigin` TEXT NOT NULL, `scheduleOrigin` TEXT NOT NULL, `createdAtEpochMillis` INTEGER NOT NULL, `createdByActorId` TEXT NOT NULL, `contentMode` TEXT NOT NULL, `currentRevisionNumber` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`personUnderCareId`) REFERENCES `persons_under_care`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`medicalIndicationId`) REFERENCES `medical_indications`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`createdByActorId`) REFERENCES `caregivers`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "personUnderCareId",
+            "columnName": "personUnderCareId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "medicalIndicationId",
+            "columnName": "medicalIndicationId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "medicalContentOrigin",
+            "columnName": "medicalContentOrigin",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "scheduleOrigin",
+            "columnName": "scheduleOrigin",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAtEpochMillis",
+            "columnName": "createdAtEpochMillis",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdByActorId",
+            "columnName": "createdByActorId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "contentMode",
+            "columnName": "contentMode",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "currentRevisionNumber",
+            "columnName": "currentRevisionNumber",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_medication_plans_personUnderCareId",
+            "unique": false,
+            "columnNames": [
+              "personUnderCareId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_medication_plans_personUnderCareId` ON `${TABLE_NAME}` (`personUnderCareId`)"
+          },
+          {
+            "name": "index_medication_plans_medicalIndicationId",
+            "unique": false,
+            "columnNames": [
+              "medicalIndicationId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_medication_plans_medicalIndicationId` ON `${TABLE_NAME}` (`medicalIndicationId`)"
+          },
+          {
+            "name": "index_medication_plans_createdByActorId",
+            "unique": false,
+            "columnNames": [
+              "createdByActorId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_medication_plans_createdByActorId` ON `${TABLE_NAME}` (`createdByActorId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "persons_under_care",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "personUnderCareId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "medical_indications",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "medicalIndicationId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "caregivers",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "createdByActorId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "medication_plan_revisions",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `medicationPlanId` TEXT NOT NULL, `revisionNumber` INTEGER NOT NULL, `medicationName` TEXT NOT NULL, `doseAsIndicated` TEXT NOT NULL, `unitOrPresentation` TEXT, `frequencyAsIndicated` TEXT, `startsOnEpochDay` INTEGER NOT NULL, `endsOnEpochDay` INTEGER, `originalAdditionalInstructions` TEXT, `capturedAtEpochMillis` INTEGER NOT NULL, `authorActorId` TEXT NOT NULL, `changeKind` TEXT NOT NULL, `changeReason` TEXT, PRIMARY KEY(`id`), FOREIGN KEY(`medicationPlanId`) REFERENCES `medication_plans`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`authorActorId`) REFERENCES `caregivers`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "medicationPlanId",
+            "columnName": "medicationPlanId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "revisionNumber",
+            "columnName": "revisionNumber",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "medicationName",
+            "columnName": "medicationName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "doseAsIndicated",
+            "columnName": "doseAsIndicated",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "unitOrPresentation",
+            "columnName": "unitOrPresentation",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "frequencyAsIndicated",
+            "columnName": "frequencyAsIndicated",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "startsOnEpochDay",
+            "columnName": "startsOnEpochDay",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "endsOnEpochDay",
+            "columnName": "endsOnEpochDay",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "originalAdditionalInstructions",
+            "columnName": "originalAdditionalInstructions",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "capturedAtEpochMillis",
+            "columnName": "capturedAtEpochMillis",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "authorActorId",
+            "columnName": "authorActorId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "changeKind",
+            "columnName": "changeKind",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "changeReason",
+            "columnName": "changeReason",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_medication_plan_revisions_medicationPlanId",
+            "unique": false,
+            "columnNames": [
+              "medicationPlanId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_medication_plan_revisions_medicationPlanId` ON `${TABLE_NAME}` (`medicationPlanId`)"
+          },
+          {
+            "name": "index_medication_plan_revisions_authorActorId",
+            "unique": false,
+            "columnNames": [
+              "authorActorId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_medication_plan_revisions_authorActorId` ON `${TABLE_NAME}` (`authorActorId`)"
+          },
+          {
+            "name": "index_medication_plan_revisions_medicationPlanId_revisionNumber",
+            "unique": true,
+            "columnNames": [
+              "medicationPlanId",
+              "revisionNumber"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_medication_plan_revisions_medicationPlanId_revisionNumber` ON `${TABLE_NAME}` (`medicationPlanId`, `revisionNumber`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "medication_plans",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "medicationPlanId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "caregivers",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "authorActorId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "scheduled_doses",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `medicationPlanRevisionId` TEXT NOT NULL, `localTimeMinutes` INTEGER NOT NULL, `configuredAtEpochMillis` INTEGER NOT NULL, `configuredByActorId` TEXT NOT NULL, `origin` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`medicationPlanRevisionId`) REFERENCES `medication_plan_revisions`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`configuredByActorId`) REFERENCES `caregivers`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "medicationPlanRevisionId",
+            "columnName": "medicationPlanRevisionId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "localTimeMinutes",
+            "columnName": "localTimeMinutes",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "configuredAtEpochMillis",
+            "columnName": "configuredAtEpochMillis",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "configuredByActorId",
+            "columnName": "configuredByActorId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "origin",
+            "columnName": "origin",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_scheduled_doses_medicationPlanRevisionId",
+            "unique": false,
+            "columnNames": [
+              "medicationPlanRevisionId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_scheduled_doses_medicationPlanRevisionId` ON `${TABLE_NAME}` (`medicationPlanRevisionId`)"
+          },
+          {
+            "name": "index_scheduled_doses_configuredByActorId",
+            "unique": false,
+            "columnNames": [
+              "configuredByActorId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_scheduled_doses_configuredByActorId` ON `${TABLE_NAME}` (`configuredByActorId`)"
+          },
+          {
+            "name": "index_scheduled_doses_medicationPlanRevisionId_localTimeMinutes",
+            "unique": true,
+            "columnNames": [
+              "medicationPlanRevisionId",
+              "localTimeMinutes"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_scheduled_doses_medicationPlanRevisionId_localTimeMinutes` ON `${TABLE_NAME}` (`medicationPlanRevisionId`, `localTimeMinutes`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "medication_plan_revisions",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "medicationPlanRevisionId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "caregivers",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "configuredByActorId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e3dbc397966ab44a4ef3df46eaa02e64')"
+    ]
+  }
+}

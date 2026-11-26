@@ -2,6 +2,9 @@ package com.bitavida.app.ui.components
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Box
@@ -295,24 +298,40 @@ private fun rememberLifecycleStarted(): Boolean {
 }
 
 /**
- * Static header geometry with a short travelling highlight. The loop only exists while the
- * header is visible, the host lifecycle is started and motion is permitted.
+ * Approved header flourish, with an opt-in living curve for Mi día. Its single animation phase
+ * only runs while the header is visible, the host lifecycle is started and motion is permitted.
  */
 @Composable
 fun BitavidaHeaderFlow(
     modifier: Modifier = Modifier,
     motionAllowed: Boolean,
+    bidirectional: Boolean = false,
+    organic: Boolean = false,
 ) {
     val progress = remember { Animatable(0f) }
     var visible by remember { mutableStateOf(false) }
     val lifecycleStarted = rememberLifecycleStarted()
 
-    LaunchedEffect(motionAllowed, visible, lifecycleStarted) {
+    val roundTrip = bidirectional || organic
+    LaunchedEffect(motionAllowed, visible, lifecycleStarted, roundTrip) {
         if (!motionAllowed || !visible || !lifecycleStarted) {
             progress.snapTo(0f)
             return@LaunchedEffect
         }
-        while (isActive) {
+        if (roundTrip) {
+            progress.snapTo(0f)
+            // A single phase repeats at equivalent geometry; easing is applied once per half in draw.
+            progress.animateTo(
+                2f,
+                infiniteRepeatable(
+                    animation = tween(
+                        durationMillis = BitavidaFluidMotion.HeaderFlowTravel * 2,
+                        easing = LinearEasing,
+                    ),
+                    repeatMode = RepeatMode.Restart,
+                ),
+            )
+        } else while (isActive) {
             progress.snapTo(0f)
             progress.animateTo(
                 1f,
@@ -339,6 +358,8 @@ fun BitavidaHeaderFlow(
                 val startY = size.height * 0.58f
                 val endY = size.height * 0.52f
                 val node = Offset(xEnd, endY)
+                val firstNode = Offset(xStart, startY)
+                val organicCurve = if (organic) HeaderOrganicCurve() else null
                 val path = Path().apply {
                     moveTo(xStart, startY)
                     cubicTo(
@@ -354,6 +375,8 @@ fun BitavidaHeaderFlow(
                 val longTail = Path()
                 val shortTail = Path()
                 val head = Path()
+                val trailWindow = HeaderFlowTrailWindow()
+                val bidirectionalHeadRadius = 2.dp.toPx()
                 val baseStroke = Stroke(1.7.dp.toPx(), cap = StrokeCap.Round)
                 val integrationStroke = Stroke(7.dp.toPx(), cap = StrokeCap.Round)
                 val softStroke = Stroke(7.dp.toPx(), cap = StrokeCap.Round)
@@ -363,7 +386,7 @@ fun BitavidaHeaderFlow(
                     listOf(
                         colors.paleBlue.copy(alpha = 0.03f),
                         colors.gradientStart.copy(alpha = 0.10f),
-                        colors.mint.copy(alpha = 0.08f),
+                        (if (organic) colors.gradientEnd else colors.mint).copy(alpha = 0.08f),
                         colors.paleBlue.copy(alpha = 0.03f),
                     ),
                     startX = xStart,
@@ -381,37 +404,62 @@ fun BitavidaHeaderFlow(
                 )
 
                 onDrawBehind {
+                    val active = motionAllowed && visible && lifecycleStarted
+                    val phase = progress.value
+                    organicCurve?.let { curve ->
+                        curve.sample(if (active) phase else 0f)
+                        path.rewind()
+                        path.moveTo(firstNode.x, firstNode.y)
+                        val step = (xEnd - xStart) / curve.segments
+                        for (segment in 0 until curve.segments) {
+                            val start = xStart + segment * step
+                            val end = if (segment == curve.segments - 1) xEnd
+                                else xStart + (segment + 1) * step
+                            path.cubicTo(
+                                start + step / 3f, size.height * curve.firstControlY(segment),
+                                end - step / 3f, size.height * curve.secondControlY(segment),
+                                end, size.height * curve.y[segment + 1],
+                            )
+                        }
+                        // All travelling pieces follow the currently drawn living curve.
+                        measure.setPath(path, false)
+                    }
                     drawPath(path, integrationBrush, style = integrationStroke)
                     drawPath(path, lineBrush, style = baseStroke)
-                    val fraction = progress.value.coerceIn(0f, 1f)
-                    val envelope = when {
+                    val fraction = if (roundTrip) headerFlowRoundTripPosition(phase)
+                        else phase.coerceIn(0f, 1f)
+                    val envelope = if (roundTrip) 1f else when {
                         fraction <= 0.04f -> fraction / 0.04f
                         fraction >= 0.96f -> (1f - fraction) / 0.04f
                         else -> 1f
                     }.coerceIn(0f, 1f)
-                    if (motionAllowed && envelope > 0f) {
+                    if (motionAllowed && envelope > 0f &&
+                        (!roundTrip || (visible && lifecycleStarted))) {
                         val distance = measure.length * fraction
                         longTail.rewind()
                         shortTail.rewind()
                         head.rewind()
-                        measure.getSegment(
-                            (distance - measure.length * 0.28f).coerceAtLeast(0f),
-                            distance,
-                            longTail,
-                            true,
-                        )
-                        measure.getSegment(
-                            (distance - measure.length * 0.14f).coerceAtLeast(0f),
-                            distance,
-                            shortTail,
-                            true,
-                        )
-                        measure.getSegment(
-                            (distance - 3.dp.toPx()).coerceAtLeast(0f),
-                            distance,
-                            head,
-                            true,
-                        )
+                        if (roundTrip) {
+                            trailWindow.sample(phase, 0.18f)
+                            measure.getSegment(measure.length * trailWindow.start,
+                                measure.length * trailWindow.end, longTail, true)
+                            trailWindow.sample(phase, 0.08f)
+                            measure.getSegment(measure.length * trailWindow.start,
+                                measure.length * trailWindow.end, shortTail, true)
+                        } else {
+                            measure.getSegment(
+                                (distance - measure.length * 0.28f).coerceAtLeast(0f),
+                                distance, longTail, true,
+                            )
+                            measure.getSegment(
+                                (distance - measure.length * 0.14f).coerceAtLeast(0f),
+                                distance, shortTail, true,
+                            )
+                            measure.getSegment(
+                                (distance - 3.dp.toPx()).coerceAtLeast(0f),
+                                distance, head, true,
+                            )
+                        }
                         drawPath(
                             longTail,
                             colors.gradientStart.copy(alpha = 0.14f * envelope),
@@ -422,7 +470,11 @@ fun BitavidaHeaderFlow(
                             colors.gradientStart.copy(alpha = 0.48f * envelope),
                             style = tailStroke,
                         )
-                        drawPath(
+                        if (roundTrip) drawCircle(
+                            colors.gradientEnd.copy(alpha = 0.90f),
+                            radius = bidirectionalHeadRadius,
+                            center = measure.getPosition(distance),
+                        ) else drawPath(
                             head,
                             colors.gradientEnd.copy(alpha = 0.90f * envelope),
                             style = headStroke,
@@ -435,17 +487,30 @@ fun BitavidaHeaderFlow(
                     } else {
                         0f
                     }
-                    drawCircle(
-                        color = colors.gradientEnd.copy(alpha = 0.44f + 0.12f * pulse),
-                        radius = 3.2.dp.toPx() * (1f + pulse * 0.06f),
-                        center = node,
-                    )
-                    if (pulse > 0f) {
+                    if (organic) {
+                        val leftArrival = if (active) (1f - fraction / 0.12f).coerceIn(0f, 1f) else 0f
+                        val rightArrival = if (active) ((fraction - 0.88f) / 0.12f).coerceIn(0f, 1f) else 0f
+                        drawCircle(colors.gradientStart.copy(alpha = 0.72f),
+                            radius = 3.2.dp.toPx(), center = firstNode)
+                        drawCircle(colors.gradientEnd.copy(alpha = 0.72f),
+                            radius = 3.2.dp.toPx(), center = node)
+                        if (leftArrival > 0f) drawCircle(colors.gradientStart.copy(alpha = 0.07f * leftArrival),
+                            radius = 7.dp.toPx(), center = firstNode)
+                        if (rightArrival > 0f) drawCircle(colors.gradientEnd.copy(alpha = 0.07f * rightArrival),
+                            radius = 7.dp.toPx(), center = node)
+                    } else {
                         drawCircle(
-                            color = colors.gradientStart.copy(alpha = 0.07f * pulse),
-                            radius = 7.dp.toPx(),
+                            color = colors.gradientEnd.copy(alpha = 0.44f + 0.12f * pulse),
+                            radius = 3.2.dp.toPx() * (1f + pulse * 0.06f),
                             center = node,
                         )
+                        if (pulse > 0f) {
+                            drawCircle(
+                                color = colors.gradientStart.copy(alpha = 0.07f * pulse),
+                                radius = 7.dp.toPx(),
+                                center = node,
+                            )
+                        }
                     }
                 }
             },

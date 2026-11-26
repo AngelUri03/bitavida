@@ -127,3 +127,39 @@ data class LegalAcceptanceEntity(
     val recordedAtEpochMillis: Long,
     val revokedAtEpochMillis: Long?,
 )
+
+@Entity(
+    tableName = "sensitive_data_consents",
+    foreignKeys = [
+        ForeignKey(
+            entity = CareRelationshipEntity::class,
+            parentColumns = ["profileId"],
+            childColumns = ["profileId"],
+        ),
+        ForeignKey(
+            entity = CaregiverEntity::class,
+            parentColumns = ["id"],
+            childColumns = ["caregiverId"],
+        ),
+        ForeignKey(
+            entity = PersonUnderCareEntity::class,
+            parentColumns = ["id"],
+            childColumns = ["personUnderCareId"],
+        ),
+    ],
+    indices = [
+        Index("profileId"),
+        Index("caregiverId"),
+        Index("personUnderCareId"),
+        Index(value = ["profileId", "documentVersion"], unique = true),
+    ],
+)
+data class SensitiveDataConsentEntity(
+    @PrimaryKey val id: String,
+    val profileId: String,
+    val caregiverId: String,
+    val personUnderCareId: String,
+    val documentVersion: String,
+    val acceptedAtEpochMillis: Long,
+    val status: String,
+)

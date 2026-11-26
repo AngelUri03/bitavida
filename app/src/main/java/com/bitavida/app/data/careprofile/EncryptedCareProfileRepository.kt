@@ -58,6 +58,29 @@ class EncryptedCareProfileRepository(
             ?.toDomain()
     }
 
+    override suspend fun updateNames(command: com.bitavida.app.domain.repository.UpdateCareProfileNamesCommand):
+        com.bitavida.app.domain.repository.UpdateCareProfileNamesResult = repositoryCall {
+        val validator = com.bitavida.app.domain.validation.CareProfileValidator
+        require(command.operationId.isNotBlank() && command.capturedAtEpochMillis >= 0)
+        require(validator.validateName(command.caregiverName, com.bitavida.app.domain.validation.CareProfileField.CAREGIVER_NAME) == null)
+        require(validator.validateName(command.personName, com.bitavida.app.domain.validation.CareProfileField.PERSON_UNDER_CARE_NAME) == null)
+        require(validator.normalizeName(command.caregiverName) == command.caregiverName)
+        require(validator.normalizeName(command.personName) == command.personName)
+        val dao = SecureDatabaseProvider.open(applicationContext).careProfileDao()
+        val revision = com.bitavida.app.data.local.secure.CareProfileNameRevisionEntity(
+            command.operationId, command.profileId, command.caregiverId, command.personUnderCareId,
+            command.expectedCaregiverName, command.expectedPersonName,
+            command.caregiverName, command.personName, command.capturedAtEpochMillis,
+        )
+        when (dao.updateNames(revision)) {
+            "STORED" -> com.bitavida.app.domain.repository.UpdateCareProfileNamesResult.Stored(
+                requireNotNull(dao.load()).toDomain(),
+            )
+            "CONFLICT" -> com.bitavida.app.domain.repository.UpdateCareProfileNamesResult.Conflict
+            else -> com.bitavida.app.domain.repository.UpdateCareProfileNamesResult.Unauthorized
+        }
+    }
+
     private suspend fun <T> repositoryCall(block: suspend () -> T): T = try {
         block()
     } catch (error: CancellationException) {

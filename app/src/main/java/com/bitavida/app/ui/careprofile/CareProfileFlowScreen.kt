@@ -908,6 +908,7 @@ private fun BitavidaNameField(
     enabled: Boolean = true,
 ) {
     var focused by remember { mutableStateOf(false) }
+    var rejectedNameInput by remember { mutableStateOf(false) }
     var fieldValue by rememberSaveable(testTag, stateSaver = TextFieldValue.Saver) {
         mutableStateOf(
             TextFieldValue(
@@ -919,7 +920,9 @@ private fun BitavidaNameField(
     val bringIntoViewRequester = remember { BringIntoViewRequester() }
     val focusManager = LocalFocusManager.current
     val characterCount = CareProfileValidator.nameLength(fieldValue.text)
-    val errorText = when (error) {
+    val errorText = if (rejectedNameInput) {
+        "El nombre admite hasta 80 caracteres."
+    } else when (error) {
         CareProfileValidationError.REQUIRED -> "Escribe un nombre para continuar."
         CareProfileValidationError.TOO_SHORT -> "Escribe al menos 2 letras."
         CareProfileValidationError.TOO_LONG -> "Usa un máximo de 80 caracteres."
@@ -954,20 +957,13 @@ private fun BitavidaNameField(
     OutlinedTextField(
         value = fieldValue,
         onValueChange = { updatedValue ->
-            val limitedText = CareProfileValidator.limitNameInput(updatedValue.text)
-            fieldValue = if (limitedText == updatedValue.text) {
-                updatedValue
+            if (CareProfileValidator.nameLength(updatedValue.text) <= CARE_PROFILE_NAME_MAX_LENGTH) {
+                rejectedNameInput = false
+                fieldValue = updatedValue
+                onValueChange(updatedValue.text)
             } else {
-                updatedValue.copy(
-                    text = limitedText,
-                    selection = TextRange(
-                        start = updatedValue.selection.start.coerceAtMost(limitedText.length),
-                        end = updatedValue.selection.end.coerceAtMost(limitedText.length),
-                    ),
-                    composition = null,
-                )
+                rejectedNameInput = true
             }
-            onValueChange(limitedText)
         },
         modifier = Modifier
             .fillMaxWidth()
@@ -1002,7 +998,7 @@ private fun BitavidaNameField(
             errorText != null -> {
                 {
                     Text(
-                        text = errorText,
+                        text = "$errorText · $characterCount/$CARE_PROFILE_NAME_MAX_LENGTH",
                         modifier = Modifier.semantics {
                             liveRegion = LiveRegionMode.Assertive
                         },
@@ -1020,7 +1016,7 @@ private fun BitavidaNameField(
             }
             else -> null
         },
-        isError = error != null,
+        isError = error != null || rejectedNameInput,
         minLines = 1,
         maxLines = 2,
         shape = MaterialTheme.shapes.medium,

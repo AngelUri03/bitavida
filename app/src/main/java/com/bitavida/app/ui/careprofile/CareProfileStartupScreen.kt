@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -20,6 +21,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.liveRegion
@@ -27,7 +29,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.bitavida.app.ui.brand.BitavidaMark
+import com.bitavida.app.R
 import com.bitavida.app.ui.components.BitavidaFluidBackground
 import com.bitavida.app.ui.theme.BitavidaSpacing
 import com.bitavida.app.ui.theme.BitavidaTheme
@@ -54,7 +56,12 @@ fun CareProfileStartupScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(BitavidaSpacing.Default),
             ) {
-                BitavidaMark(modifier = Modifier.size(52.dp))
+                Icon(
+                    painter = painterResource(R.drawable.ic_bitavida_mark),
+                    contentDescription = null,
+                    modifier = Modifier.size(52.dp),
+                    tint = MaterialTheme.colorScheme.primary,
+                )
                 Text(
                     text = if (error == null) {
                         "Preparando Bitavida…"

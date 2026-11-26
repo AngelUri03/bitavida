@@ -1,0 +1,80 @@
+GLUCOSE_FASTING	En glucosa, a qué le llaman estar en ayunas
+GLUCOSE_FASTING	sin desayunar y en ayunas, qué quiere decir ese contexto del azúcar
+GLUCOSE_CONTEXT	Qué anoto de los alimentos junto con la hora de la glucemia
+GLUCOSE_CONTEXT	antes o despues de la comida: porq vale la pena ponerlo al apuntar el azucar
+GLUCOSE_UNITS	En el medidor de azúcar vienen mg por dL, qué representan
+GLUCOSE_UNITS	mgdl en la glucemia, me explicas esa unidad
+PRESSURE_NUMBERS	La cifra sistólica y la diastólica, en qué son diferentes
+PRESSURE_NUMBERS	numeros de arriba y abajo del tensiometro: cómo se llaman
+PRESSURE_RECORDING	Al capturar tensión, dónde van la sistólica, la diastólica y el pulso
+PRESSURE_RECORDING	las dos cifras del baumanometro se apuntan en el mismo registro
+WEIGHT_TRACKING	De qué sirve ir dejando anotado el peso con su fecha
+WEIGHT_TRACKING	para q llevar seguimiento de los kilos en vez de recordar el ultimo pesaje
+WEIGHT_CONDITIONS	Por qué importa conservar la misma báscula cuando me peso
+WEIGHT_CONDITIONS	si cambio de balanza a cada rato, las condiciones del pesaje son iguales
+MEASUREMENT_REMINDERS	El aviso del celular para medirme, qué hace exactamente
+MEASUREMENT_REMINDERS	si cierro la notificacion, Bitavida da por hecha la medicion
+MEASUREMENT_HISTORY	Quiero ubicar en el calendario las lecturas de hace unas semanas
+MEASUREMENT_HISTORY	los registros viejitos de mediciones, por dónde los consulto
+MEASUREMENT_CORRECTIONS	Cómo arreglo una lectura que guardé con la fecha equivocada
+MEASUREMENT_CORRECTIONS	si edito un dato mal apuntado, se conserva lo que decía antes
+GLUCOSE_WHAT	Qué es exactamente ese azúcar que llevamos en la sangre
+GLUCOSE_WHAT	glucemia y glucosa, de qué están hablando esas palabras
+GLUCOSE_PURPOSE	Qué información aporta checar el azúcar con el glucómetro
+GLUCOSE_PURPOSE	checarme la glucosa, para q me sirve hacerlo
+GLUCOSE_VARIATIONS	Por qué una lectura de glucosa puede ser distinta de otra
+GLUCOSE_VARIATIONS	el azucar no sale igual todas las veces, qué cosas pueden influir
+GLUCOSE_INDICATORS	Si el glucómetro usa letras HI o LO, qué representan
+GLUCOSE_INDICATORS	hi y lo no son cifras, qué son esos mensajes del aparato
+GLUCOSE_PLANNED	Una lectura extra de glucosa sustituye la que estaba agendada
+GLUCOSE_PLANNED	glucosa adicional o programada: cuál es la diferencia en Bitavida
+PRESSURE_WHAT	Cuando dicen tensión arterial, qué están midiendo
+PRESSURE_WHAT	presion de la sangre sobre las arterias, qué significa eso
+PRESSURE_PURPOSE	Para qué aporta información checar la tensión arterial
+PRESSURE_PURPOSE	checarse la presion aunque uno se sienta bien, qué utilidad tiene
+PRESSURE_REST	En una medición de presión, por qué cuentan el reposo y la postura
+PRESSURE_REST	descansar antes del baumanometro, porq importa esa condicion
+PRESSURE_ACTIVITY	Qué tiene que ver haber hecho ejercicio con una lectura de tensión
+PRESSURE_ACTIVITY	presion tomada tras caminar, qué contexto aporta esa actividad
+PRESSURE_VARIATIONS	Por qué dos lecturas de presión tomadas en distintos momentos pueden diferir
+PRESSURE_VARIATIONS	la tension cambia entre una toma y otra, qué puede influir
+WEIGHT_VARIATIONS	Por qué el peso que marca la báscula puede cambiar entre días
+WEIGHT_VARIATIONS	los kilos del cuerpo no son solo grasa, qué hace variar el peso cotidiano
+WEIGHT_BMI	Qué relación entre estatura y kilos expresa el índice de masa corporal
+WEIGHT_BMI	imc: qué representa ese cálculo y qué no distingue
+WEIGHT_TARGET	De dónde debe salir el objetivo de peso que se anota en la app
+WEIGHT_TARGET	la referencia de peso objetivo la decide el medico o la calcula Bitavida
+WEIGHT_COMPARISON	Cómo reviso juntos los pesajes de varias fechas sin perder su contexto
+WEIGHT_COMPARISON	comparar mis registros de kilos, qué datos debo mirar además de la cifra
+MEASUREMENT_REGISTER	Ya tengo una lectura real, cómo la capturo dentro de Mediciones
+MEASUREMENT_REGISTER	en Bitavida dónde empiezo para apuntar una medicion nueva
+MEASUREMENT_FOLLOWUPS	Qué se organiza cuando configuro el seguimiento de una medición
+MEASUREMENT_FOLLOWUPS	frecuencia y horarios del seguimiento, para q sirven en la app
+MEASUREMENT_STATES	En la app, qué cambia entre registrada, no realizada y sin confirmar
+MEASUREMENT_STATES	sin confirmar quiere decir lo mismo que no se realizo
+MEASUREMENT_CHARTS	En las gráficas, qué representan los puntos y los días sin punto
+MEASUREMENT_CHARTS	las graficas de Mediciones, cómo muestran los registros en el tiempo
+MEASUREMENT_CONSULTATION	Qué datos del cuidado puedo preparar para enseñarlos durante la consulta
+MEASUREMENT_CONSULTATION	para mi siguiente consulta, qué informacion guardada en Bitavida puedo revisar
+MEASUREMENT_FORGOTTEN	Sí se tomó la medición pero se me pasó escribirla, qué hago con ese registro
+MEASUREMENT_FORGOTTEN	olvide apuntar el resultado y no lo conservo, debo inventar una cifra
+__UNKNOWN__	Qué pronóstico del tiempo hay para este fin de semana
+__UNKNOWN__	A qué hora empieza la final de futbol de mañana
+__UNKNOWN__	Cómo acomodo los álbumes de fotos de mis vacaciones
+__UNKNOWN__	Me dices a qué hora llega el camión a mi colonia
+__UNKNOWN__	Ayúdame a organizar la lista del supermercado
+__UNKNOWN__	Cómo preparo galletas de avena en el horno
+__UNKNOWN__	Qué planta aguanta bien en un patio sin sol
+__UNKNOWN__	Por qué la luna se ve diferente durante el mes
+__UNKNOWN__	Recomiéndame una novela para leer el domingo
+__UNKNOWN__	Cuánto dura esa película que salió en el cine
+__UNKNOWN__	Cómo cambio la contraseña de mi correo electrónico
+__UNKNOWN__	Mi teléfono no encuentra el wifi, cómo lo conecto
+__UNKNOWN__	Cómo copio mis contactos a otra aplicación
+__UNKNOWN__	Cómo ajusto la hora en mi reloj de pared
+__UNKNOWN__	Cómo acomodo documentos en carpetas de la computadora
+__UNKNOWN__	Quiero platicar de cualquier cosa
+__UNKNOWN__	Necesito ayuda pero no sé qué preguntar
+__UNKNOWN__	Quiero medir algo
+__UNKNOWN__	Explícame glucosa, presión e IMC todo junto
+__UNKNOWN__	Me interesan las cifras y los registros, nada más

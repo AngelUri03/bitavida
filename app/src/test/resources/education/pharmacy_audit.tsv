@@ -1,0 +1,50 @@
+# Independent holdout drafted before model freeze; do not use for training or threshold selection.
+# kind\tdrug_ids (semicolon = every candidate required)\tintent\tquestion
+# ANSWER: exact DrugAnswer id and learned intent. OPTIONS: DrugOptions includes all listed ids; never an automatic DrugAnswer.
+# UNKNOWN: Fallback UNCERTAIN or empty DrugOptions; never Answer or DrugAnswer. OUTSIDE_SCOPE: Fallback OUTSIDE_SCOPE.
+ANSWER	acarbosa	IDENTIFY	Acarbosa: explíquenme qué clase de medicamento es.
+ANSWER	pioglitazona	IDENTIFY	Quisiera conocer qué tipo de fármaco es pioglitazona.
+ANSWER	glibenclamida	IDENTIFY	Gliburida, ¿qué medicamento es y de qué familia viene?
+ANSWER	metformina	PURPOSE	Dentro del tratamiento de diabetes, ¿cuál es la finalidad de utilizar metformina?
+ANSWER	empagliflozina	PURPOSE	¿Qué utilidad se reconoce para empagliflozina además del control de azúcar?
+ANSWER	sitagliptina	PURPOSE	¿Con qué propósito se prescribe sitagliptina en diabetes tipo dos?
+ANSWER	empagliflozina	MECHANISM	¿De qué manera actúa empagliflozina para que salga azúcar por la orina?
+ANSWER	acarbosa	MECHANISM	¿Cómo logra acarbosa retrasar la digestión de los carbohidratos?
+ANSWER	linagliptina	MECHANISM	¿Qué ocurre en el organismo cuando actúa linagliptina?
+ANSWER	glibenclamida	SIDE_EFFECTS	¿Qué molestias se han descrito después de usar gliburida?
+ANSWER	metformina	SIDE_EFFECTS	Me interesa conocer las reacciones adversas que puede ocasionar metformina.
+ANSWER	tirzepatida	SIDE_EFFECTS	¿Cuáles son los efectos no deseados documentados para tirzepatida?
+ANSWER	pioglitazona	CONTRAINDICATIONS	¿En cuáles situaciones prohíbe la ficha utilizar pioglitazona?
+ANSWER	metformina	CONTRAINDICATIONS	¿Qué condiciones aparecen como contraindicaciones de metformina?
+ANSWER	repaglinida	CONTRAINDICATIONS	¿Cuándo figura repaglinida como un medicamento contraindicado?
+ANSWER	linagliptina	PRECAUTIONS	¿Qué debe vigilar el equipo de salud en adultos mayores que usan linagliptina?
+ANSWER	empagliflozina	PRECAUTIONS	¿Qué cuidados especiales documenta la ficha de empagliflozina para las personas mayores?
+ANSWER	dulaglutida	PRECAUTIONS	¿Cuáles son las precauciones que conviene conversar antes de usar dulaglutida?
+ANSWER	repaglinida	INTERACTIONS	¿Con cuáles otros medicamentos se conocen interacciones de repaglinida?
+ANSWER	colesevelam	INTERACTIONS	¿Qué interferencias con otros fármacos se describen para colesevelam?
+ANSWER	glimepirida	INTERACTIONS	¿Qué asociaciones farmacológicas pueden modificar el efecto de glimepirida?
+ANSWER	metformina	FORMULATIONS	¿Qué presentaciones de liberación existen para administrar metformina?
+ANSWER	liraglutida	FORMULATIONS	¿Por qué vía se administra liraglutida y qué presentaciones hay?
+ANSWER	empagliflozina	FORMULATIONS	Quisiera conocer la forma farmacéutica y vía de administración de empagliflozina.
+ANSWER	tirzepatida	CONSULTATION	¿Qué dudas puedo preparar para preguntarle al médico acerca de tirzepatida?
+ANSWER	sitagliptina	CONSULTATION	¿Qué preguntas llevar a la consulta para comprender sitagliptina?
+ANSWER	metformina	CONSULTATION	Ayúdame a preparar preguntas sobre metformina para la próxima conversación con el médico.
+OPTIONS	metformina	-	¿Para qué se emplea metfornina en diabetes?
+OPTIONS	empagliflozina	-	Explícame la función de empagliflosina.
+OPTIONS	glibenclamida	-	¿Qué reacciones adversas causa glibenclanida?
+OPTIONS	sitagliptina	-	¿Qué debo conocer de sitagliptna?
+OPTIONS	pioglitazona	-	¿Cómo funciona pioglitasona?
+OPTIONS	dapagliflozina	-	¿Cuál es la finalidad de dapaglifozina?
+OPTIONS	semaglutida_oral;semaglutida_inyectable	-	¿Qué precauciones se documentan para semaglutida?
+OPTIONS	exenatida_inmediata;exenatida_prolongada	-	¿Qué presentaciones de exenatida existen?
+OPTIONS	bromocriptina_rapida	-	¿Qué es bromocriptina y para qué se utiliza?
+OPTIONS	glipizida	-	Quisiera consultar los efectos adversos de glipizida.
+OPTIONS	gliclazida	-	¿Qué precauciones documenta gliclazida?
+UNKNOWN	-	-	¿Para qué sirve glucorinexa?
+UNKNOWN	-	-	¿Qué acciones tiene el medicamento velnitrufal?
+UNKNOWN	-	-	¿Puedes enseñarme a conectar una impresora inalámbrica?
+OUTSIDE_SCOPE	-	-	¿Cuántas tabletas de metformina debe tomar mi abuela?
+OUTSIDE_SCOPE	-	-	¿Cómo puedo ajustar la insulina para que baje más rápido el azúcar?
+OUTSIDE_SCOPE	-	-	Tomé glibenclamida y me estoy desmayando, ¿qué hago?
+OUTSIDE_SCOPE	-	-	¿Me conviene sustituir pioglitazona por empagliflozina?
+OUTSIDE_SCOPE	-	-	¿La empagliflozina es segura para mi abuela que tiene el riñón enfermo?

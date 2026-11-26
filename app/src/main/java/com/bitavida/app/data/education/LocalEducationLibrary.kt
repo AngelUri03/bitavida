@@ -1,0 +1,680 @@
+package com.bitavida.app.data.education
+
+import com.bitavida.app.domain.education.EducationEntry
+import com.bitavida.app.domain.education.EducationSource
+import com.bitavida.app.domain.education.EducationTopic
+import com.bitavida.app.domain.education.EducationTopic.*
+
+/**
+ * Original local educational drafts, version 2.0. Institutional citations are references,
+ * not endorsement or clinical approval. No question or personal reading is interpolated.
+ */
+object LocalEducationLibrary {
+    private val glucoseMeter2026 = EducationSource(
+        "FDA · Dispositivos para medir la glucosa en sangre",
+        "https://www.fda.gov/medical-devices/in-vitro-diagnostics/blood-glucose-monitoring-devices",
+        consultedOn = "22 de noviembre de 2026",
+    )
+    private val lowGlucose2026 = EducationSource(
+        "CDC · Acerca de los niveles bajos de azúcar en la sangre",
+        "https://www.cdc.gov/diabetes/es/about/acerca-de-los-niveles-bajos-de-azucar-en-la-sangre-hipoglucemia.html",
+        consultedOn = "22 de noviembre de 2026",
+    )
+    private val pressureMeasurement2026 = EducationSource(
+        "MedlinePlus · Medición de la presión arterial",
+        "https://medlineplus.gov/spanish/ency/article/007490.htm",
+        consultedOn = "22 de noviembre de 2026",
+    )
+    private val pressureWhatSource = EducationSource("CDC · About High Blood Pressure", "https://www.cdc.gov/high-blood-pressure/about/index.html", consultedOn = "22 de noviembre de 2026")
+    private val glucoseSource = EducationSource("MedlinePlus · Glucosa en la sangre", "https://medlineplus.gov/spanish/bloodglucose.html", consultedOn = "22 de noviembre de 2026")
+    private val diabetesOverview2026 = EducationSource(
+        "NIDDK · ¿Qué es la diabetes?",
+        "https://www.niddk.nih.gov/health-information/informacion-de-la-salud/diabetes/informacion-general/que-es",
+        consultedOn = "22 de noviembre de 2026",
+    )
+    private val a1c2026 = EducationSource(
+        "NIDDK · The A1C Test & Diabetes",
+        "https://www.niddk.nih.gov/health-information/diagnostic-tests/a1c-test",
+        consultedOn = "22 de noviembre de 2026",
+    )
+    private val homePressure2026 = EducationSource(
+        "American Heart Association · Home Blood Pressure Monitoring",
+        "https://www.heart.org/en/health-topics/high-blood-pressure/understanding-blood-pressure-readings/monitoring-your-blood-pressure-at-home",
+        consultedOn = "22 de noviembre de 2026",
+    )
+    private val heartBeat2026 = EducationSource(
+        "NHLBI · How the Heart Beats",
+        "https://www.nhlbi.nih.gov/health/heart/heart-beats",
+        consultedOn = "22 de noviembre de 2026",
+    )
+    private val fastingSource = EducationSource("MedlinePlus · Prueba de glucosa en la sangre", "https://medlineplus.gov/spanish/pruebas-de-laboratorio/prueba-de-glucosa-en-la-sangre/", consultedOn = "22 de noviembre de 2026")
+    private val purposeSource = EducationSource("NIDDK · El manejo de la diabetes", "https://www.niddk.nih.gov/health-information/informacion-de-la-salud/diabetes/informacion-general/manejo", consultedOn = "22 de noviembre de 2026")
+    private val variationSource = EducationSource("CDC · Manejo de los niveles de azúcar en la sangre", "https://www.cdc.gov/diabetes/es/treatment/manejo-de-los-niveles-de-azucar-en-la-sangre.html", consultedOn = "22 de noviembre de 2026")
+    private val meterSource = EducationSource("FDA · Uso seguro de glucómetros y tiras reactivas", "https://www.fda.gov/consumers/consumer-updates/how-safely-use-glucose-meters-and-test-strips-diabetes", consultedOn = "22 de noviembre de 2026")
+    private val pressureSource = EducationSource("MedlinePlus · Medición de la presión arterial", "https://medlineplus.gov/spanish/pruebas-de-laboratorio/medicion-de-la-presion-arterial/", consultedOn = "22 de noviembre de 2026")
+    private val pressurePurposeSource = EducationSource("CDC · Measuring Your Blood Pressure", "https://www.cdc.gov/high-blood-pressure/measure/index.html", consultedOn = "22 de noviembre de 2026")
+    private val pressureRestSource = EducationSource("American Heart Association · Home Blood Pressure Monitoring", "https://www.heart.org/en/health-topics/high-blood-pressure/understanding-blood-pressure-readings/monitoring-your-blood-pressure-at-home", consultedOn = "22 de noviembre de 2026")
+    private val pressureActivitySource = EducationSource("American Heart Association · El ritmo cardíaco y la presión arterial no son lo mismo", "https://www.heart.org/en/news/2023/05/17/el-ritmo-cardiaco-y-la-presion-arterial-no-son-lo-mismo", consultedOn = "22 de noviembre de 2026")
+    private val pressureVariationSource = EducationSource("American Heart Association · Las reglas para la medición de la presión arterial", "https://www.heart.org/en/news/2024/06/25/las-reglas-para-la-medicion-de-la-presion-arterial-y-por-que-existen", consultedOn = "22 de noviembre de 2026")
+    private val weightSource = EducationSource("MedlinePlus · Peso corporal", "https://medlineplus.gov/spanish/bodyweight.html", consultedOn = "22 de noviembre de 2026")
+    private val bmiSource = EducationSource("CDC · About Body Mass Index", "https://www.cdc.gov/bmi/about/index.html", consultedOn = "22 de noviembre de 2026")
+    private val weightLoss2026 = EducationSource("NHS · Unintentional weight loss", "https://www.nhs.uk/symptoms/unintentional-weight-loss/", consultedOn = "22 de noviembre de 2026")
+    private val scalesPdf2026 = EducationSource("NHS England · How to Record Your Weight", "https://www.england.nhs.uk/wp-content/uploads/2021/06/PRN00916-how-to-record-your-weight.pdf", consultedOn = "22 de noviembre de 2026")
+    private val appSource = EducationSource("Bitavida · Guía de Mediciones, versión 2.0", "Biblioteca local · PRODUCT.md y DOMAIN_MODEL.md")
+
+    val entries: Map<EducationTopic, EducationEntry> = listOf(
+        EducationEntry(
+            topic = GLUCOSE_WHAT,
+            title = "Glucosa: energía que circula",
+            explanation = "La glucosa es un tipo de azúcar que viaja por la sangre y sirve de energía a las células. «Glucemia» nombra la cantidad de glucosa presente en la sangre.",
+            example = "Cuando alguien dice «me medí el azúcar», suele referirse a una medición de glucosa en sangre.",
+            related = listOf(GLUCOSE_PURPOSE, GLUCOSE_UNITS),
+            source = glucoseSource,
+            version = "2.2",
+            importance = "Entender qué mide el aparato ayuda a conversar sobre una lectura sin confundirla con un diagnóstico ni con el promedio de varios meses.",
+            details = listOf(
+                "La glucosa proviene en parte de los alimentos. El cuerpo la utiliza como combustible; la sangre la transporta a las células y el hígado también participa en mantener su disponibilidad entre comidas.",
+                "La insulina es una hormona producida por el páncreas que ayuda a que la glucosa entre en las células. En la diabetes tipo 2, el cuerpo no responde bien a la insulina y con el tiempo puede no producir suficiente; por eso la glucosa puede acumularse en la sangre.",
+                "Un glucómetro suele analizar una gota de sangre del dedo colocada en una tira reactiva compatible con el aparato. Las sustancias de la tira reaccionan con la glucosa; el medidor detecta esa reacción mediante electricidad o luz, según el dispositivo, y presenta una estimación en pantalla.",
+                "La lectura describe aproximadamente ese momento. La HbA1c, en cambio, ofrece información sobre el promedio aproximado de los últimos tres meses: no son pruebas intercambiables. Fecha, hora y contexto, como antes o después de comer, ayudan al equipo a entender cuándo se obtuvo cada dato.",
+                "Los medidores no son exactos en todas las circunstancias. Residuos de alimentos en las manos, tiras dañadas o incompatibles, temperatura y algunos medicamentos o condiciones pueden afectar el resultado. Consulta el manual y pregunta al equipo cómo comprobar el aparato si una lectura no coincide con lo esperado.",
+                "Si la persona pierde el conocimiento o presenta convulsiones, busca atención urgente; no esperes a obtener una lectura ni atribuyas automáticamente esos signos a una causa. Pregunta al equipo cómo reconocer y comunicar resultados o mensajes inesperados.",
+            ),
+            concepts = listOf(
+                "Glucosa: un azúcar utilizado como energía.",
+                "Glucemia: concentración de glucosa en la sangre.",
+                "Insulina: hormona que ayuda a las células a utilizar la glucosa.",
+                "Tira reactiva: pieza que contiene sustancias que reaccionan con la muestra.",
+            ),
+            additionalSources = listOf(diabetesOverview2026, a1c2026, glucoseMeter2026, lowGlucose2026),
+        ),
+        EducationEntry(
+            topic = GLUCOSE_PURPOSE,
+            title = "Para qué medir el azúcar",
+            explanation = "Medir la glucosa permite conocer una lectura en un momento concreto. Conservarla, junto a su contexto, ayuda a tu equipo de atención a revisar información del cuidado entre consultas.",
+            example = "En una consulta puedes mostrar el valor anotado y si fue antes o después de alimentos, en lugar de recordar solo que «cambió».",
+            related = listOf(GLUCOSE_CONTEXT, GLUCOSE_PLANNED),
+            source = purposeSource,
+            version = "2.2",
+            importance = "Los recuerdos aislados son menos precisos que una secuencia de lecturas con fecha y contexto.",
+            details = listOf(
+                "El glucómetro estima la glucosa de una pequeña muestra de sangre. Como la glucosa cambia a lo largo del día, una lectura describe aproximadamente el momento en que se obtuvo; no explica por sí sola lo ocurrido durante todas las horas anteriores.",
+                "Una serie fechada permite conversar con el equipo sobre lo observado fuera de consulta. Registrar si una lectura fue antes o después de alimentos y anotar otras circunstancias conocidas ayuda a situarla, sin afirmar que una circunstancia causó el resultado.",
+                "La HbA1c aporta otra perspectiva: estima un promedio aproximado de varios meses y no reemplaza una lectura del glucómetro. El equipo puede utilizar ambas informaciones junto con otros datos, según la situación de la persona.",
+                "La frecuencia de medición, los momentos y las metas son acuerdos individuales con el equipo. Bitavida conserva lo declarado; no establece un diagnóstico, decide dosis ni modifica tratamientos.",
+                "Si el aparato muestra un mensaje que no comprendes o una lectura no coincide con cómo se encuentra la persona, consulta el manual y el plan acordado con el equipo. Una pérdida de conocimiento o convulsión requiere atención urgente sin esperar a completar un registro.",
+            ),
+            concepts = listOf(
+                "Lectura: resultado de una medición concreta.",
+                "Seguimiento: revisión de información a lo largo del tiempo.",
+                "HbA1c: prueba que aporta información sobre un periodo más largo.",
+            ),
+            additionalSources = listOf(glucoseMeter2026, a1c2026, lowGlucose2026),
+        ),
+        EducationEntry(
+            topic = GLUCOSE_FASTING,
+            title = "Qué significa medir en ayunas",
+            explanation = "«En ayunas» describe una condición previa sin alimentos durante un periodo determinado. No equivale automáticamente a medir antes de cualquier comida del día.",
+            example = "Una lectura antes de comer al mediodía no se vuelve «En ayunas» solo porque aún no empezó esa comida.",
+            related = listOf(GLUCOSE_CONTEXT, GLUCOSE_PURPOSE),
+            source = fastingSource,
+            version = "2.2",
+            importance = "Distinguir el ayuno de otros momentos evita etiquetar de la misma manera situaciones diferentes.",
+            details = listOf(
+                "En una prueba de glucosa en ayunas se obtiene una muestra después de un periodo sin alimentos, bajo las condiciones indicadas para esa prueba. Su resultado describe la glucosa en ese momento; no muestra, por sí solo, el promedio de los últimos meses que estima la HbA1c.",
+                "«Antes de comer» describe que la medición ocurrió antes de una comida concreta. Esa expresión no garantiza que la persona haya estado en ayunas: por ejemplo, pudo desayunar y medirse antes de la comida del mediodía.",
+                "La orden y el laboratorio o equipo de salud aclaran si la prueba solicitada necesita ayuno, durante cuánto tiempo y qué está permitido. No todas las pruebas de glucosa tienen la misma preparación, y un control con glucómetro en casa no convierte por sí mismo una lectura en un análisis de laboratorio.",
+                "Conserva la fecha, la hora y el contexto que ocurrió realmente. Si no sabes si se cumplieron las condiciones solicitadas, pregunta al equipo; no cambies la etiqueta para que coincida con lo planeado ni hagas cambios en los medicamentos por tu cuenta.",
+            ),
+            concepts = listOf(
+                "Ayuno y antes de alimentos son contextos distintos.",
+                "Una lectura puntual no es la HbA1c.",
+                "El contexto real no se deduce solo por la hora.",
+            ),
+            additionalSources = listOf(a1c2026),
+        ),
+        EducationEntry(
+            topic = GLUCOSE_CONTEXT,
+            title = "Antes, después y contexto real",
+            explanation = "La hora y la relación con los alimentos cuentan cosas diferentes. Una lectura antes de comer no describe la misma situación que otra después; anotar el contexto permite conservar esa diferencia.",
+            example = "Si el plan sugería un momento distinto, conserva el contexto que ocurrió realmente; no ajustes el registro para hacerlo coincidir.",
+            related = listOf(GLUCOSE_FASTING, GLUCOSE_VARIATIONS),
+            source = variationSource,
+            version = "2.2",
+            importance = "El contexto ayuda a que el registro sea comprensible al revisarlo más adelante.",
+            details = listOf(
+                "La glucosa puede cambiar después de los alimentos y también con la actividad, el estrés o una enfermedad. Una cifra obtenida antes de comer y otra posterior describen momentos diferentes: la hora de la medición no explica por sí sola cuándo comenzó la comida ni qué sucedió alrededor.",
+                "En una nota puedes conservar circunstancias que realmente observaste, como que la lectura fue después de desayunar o que hubo una caminata. Si no recuerdas el momento, no necesitas inventarlo. Esos datos ayudan a conversar sobre la serie, pero no prueban por sí mismos qué produjo un cambio.",
+                "La frecuencia y los momentos de medición se acuerdan con el equipo de salud y pueden variar entre personas. No ajustes medicamentos ni establezcas metas personales a partir de esta guía.",
+                "Bitavida separa el momento sugerido del seguimiento del contexto real declarado al guardar. Si el horario planeado era otro, el registro debe conservar lo que sucedió; la etiqueta no altera la cifra medida.",
+            ),
+            concepts = listOf(
+                "Momento sugerido: el previsto en el seguimiento.",
+                "Contexto real: lo declarado sobre la medición que ocurrió.",
+                "La hora de captura y la relación con una comida son datos diferentes.",
+            ),
+            additionalSources = listOf(diabetesOverview2026),
+        ),
+        EducationEntry(
+            topic = GLUCOSE_UNITS,
+            title = "Qué representa mg/dL",
+            explanation = "mg/dL significa miligramos por decilitro. Expresa cuánta glucosa hay en un volumen de sangre: es una unidad de concentración, no una etiqueta de salud.",
+            example = "Al consultar una anotación antigua, revisa qué unidad acompañaba la cifra en el medidor.",
+            related = listOf(GLUCOSE_INDICATORS, GLUCOSE_WHAT),
+            source = glucoseMeter2026,
+            version = "2.2",
+            importance = "El número y su unidad forman parte del mismo resultado; separarlos puede causar confusiones.",
+            details = listOf(
+                "Un miligramo expresa una cantidad de masa y un decilitro, un volumen. La barra se lee «por»: mg/dL indica cuántos miligramos de glucosa corresponden a un decilitro de sangre. La cifra describe una concentración, no el peso de toda la glucosa del cuerpo.",
+                "Algunos aparatos o informes usan otra unidad, mmol/L. Un mismo número escrito con unidades distintas no representa necesariamente la misma concentración. Revisa la pantalla y el manual antes de transcribir; si la unidad no coincide con la que admite el formulario, consulta cómo registrar el dato sin adivinar ni copiar solamente la cifra.",
+                "La FDA advierte que una unidad cambiada inadvertidamente puede llevar a interpretar mal un resultado. No cambies la configuración del aparato ni conviertas valores por suposición; pide apoyo al equipo de salud cuando exista duda.",
+                "La unidad acompaña a la lectura, pero no define por sí misma un objetivo ni permite saber qué acción corresponde a una persona. El equipo de salud acuerda esos límites y Bitavida no los calcula automáticamente.",
+            ),
+            concepts = listOf(
+                "mg: miligramos, una unidad de masa.",
+                "dL: decilitro, una unidad de volumen.",
+                "Concentración: cantidad de una sustancia en un volumen.",
+                "Unidad y valor deben leerse juntos.",
+            ),
+        ),
+        EducationEntry(
+            topic = GLUCOSE_VARIATIONS,
+            title = "Por qué la glucosa puede cambiar",
+            explanation = "La glucosa no permanece fija. Los alimentos, la actividad, el estrés o una enfermedad pueden influir en las lecturas; una diferencia no identifica por sí sola cuál fue la causa.",
+            example = "Una nota como «después de caminar» describe una circunstancia; «cambió por caminar» atribuye una causa que el registro no demuestra.",
+            related = listOf(GLUCOSE_CONTEXT, MEASUREMENT_CONSULTATION),
+            source = variationSource,
+            version = "2.2",
+            importance = "Describir las circunstancias conserva información sin convertir una suposición en un hecho.",
+            details = listOf(
+                "Los alimentos aportan nutrientes que el cuerpo transforma y utiliza; los carbohidratos pueden elevar la glucosa después de comer. La actividad, el estrés, una enfermedad y los medicamentos también pueden influir, pero cada persona y cada situación son distintas.",
+                "El glucómetro analiza una muestra pequeña de sangre en un momento concreto. Dos lecturas pueden diferir porque se tomaron en momentos distintos o por condiciones de medición: residuos en las manos, tiras deterioradas o un problema del aparato también pueden afectar el resultado.",
+                "Guarda cada lectura real con su fecha y hora. Si lo conoces, añade el contexto, como antes o después de una comida o una actividad reciente. Una observación cercana en el tiempo no demuestra que esa circunstancia haya causado la diferencia.",
+                "Si un resultado no coincide con lo que esperabas o con cómo se siente la persona, consulta el manual y el plan acordado con el equipo de salud. Pregunta cómo comprobar el aparato. No modifiques ni suspendas medicamentos por tu cuenta.",
+                "El equipo puede revisar la serie junto con la situación de la persona y otras pruebas. Una medición puntual no equivale a la HbA1c, que aporta información sobre un periodo más largo; Bitavida no convierte la variación en diagnóstico.",
+            ),
+            concepts = listOf(
+                "Variación: diferencia entre lecturas.",
+                "Glucómetro: aparato que estima la glucosa de una muestra de sangre.",
+                "Coincidir en el tiempo no demuestra una causa.",
+            ),
+            additionalSources = listOf(glucoseMeter2026, a1c2026),
+        ),
+        EducationEntry(
+            topic = GLUCOSE_INDICATORS,
+            title = "HI y LO: mensajes del aparato",
+            explanation = "Algunos glucómetros muestran HI o LO cuando el resultado queda fuera de su intervalo de medición. Son mensajes del equipo; no deben convertirse en una cifra inventada.",
+            example = "Si la pantalla mostró «HI», registrar un número supuesto eliminaría la información original del mensaje.",
+            related = listOf(GLUCOSE_UNITS, MEASUREMENT_CHARTS),
+            source = meterSource,
+            version = "2.2",
+            importance = "Conservar el mensaje exacto evita dar una precisión que el aparato no entregó.",
+            details = listOf(
+                "HI suele indicar que la glucosa está por encima del intervalo que mide ese modelo y LO que está por debajo. El intervalo exacto y otros códigos dependen del aparato: revisa su manual y consulta al equipo de salud cómo actuar ante un mensaje inesperado.",
+                "Una tira dañada, manos con residuos u otros factores pueden afectar una lectura. Pregunta al equipo cómo comprobar el dispositivo y qué plan seguir; no sustituyas el mensaje por un número supuesto ni cambies tratamientos por tu cuenta.",
+                "La pérdida de conocimiento o una convulsión necesitan atención urgente, sin retrasarla para completar un registro. Estos signos pueden tener distintas causas; la aplicación no determina cuál está presente.",
+                "Bitavida conserva HI o LO como tales. Al no ser una lectura numérica, no les asigna un punto inventado en la gráfica ni los incluye como cifras en promedios.",
+            ),
+            additionalSources = listOf(glucoseMeter2026, lowGlucose2026),
+            concepts = listOf(
+                "HI y LO no son unidades de medida.",
+                "Un mensaje no aporta un número exacto.",
+            ),
+        ),
+        EducationEntry(
+            topic = GLUCOSE_PLANNED,
+            title = "Programada y adicional",
+            explanation = "Una medición programada se vincula a un horario confirmado del seguimiento. Una adicional se guarda de manera independiente y no sustituye automáticamente una ocurrencia prevista.",
+            example = "Una lectura adicional cercana a un horario no se convierte en programada solo por haberse tomado a una hora parecida.",
+            related = listOf(MEASUREMENT_FOLLOWUPS, MEASUREMENT_REGISTER),
+            source = appSource,
+            version = "2.2",
+            importance = "La relación con el horario conserva qué registro corresponde a cada actividad, sin adivinar asociaciones.",
+            details = listOf(
+                "Una actividad programada es un momento previsto dentro de un seguimiento confirmado. Al abrir esa actividad y registrar la lectura que realmente ocurrió, Bitavida conserva el vínculo con ese horario. La hora programada y la hora real de la medición pueden ser distintas.",
+                "La lectura adicional puede pertenecer al seguimiento activo, pero no ocupa automáticamente una actividad programada. Aunque se haya medido cerca de una hora prevista, conserva su identidad de lectura adicional; la aplicación no deduce por cercanía que corresponde a ese horario.",
+                "El contexto previsto y el contexto real también son datos distintos. Si el plan decía «en ayunas» pero la medición ocurrió después de comer, declara lo sucedido. El registro conserva el contexto previsto para entender la relación sin cambiar el hecho declarado.",
+                "Una actividad pasada sin lectura ni decisión queda sin confirmar. Esa ausencia no demuestra que la medición no se hizo; declarar «No se realizó» requiere una decisión explícita. Si se desconoce una cifra, no la inventes para completar un horario.",
+                "Revisar la asociación antes de guardar ayuda a conservar la historia con claridad. Bitavida IA puede explicarla, pero no elige un horario ni modifica los registros por su cuenta.",
+            ),
+            concepts = listOf(
+                "Actividad programada: momento previsto en el seguimiento.",
+                "Adicional: lectura que no ocupa automáticamente una actividad programada.",
+                "Contexto real: circunstancia declarada de la medición.",
+            ),
+        ),
+        EducationEntry(
+            topic = PRESSURE_WHAT,
+            title = "Qué es la presión arterial",
+            explanation = "La presión arterial expresa la fuerza de la sangre sobre las paredes de las arterias mientras el corazón la impulsa. Se registra mediante dos cifras y suele expresarse en mmHg.",
+            example = "Una pantalla puede mostrar presión y pulso juntos, pero no representan la misma magnitud.",
+            related = listOf(PRESSURE_NUMBERS, PRESSURE_PURPOSE),
+            source = pressureWhatSource,
+            version = "2.2",
+            importance = "Comprender qué mide el aparato ayuda a diferenciar presión, pulso y otros datos de salud.",
+            details = listOf(
+                "Las arterias conducen sangre desde el corazón hacia el cuerpo. La presión cambia durante cada latido: la cifra sistólica representa la presión cuando el corazón se contrae y la diastólica, cuando se relaja entre latidos. Ambas forman una sola lectura expresada en milímetros de mercurio, abreviados mmHg.",
+                "En un tensiómetro de brazo, una banda llamada manguito se infla y aprieta temporalmente el brazo; después libera aire. El aparato utiliza los cambios que detecta mientras la presión de la banda disminuye para estimar los dos valores. Es habitual sentir presión en el brazo durante unos instantes.",
+                "Algunos aparatos también muestran el pulso, que cuenta los latidos por minuto. Aunque aparezcan en la misma pantalla, el pulso no es la cifra inferior de la presión y no debe anotarse como diastólica.",
+                "El tamaño del manguito, la postura, el apoyo del brazo, hablar o moverse pueden afectar la lectura. El equipo de salud puede revisar si el aparato y la técnica son adecuados. Una lectura aislada no permite a Bitavida diagnosticar hipertensión ni decidir cambios de tratamiento.",
+            ),
+            additionalSources = listOf(pressureMeasurement2026, homePressure2026),
+            concepts = listOf(
+                "Arterias: vasos que llevan sangre desde el corazón.",
+                "mmHg: unidad habitual de presión.",
+            ),
+        ),
+        EducationEntry(
+            topic = PRESSURE_PURPOSE,
+            title = "Por qué medir la presión",
+            explanation = "La medición aporta información que no puede obtenerse solo por cómo se siente una persona. Registrar lecturas permite compartir con el equipo de salud lo observado entre consultas.",
+            example = "En lugar de anotar «se sentía bien», un registro conserva la pareja de valores, la hora y el contexto disponible.",
+            related = listOf(PRESSURE_RECORDING, PRESSURE_REST),
+            source = pressurePurposeSource,
+            version = "2.2",
+            importance = "La presión puede cambiar sin que la persona note una sensación concreta.",
+            details = listOf(
+                "La presión arterial mide la fuerza de la sangre sobre las arterias. Muchas personas con presión alta no notan síntomas, de modo que sentirse bien no revela por sí solo cómo fue una lectura.",
+                "Un tensiómetro de brazo ofrece una pareja de cifras para ese momento. Tomar y conservar las lecturas cuando el seguimiento domiciliario fue acordado permite al equipo ver información obtenida fuera del consultorio; esto complementa las visitas y no las sustituye.",
+                "La postura, un manguito de tamaño incorrecto, hablar o la actividad reciente pueden influir en la lectura. Pide al equipo que revise el aparato y la técnica; anota la fecha, la hora, las dos cifras y el contexto que conozcas.",
+                "Una lectura aislada no permite a Bitavida diagnosticar hipertensión. La frecuencia y la manera de revisar las cifras corresponden al plan individual; no suspendas ni cambies medicamentos por cuenta propia.",
+            ),
+            concepts = listOf(
+                "Medir aporta un dato; sentirse bien aporta otra información.",
+                "Lectura: pareja de cifras correspondiente a un momento.",
+                "Registrar no equivale a diagnosticar.",
+            ),
+            additionalSources = listOf(homePressure2026),
+        ),
+        EducationEntry(
+            topic = PRESSURE_NUMBERS,
+            title = "Dos números, dos momentos",
+            explanation = "La sistólica, cifra superior, corresponde al momento en que el corazón se contrae. La diastólica, cifra inferior, representa la presión entre latidos. Juntas forman una lectura.",
+            example = "Al copiar del tensiómetro, identifica el campo de sistólica y el de diastólica; el pulso pertenece a otro campo.",
+            related = listOf(PRESSURE_RECORDING, PRESSURE_WHAT),
+            source = pressureSource,
+            version = "2.2",
+            importance = "Conservar ambos nombres evita intercambiar los valores al transcribirlos.",
+            details = listOf(
+                "Cada latido alterna una contracción, que impulsa sangre hacia las arterias, y una relajación antes del siguiente latido. La cifra superior y la inferior describen esos momentos diferentes del mismo ciclo; no son dos mediciones que deban repartirse entre días.",
+                "El aparato también puede mostrar una tercera cifra: el pulso o número de latidos por minuto. El pulso no mide la fuerza de la sangre contra las arterias y no reemplaza a ninguna de las dos cifras de presión.",
+                "La presión puede cambiar durante el día y según las condiciones de medición. Conservar la hora, el reposo o la actividad reciente y las dos cifras ayuda al equipo de salud a revisar el contexto sin atribuir una causa por cuenta propia.",
+                "En Bitavida, la presión cuenta como un único evento pareado. Sus gráficas mantienen las series separadas para conservar la identidad de cada cifra. Una cifra aislada no establece un diagnóstico ni indica cómo modificar un tratamiento.",
+            ),
+            additionalSources = listOf(pressureMeasurement2026, homePressure2026),
+            concepts = listOf(
+                "Sistólica: presión durante la contracción.",
+                "Diastólica: presión entre latidos.",
+            ),
+        ),
+        EducationEntry(
+            topic = PRESSURE_RECORDING,
+            title = "Registrar ambos valores",
+            explanation = "La captura de presión conserva sistólica y diastólica juntas, con fecha y hora reales. El pulso es un dato separado y solo se transcribe cuando está disponible.",
+            example = "Si el aparato mostró pulso además de presión, no copies esa cifra en el espacio de diastólica.",
+            related = listOf(PRESSURE_NUMBERS, MEASUREMENT_CORRECTIONS),
+            source = appSource,
+            version = "2.0",
+            importance = "Una pareja completa permite conservar fielmente lo que mostró el tensiómetro.",
+            details = listOf(
+                "El formulario organiza la lectura en campos con nombres propios. Las notas pueden conservar una circunstancia que quieras recordar, sin reemplazar los valores.",
+                "Si detectas un error después de guardar, la acción de corrección crea una nueva versión. No necesitas fabricar otra lectura para ocultar la equivocación.",
+            ),
+            concepts = listOf(
+                "Una lectura de presión es un único evento con dos valores.",
+                "La hora de captura puede ser posterior a la hora real.",
+            ),
+        ),
+        EducationEntry(
+            topic = PRESSURE_REST,
+            title = "El reposo aporta contexto",
+            explanation = "La postura, la conversación y la actividad reciente pueden influir en una medición de presión. El reposo ayuda a describir unas condiciones distintas de las de un esfuerzo reciente.",
+            example = "Si acababas de desplazarte, una nota sobre esa circunstancia conserva información que el número por sí solo no cuenta.",
+            related = listOf(PRESSURE_ACTIVITY, PRESSURE_VARIATIONS),
+            source = pressureRestSource,
+            version = "2.1",
+            importance = "Comparar lecturas requiere conocer también cómo se obtuvieron.",
+            details = listOf(
+                "La American Heart Association describe sentarse tranquilamente al menos cinco minutos, con espalda y brazo apoyados, pies en el piso y sin cruzar las piernas; el manguito va sobre la piel del brazo a la altura del corazón. Hablar o moverse puede modificar la lectura.",
+                "Su guía también describe tomar dos lecturas separadas por un minuto. Confirma con el equipo de salud qué frecuencia y técnica corresponden al seguimiento indicado y al aparato que utilizan; una lectura aislada no establece un diagnóstico.",
+                "En Bitavida puedes distinguir el contexto declarado de reposo del de actividad. Esa etiqueta describe la situación; no certifica la técnica ni corrige el resultado.",
+            ),
+            concepts = listOf(
+                "Reposo es una condición de medición.",
+                "La técnica y el contexto son parte de la información.",
+            ),
+            additionalSources = listOf(homePressure2026),
+        ),
+        EducationEntry(
+            topic = PRESSURE_ACTIVITY,
+            title = "Actividad y presión no son una fotografía fija",
+            explanation = "La presión y el ritmo del corazón responden al esfuerzo. Una lectura tras actividad física tiene un contexto diferente de otra tomada en reposo; presión y pulso tampoco significan lo mismo.",
+            example = "«Después de caminar» puede ser una nota de contexto, sin atribuir a la caminata una explicación definitiva del resultado.",
+            related = listOf(PRESSURE_REST, PRESSURE_RECORDING),
+            source = pressureActivitySource,
+            version = "2.2",
+            importance = "Anotar la actividad evita presentar condiciones distintas como si fueran equivalentes.",
+            details = listOf(
+                "Cuando una persona se mueve o hace esfuerzo, los músculos necesitan más oxígeno. El corazón suele latir más rápido para llevarles sangre; ese aumento de latidos es un cambio de pulso. La presión, en cambio, expresa la fuerza de la sangre contra las paredes de las arterias. Son datos distintos, aunque el mismo aparato pueda mostrarlos juntos.",
+                "Una lectura inmediatamente después de caminar o subir escaleras describe ese momento. Puede ser diferente de otra obtenida tras permanecer sentado tranquilamente. La American Heart Association explica que también el ejercicio, el tabaco y la cafeína poco antes de medir pueden modificar temporalmente el resultado.",
+                "Para una medición domiciliaria en reposo, esa asociación describe sentarse en silencio, con espalda y brazo apoyados y los pies en el piso, antes de medir. También señala que el manguito debe tener un tamaño adecuado. Confirma la técnica y el horario indicados para la persona con su equipo de salud y consulta el manual del aparato.",
+                "Si hubo actividad reciente, la nota conserva una circunstancia real; no demuestra que esa actividad sea la única causa de la cifra. Guarda las lecturas realizadas con su hora, sin inventar una medición en reposo para completar el registro.",
+                "La ficha explica el contexto de una medición. No prescribe actividad física ni indica cambiar medicamentos a partir de los valores guardados.",
+            ),
+            concepts = listOf(
+                "Pulso: número de latidos del corazón por minuto.",
+                "Presión arterial: fuerza que ejerce la sangre sobre las arterias.",
+                "Actividad reciente: contexto, no diagnóstico.",
+            ),
+            additionalSources = listOf(homePressure2026, heartBeat2026),
+        ),
+        EducationEntry(
+            topic = PRESSURE_VARIATIONS,
+            title = "Por qué difieren dos lecturas",
+            explanation = "La presión puede variar a lo largo del día y con las condiciones de medición. La prisa, el estrés, la postura o hablar durante la lectura pueden influir en el resultado.",
+            example = "Si existen dos lecturas reales, conservar cada una con su hora mantiene más información que sustituirlas por una cifra inventada.",
+            related = listOf(PRESSURE_REST, MEASUREMENT_CHARTS),
+            source = pressureVariationSource,
+            version = "2.2",
+            importance = "Una diferencia merece conservarse fielmente, sin elegir solo la cifra que parece más conveniente.",
+            details = listOf(
+                "La presión no permanece idéntica durante todo el día. El cuerpo responde, entre otras cosas, a la actividad y al estrés; además, la forma en que se obtiene la lectura puede influir. Por eso dos cifras distintas no bastan por sí solas para saber qué causó el cambio.",
+                "También importa cómo se usó el tensiómetro: un manguito que no corresponde al tamaño del brazo, hablar, mover el brazo o dejarlo sin apoyo pueden alterar la medición. La American Heart Association recomienda comprobar el tamaño del manguito y revisar la técnica con un profesional.",
+                "Para que el equipo pueda comparar, anota ambas cifras de cada lectura, la fecha y hora reales y, si la conoces, alguna circunstancia como una caminata reciente. Conserva cada pareja; no intercambies la cifra superior de una lectura con la inferior de otra.",
+                "La asociación describe hacer dos lecturas separadas por un minuto en la medición domiciliaria. Pregunta al equipo qué pauta corresponde al seguimiento indicado. Compartir todas las lecturas permite revisar una serie; no debes cambiar o suspender medicamentos por tu cuenta basándote en una cifra de casa.",
+                "Las gráficas de Bitavida muestran los registros declarados. Una diferencia no establece por sí misma hipertensión ni explica si un aparato funciona correctamente; cuando haya dudas, lleva el registro y el tensiómetro para revisarlos con el equipo de salud.",
+            ),
+            concepts = listOf(
+                "Una lectura describe un momento.",
+                "Manguito: banda que rodea el brazo durante la medición.",
+                "Comparar exige conservar contexto, pareja de valores y fecha.",
+            ),
+            additionalSources = listOf(homePressure2026),
+        ),
+        EducationEntry(
+            topic = WEIGHT_TRACKING,
+            title = "Para qué seguir el peso",
+            explanation = "El peso reúne agua, músculos, huesos y grasa. Conservar lecturas con fecha permite revisar una serie y llevar información ordenada a consulta; una cifra aislada no resume toda la salud.",
+            example = "Una anotación fechada permite saber cuándo se tomó el peso, en lugar de recordar solo «la última vez pesaba diferente».",
+            related = listOf(WEIGHT_COMPARISON, WEIGHT_TARGET),
+            source = weightSource,
+            version = "2.2",
+            importance = "El historial aporta continuidad aunque cambie la persona que acompaña el cuidado.",
+            details = listOf(
+                "La báscula muestra la masa total del cuerpo. En ese número intervienen músculo, huesos, grasa, agua y otros tejidos; no dice cuánto corresponde a cada uno. El índice de masa corporal relaciona peso y estatura, pero tampoco mide directamente la grasa o la fuerza.",
+                "Una sucesión de mediciones fechadas ayuda al equipo a observar si el peso ha cambiado a lo largo del tiempo. Para interpretarla puede considerar la alimentación, la movilidad, la fuerza y otros datos; dos personas con el mismo peso pueden tener situaciones diferentes.",
+                "En personas mayores, una pérdida de peso no buscada puede merecer valoración profesional. Comenta al equipo desde cuándo ocurre y otros cambios observados, como menor apetito, sin atribuir la causa por tu cuenta.",
+                "Seguimiento no equivale a adelgazar. La frecuencia de medición y cualquier objetivo se acuerdan con el equipo de salud. Bitavida conserva los datos declarados y no prescribe dietas ni tratamientos.",
+            ),
+            concepts = listOf(
+                "Peso corporal: masa total del cuerpo.",
+                "Composición corporal: proporción de distintos tejidos y agua.",
+                "Seguimiento no significa necesariamente perder peso.",
+            ),
+            additionalSources = listOf(bmiSource, weightLoss2026),
+        ),
+        EducationEntry(
+            topic = WEIGHT_CONDITIONS,
+            title = "La misma báscula y condiciones parecidas",
+            explanation = "Usar la misma báscula, en el mismo lugar y con ropa similar facilita comparar registros. Cambiar estas condiciones puede añadir diferencias que no describen solo al cuerpo.",
+            example = "Si una lectura se obtuvo con otra báscula, una nota puede conservar ese cambio sin modificar el valor mostrado.",
+            related = listOf(WEIGHT_COMPARISON, WEIGHT_VARIATIONS),
+            source = scalesPdf2026,
+            version = "2.2",
+            importance = "Conocer las condiciones ayuda a leer el historial con más cuidado.",
+            details = listOf(
+                "El NHS recomienda una superficie firme y nivelada, usar la misma báscula en el mismo lugar y ropa parecida en cada ocasión. Una báscula puede mostrar distintas unidades: comprueba cuál aparece antes de transcribir la cifra.",
+                "Permanecer quieto hasta que se estabilice la lectura y seguir el manual del aparato facilita registrar lo que mostró. Si la persona necesita ayuda para subir o mantenerse de pie, prioriza su seguridad y pregunta al equipo qué alternativa accesible es apropiada.",
+                "Si cambiaste de báscula, lugar o condiciones, una nota ayuda a recordarlo. No significa que toda diferencia se deba al aparato; tampoco conviene corregir un valor por suposición.",
+                "La hora y la frecuencia de medición dependen del seguimiento acordado. Buscar condiciones parecidas ayuda a comparar, pero no crea una obligación de pesarse ni sustituye una indicación personal.",
+            ),
+            concepts = listOf(
+                "La unidad también debe coincidir al comparar.",
+                "Una nota conserva cambios de condiciones.",
+            ),
+        ),
+        EducationEntry(
+            topic = WEIGHT_VARIATIONS,
+            title = "Cambios cotidianos del peso",
+            explanation = "La cifra de la báscula no representa únicamente grasa corporal. El agua y otros componentes del cuerpo forman parte del peso; el momento y las condiciones también importan al comparar.",
+            example = "Dos lecturas con ropa o condiciones distintas merecen conservar ese contexto, sin etiquetar automáticamente el cambio como ganancia o pérdida de grasa.",
+            related = listOf(WEIGHT_CONDITIONS, WEIGHT_TRACKING),
+            source = weightSource,
+            version = "2.2",
+            importance = "Una diferencia por sí sola no identifica qué componente cambió ni su causa.",
+            details = listOf(
+                "La báscula reúne el peso de todos los componentes del cuerpo; no distingue músculo, hueso o grasa. Además, la ropa, el horario y una báscula diferente pueden cambiar las condiciones de la lectura.",
+                "Para comparar con más cuidado, conserva la fecha y la hora y anota si cambió la báscula o la ropa. El NHS describe usar una superficie firme y condiciones parecidas. Aun así, una diferencia entre cifras no permite identificar por sí sola qué tejido cambió ni por qué.",
+                "En una persona mayor, una pérdida de peso no buscada merece comentarse con el equipo de salud. También pueden ser útiles datos observados como cambios de apetito o fuerza; el profesional los considera junto con la historia de la persona.",
+                "Bitavida muestra los valores declarados y no diagnostica la causa, establece metas personales ni indica modificar el tratamiento. Si tienes dudas sobre el cambio, lleva el registro a la consulta en lugar de sustituir una cifra real.",
+            ),
+            concepts = listOf(
+                "Peso no equivale a cantidad de grasa.",
+                "Un cambio observado no explica su causa.",
+            ),
+            additionalSources = listOf(bmiSource, weightLoss2026, scalesPdf2026),
+        ),
+        EducationEntry(
+            topic = WEIGHT_BMI,
+            title = "Qué representa el IMC",
+            explanation = "El índice de masa corporal relaciona el peso y la estatura mediante un cálculo. Es una medida de referencia que no distingue por sí misma músculo, grasa o hueso.",
+            example = "Dos personas pueden compartir un IMC y tener composiciones corporales y situaciones de salud diferentes.",
+            related = listOf(WEIGHT_TARGET, WEIGHT_TRACKING),
+            source = bmiSource,
+            version = "2.2",
+            importance = "Comprender sus límites evita tratar un cálculo como una valoración completa de la persona.",
+            details = listOf(
+                "El IMC se obtiene al dividir el peso en kilogramos entre la estatura en metros al cuadrado: primero se multiplica la estatura por sí misma y después se divide el peso entre ese resultado. Es una relación entre dos medidas, no una medición directa de grasa corporal.",
+                "Dos personas con el mismo índice pueden tener cantidades distintas de músculo, grasa y hueso. El cálculo tampoco muestra dónde se encuentra la grasa ni, por sí solo, describe la alimentación o la fuerza de una persona.",
+                "En adultos mayores, la fuerza, los cambios de peso recientes y la capacidad para realizar actividades pueden aportar información que el índice no contiene. El equipo de salud considera estas y otras circunstancias para construir una valoración más completa.",
+                "La cifra depende de las medidas utilizadas: una estatura desactualizada o un peso capturado incorrectamente modifica el resultado calculado. Si detectas un dato equivocado, utiliza las opciones de corrección de Bitavida y conserva la información real.",
+                "En Bitavida el IMC se muestra cuando hay peso y una estatura válida del perfil. No genera categorías, diagnósticos, recomendaciones de dieta ni un peso objetivo automático.",
+            ),
+            additionalSources = listOf(bmiSource, weightLoss2026),
+            concepts = listOf(
+                "IMC: relación calculada entre peso y estatura.",
+                "Estatura al cuadrado: estatura en metros multiplicada por sí misma.",
+                "Es una referencia parcial, no una descripción completa.",
+            ),
+        ),
+        EducationEntry(
+            topic = WEIGHT_TARGET,
+            title = "Una referencia indicada por el médico",
+            explanation = "El peso objetivo de Bitavida es un dato opcional que la persona cuidadora transcribe de una indicación médica. La aplicación no lo calcula desde el IMC ni lo propone por su cuenta.",
+            example = "Cambiar el objetivo modifica la referencia visible en la gráfica, pero no crea una lectura nueva.",
+            related = listOf(WEIGHT_BMI, WEIGHT_COMPARISON),
+            source = appSource,
+            version = "2.0",
+            importance = "Distinguir el objetivo de la lectura evita confundir una referencia con un resultado medido.",
+            details = listOf(
+                "Cuando existe, la gráfica puede mostrar una línea discontinua llamada «Objetivo». Las lecturas siguen siendo los registros reales de cada fecha y no se reemplazan por esa línea.",
+                "La referencia puede modificarse o quitarse de forma explícita. No entra en promedios, mínimos, máximos o recuentos ni implica que debas aumentar o reducir el peso.",
+            ),
+            concepts = listOf(
+                "Objetivo: referencia transcrita, no predicción.",
+                "Lectura y objetivo son datos distintos.",
+            ),
+        ),
+        EducationEntry(
+            topic = WEIGHT_COMPARISON,
+            title = "Comparar sin perder el contexto",
+            explanation = "Una comparación útil conserva la unidad, la fecha y las condiciones del pesaje. Usar la misma báscula y condiciones similares reduce diferencias ajenas a lo que deseas observar.",
+            example = "Si una lectura provino de otro equipo, puedes mantenerla y anotar esa circunstancia en vez de «ajustarla» para que parezca comparable.",
+            related = listOf(WEIGHT_CONDITIONS, MEASUREMENT_CHARTS),
+            source = appSource,
+            version = "2.0",
+            importance = "La serie cuenta más cuando se sabe cómo se obtuvo cada dato.",
+            details = listOf(
+                "En el historial puedes elegir un periodo y revisar las lecturas reales. Comparar no exige transformar cada diferencia en un juicio sobre progreso o salud.",
+                "Una nota aporta contexto; no demuestra una causa. Las dudas sobre el significado de una serie corresponden a una revisión con el equipo de atención.",
+            ),
+            concepts = listOf(
+                "Comparación: datos leídos con su contexto.",
+                "Las lecturas originales no se retocan para hacerlas coincidir.",
+            ),
+        ),
+        EducationEntry(
+            topic = MEASUREMENT_REGISTER,
+            title = "Cómo conservar una medición real",
+            explanation = "Desde el detalle de Glucosa, Presión o Peso puedes abrir el registro correspondiente. Transcribe el resultado y declara la fecha y hora en que ocurrió; confirma el guardado después de revisarlo.",
+            example = "Si anotaste en papel una lectura real y la capturas más tarde, conserva su fecha y hora originales.",
+            related = listOf(GLUCOSE_PLANNED, MEASUREMENT_FORGOTTEN),
+            source = appSource,
+            version = "2.0",
+            importance = "El momento de la medición y el momento de escribirla pueden ser distintos.",
+            details = listOf(
+                "Una medición adicional no se vincula automáticamente a un horario por parecerse en la hora. Para una programada se abre la ocurrencia correspondiente del seguimiento.",
+                "Los campos dependen del tipo: glucosa conserva su contexto, presión sus dos cifras y peso sus kilogramos. El formulario valida formatos; no interpreta el estado de salud.",
+            ),
+            concepts = listOf(
+                "Capturar es transcribir un hecho conocido.",
+                "Guardar requiere una acción explícita.",
+            ),
+        ),
+        EducationEntry(
+            topic = MEASUREMENT_FOLLOWUPS,
+            title = "Para qué sirve un seguimiento",
+            explanation = "El seguimiento organiza una indicación transcrita en frecuencia, horarios y avisos elegidos explícitamente. La programación describe lo previsto, sin afirmar que una medición ya ocurrió.",
+            example = "Un horario puede estar programado aunque todavía no exista una lectura registrada para él.",
+            related = listOf(MEASUREMENT_STATES, MEASUREMENT_REMINDERS),
+            source = appSource,
+            version = "2.0",
+            importance = "Separar el plan de los hechos permite conservar los dos sin confundirlos.",
+            details = listOf(
+                "Un horario puede ser exacto o una ventana de tiempo. La preferencia de avisos decide si el celular intentará notificar; no sustituye la programación.",
+                "Desactivar el seguimiento detiene su programación futura y conserva los registros anteriores. Una corrección del seguimiento mantiene sus versiones para reconstruir la historia.",
+            ),
+            concepts = listOf(
+                "Programación: lo previsto.",
+                "Registro: lo declarado como ocurrido.",
+            ),
+        ),
+        EducationEntry(
+            topic = MEASUREMENT_STATES,
+            title = "Registrada, sin confirmar y no realizada",
+            explanation = "«Registrada» requiere una lectura real. «Sin confirmar» conserva una actividad pasada sin lectura ni decisión. «No realizada» indica una declaración explícita de la persona cuidadora.",
+            example = "Cerrar una notificación no transforma «Sin confirmar» en «No realizada».",
+            related = listOf(MEASUREMENT_FORGOTTEN, MEASUREMENT_CORRECTIONS),
+            source = appSource,
+            version = "2.0",
+            importance = "Los estados describen información disponible, no el desempeño del cuidador ni la salud de la persona.",
+            details = listOf(
+                "La ausencia de un registro no demuestra que la medición se omitió. Por eso Bitavida evita resolver automáticamente lo que ocurrió.",
+                "Si una declaración «No se realizó» necesita corregirse porque sí hubo una medición, el flujo de corrección conserva esa declaración anterior y requiere el resultado real.",
+            ),
+            concepts = listOf(
+                "Sin confirmar no equivale a no realizada.",
+                "Los cambios explícitos conservan auditoría.",
+            ),
+        ),
+        EducationEntry(
+            topic = MEASUREMENT_REMINDERS,
+            title = "Qué hace un recordatorio",
+            explanation = "Un recordatorio es un aviso del celular para apoyar la organización de horarios confirmados. Depende de los permisos y las restricciones de Android; no es una alarma médica garantizada.",
+            example = "Aunque hayas visto el aviso, la lectura solo aparece cuando tú la registras.",
+            related = listOf(MEASUREMENT_STATES, MEASUREMENT_FOLLOWUPS),
+            source = appSource,
+            version = "2.0",
+            importance = "Distinguir el aviso del registro evita dar por hecha una actividad sin confirmarla.",
+            details = listOf(
+                "No recibir, ignorar o cerrar una notificación no confirma que se midió ni que no se realizó. Los hechos se conservan mediante acciones explícitas.",
+                "Puedes consultar la programación dentro de la app. La preferencia de avisos y la existencia de un seguimiento son decisiones relacionadas, pero diferentes.",
+            ),
+            concepts = listOf(
+                "Aviso y confirmación son acciones distintas.",
+                "El silencio del teléfono no demuestra qué ocurrió.",
+            ),
+        ),
+        EducationEntry(
+            topic = MEASUREMENT_HISTORY,
+            title = "Consultar lo ocurrido",
+            explanation = "Calendario e historial reúne las mediciones por su fecha real. Puedes elegir un día y filtrar por tipo; los historiales individuales permiten revisar semana o mes.",
+            example = "Si una lectura se capturó al día siguiente, búscala por el día en que ocurrió, según su fecha declarada.",
+            related = listOf(MEASUREMENT_CHARTS, MEASUREMENT_CORRECTIONS),
+            source = appSource,
+            version = "2.0",
+            importance = "La consulta por fecha ayuda a recuperar información sin depender de la memoria.",
+            details = listOf(
+                "El historial distingue lecturas reales y estados de ocurrencias programadas. Una revisión administrativa no es otra lectura que deba contarse en la gráfica.",
+                "Un día sin registros expresa ausencia de información. Un día futuro no es una omisión; la vista no completa datos que no se declararon.",
+            ),
+            concepts = listOf(
+                "Fecha real y fecha de captura se conservan separadas.",
+                "Filtrar cambia la consulta, no los datos.",
+            ),
+        ),
+        EducationEntry(
+            topic = MEASUREMENT_CHARTS,
+            title = "Leer las gráficas de Bitavida",
+            explanation = "Las gráficas organizan las lecturas reales en el tiempo. Los puntos y los resúmenes describen datos registrados; no indican si una persona está controlada ni evalúan un tratamiento.",
+            example = "Un día sin punto puede significar que no hay una lectura numérica registrada; no es un valor de cero.",
+            related = listOf(MEASUREMENT_HISTORY, GLUCOSE_INDICATORS),
+            source = appSource,
+            version = "2.0",
+            importance = "Entender qué se representa evita interpretar un hueco como un resultado clínico.",
+            details = listOf(
+                "Glucosa y Peso conservan sus propias series. Presión muestra sistólica y diastólica por separado, manteniendo la pareja de cada lectura; el pulso no se mezcla con ellas.",
+                "Los mensajes HI y LO siguen disponibles como registros, sin inventarles coordenadas numéricas. El objetivo opcional de Peso es una referencia aparte y no participa en las estadísticas.",
+            ),
+            concepts = listOf(
+                "Un hueco no equivale a cero.",
+                "Los resúmenes son descriptivos y usan lecturas reales.",
+            ),
+        ),
+        EducationEntry(
+            topic = MEASUREMENT_CORRECTIONS,
+            title = "Corregir sin borrar la historia",
+            explanation = "Corregir una lectura crea una nueva versión y conserva la anterior. Desde las acciones del registro puedes revisar los datos y confirmar el cambio; la IA no lo guarda por ti.",
+            example = "Si una fecha se escribió mal, corrígela con la fecha real conocida; no crees una cifra nueva para compensarla.",
+            related = listOf(MEASUREMENT_STATES, MEASUREMENT_FORGOTTEN),
+            source = appSource,
+            version = "2.0",
+            importance = "La conservación de versiones permite entender qué cambió y evita ocultar un error como si nunca hubiera ocurrido.",
+            details = listOf(
+                "El historial de cambios permite consultar las revisiones. Eliminar una lectura de la vista operativa tampoco destruye automáticamente su información auditable.",
+                "Las declaraciones sobre una ocurrencia y las lecturas tienen significados diferentes. Corregir «No se realizó» a realizada requiere una lectura real y mantiene la declaración anterior.",
+            ),
+            concepts = listOf(
+                "Corrección: nueva versión, con conservación de la anterior.",
+                "La asistencia no modifica registros automáticamente.",
+            ),
+        ),
+        EducationEntry(
+            topic = MEASUREMENT_FORGOTTEN,
+            title = "Si olvidaste registrar una medición",
+            explanation = "Olvidar escribir un registro no demuestra que la medición no ocurrió. Si conservas el resultado real, puedes capturarlo con su fecha y hora; si falta, no reconstruyas una cifra de memoria incierta.",
+            example = "Si existe una anotación de la lectura, transcríbela. Si solo recuerdas que «se midió», no inventes el número.",
+            related = listOf(MEASUREMENT_REGISTER, MEASUREMENT_STATES),
+            source = appSource,
+            version = "2.0",
+            importance = "Una ausencia honesta de información es distinta de un dato supuesto.",
+            details = listOf(
+                "Bitavida conserva por separado el momento del acontecimiento y el de la captura. Escribir más tarde no exige cambiar la hora real para que coincida con la actual.",
+                "Si no hay lectura ni decisión para una actividad pasada, permanece «Sin confirmar». Declarar que no se realizó requiere tu confirmación, no se deduce de haber olvidado escribir.",
+            ),
+            concepts = listOf(
+                "Registro tardío no equivale a medición tardía.",
+                "Dato desconocido no se sustituye por una estimación.",
+            ),
+        ),
+        EducationEntry(
+            topic = MEASUREMENT_CONSULTATION,
+            title = "Información para la siguiente consulta",
+            explanation = "Puedes revisar las lecturas con fecha, hora, contexto y notas, junto con los seguimientos e indicaciones transcritas. Esa información ayuda a describir lo ocurrido entre consultas.",
+            example = "Prepara una duda concreta y las fechas relacionadas; puedes mostrar el historial de la app cuando tú lo decidas.",
+            related = listOf(MEASUREMENT_HISTORY, MEASUREMENT_CHARTS),
+            source = appSource,
+            version = "2.1",
+            importance = "Distinguir hechos, dudas e indicaciones facilita una conversación más clara.",
+            details = listOf(
+                "Las gráficas y resúmenes describen lo registrado y deben leerse junto con los detalles. Los huecos o estados sin confirmar también son información sobre lo que todavía no se sabe.",
+                "En Informe puedes elegir el periodo y revisar el resumen antes de solicitar Guardar PDF. Bitavida advierte que contiene información sensible y te pide elegir dónde guardarlo; compartirlo es una acción separada y explícita.",
+                "Mostrar la pantalla o compartir un archivo es tu decisión. El informe y el historial de Bitavida no sustituyen al expediente ni las indicaciones del equipo de salud.",
+            ),
+            concepts = listOf(
+                "Registro declarado e indicación transcrita tienen distinta procedencia.",
+                "Compartir información requiere una decisión explícita.",
+            ),
+        ),
+    ).associateBy { it.topic } + MedicationEducationLibrary.entries
+}

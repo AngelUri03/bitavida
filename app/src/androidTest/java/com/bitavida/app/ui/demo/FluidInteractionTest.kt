@@ -21,7 +21,8 @@ import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import androidx.compose.ui.test.performScrollTo
+import androidx.compose.ui.test.performScrollToNode
+import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.up
 import androidx.compose.ui.unit.dp
@@ -155,14 +156,22 @@ class FluidInteractionTest {
     }
 
     @Test
-    fun expandedDemoStateSurvivesRestoration() {
+    fun expandedTodayCategorySurvivesRestoration() {
         val restoration = StateRestorationTester(rule)
-        restoration.setContent { BitavidaTheme { TodayDemoScreen(motionEnabledOverride = false) } }
-        rule.onNodeWithTag("appointment_event").performScrollTo().performClick()
-        rule.onNodeWithText("Ocultar contexto").assertIsDisplayed()
+        restoration.setContent {
+            BitavidaTheme {
+                TodayDemoScreen(
+                    currentDateTime = todayPreviewNow, state = TodayDemoState.HasPlan,
+                    projection = todayPreviewProjection(), motionEnabledOverride = false,
+                )
+            }
+        }
+        rule.onNodeWithTag("today_scroll").performScrollToNode(hasTestTag("today_more_medications"))
+        rule.onNodeWithTag("today_more_medications").performClick()
         restoration.emulateSavedInstanceStateRestore()
-        rule.onNodeWithTag("appointment_event").performScrollTo()
-        rule.onNodeWithText("Ocultar contexto").assertIsDisplayed()
+        rule.onNodeWithText("Mostrar menos").assertExists()
+        rule.onNodeWithTag("today_scroll").performScrollToNode(hasTestTag("today_medication_taken_preview-dose3"))
+        rule.onNodeWithTag("today_medication_taken_preview-dose3").assertIsDisplayed()
         rule.onNodeWithContentDescription("Mi día").assertIsSelected()
     }
 
@@ -208,12 +217,24 @@ class FluidInteractionTest {
     }
 
     @Test
-    fun demoDestinationDoesNotChangeRealSelectionAfterScroll() {
-        rule.setContent { BitavidaTheme { TodayDemoScreen(motionEnabledOverride = true) } }
+    fun todayNavigationAndReminderDispatchThroughTheirRealCallbacks() {
+        var planSelections = 0
+        var postponeRequests = 0
+        rule.setContent {
+            BitavidaTheme {
+                TodayDemoScreen(
+                    currentDateTime = todayPreviewNow, state = TodayDemoState.HasPlan,
+                    projection = todayPreviewProjection(multiple = false), motionEnabledOverride = false,
+                    onPlanSelected = { planSelections++ },
+                    onReminderPostpone = { postponeRequests++ },
+                )
+            }
+        }
         rule.onNodeWithContentDescription("Plan").performClick()
-        rule.onNodeWithContentDescription("Mi día").assertIsSelected()
-        rule.onNodeWithTag("appointment_event").performScrollTo().performClick()
-        rule.onNodeWithText("Ocultar contexto", substring = true).assertExists()
+        rule.runOnIdle { assertEquals(1, planSelections) }
+        rule.onNodeWithTag("today_scroll").performScrollToNode(hasTestTag("today_reminder_postpone_preview-reminder"))
+        rule.onNodeWithTag("today_reminder_postpone_preview-reminder").performClick()
+        rule.runOnIdle { assertEquals(1, postponeRequests) }
         rule.onNodeWithContentDescription("Mi día").assertIsSelected()
     }
 }

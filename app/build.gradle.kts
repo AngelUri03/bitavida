@@ -22,6 +22,16 @@ android {
     }
 
     buildTypes {
+        create("audit") {
+            initWith(getByName("debug"))
+            applicationIdSuffix = ".audit"
+            matchingFallbacks += listOf("debug")
+        }
+        create("demo") {
+            initWith(getByName("debug"))
+            applicationIdSuffix = ".demo"
+            matchingFallbacks += listOf("debug")
+        }
         release {
             optimization {
                 enable = true
@@ -29,6 +39,16 @@ android {
             }
         }
     }
+    // Opt-in only: ordinary debug instrumentation keeps targeting the main app.
+    if (providers.gradleProperty("bitavidaAudit").orNull == "true") {
+        testBuildType = "audit"
+    } else if (providers.gradleProperty("bitavidaDemoTest").orNull == "true") {
+        testBuildType = "demo"
+        sourceSets.getByName("androidTest").java.directories.clear()
+        sourceSets.getByName("androidTest").kotlin.directories.clear()
+        sourceSets.getByName("androidTest").kotlin.directories.add("src/demoAndroidTest/java")
+    }
+    sourceSets.getByName("audit").kotlin.directories.add("src/debug/java")
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -51,6 +71,8 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.exifinterface)
+    implementation(libs.androidx.fragment.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.room3.runtime)
     implementation(libs.androidx.sqlite)
@@ -61,6 +83,8 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
+    add("auditImplementation", libs.androidx.compose.ui.test.manifest)
+    add("auditImplementation", libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
 }

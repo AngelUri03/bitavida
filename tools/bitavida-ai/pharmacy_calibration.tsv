@@ -1,0 +1,20 @@
+# Diagnostic/calibration questions only; not training data or independent evaluation results.
+# expected_topic\tquestion
+MEDICATION_IDENTIFY	En el catálogo me pierdo: ¿a qué grupo farmacológico pertenece este medicamento?
+MEDICATION_IDENTIFY	Necesito una descripción del principio activo para saber qué clase de fármaco es.
+MEDICATION_PURPOSE	¿Cuál es el objetivo terapéutico reconocido de este fármaco?
+MEDICATION_PURPOSE	Explica los motivos por los cuales se indica este medicamento.
+MEDICATION_MECHANISM	¿De qué forma modifica este fármaco los procesos del organismo?
+MEDICATION_MECHANISM	Quiero comprender el mecanismo de acción de esta sustancia.
+MEDICATION_SIDE_EFFECTS	¿Qué reacciones no deseadas se observaron con este fármaco?
+MEDICATION_SIDE_EFFECTS	Me interesa consultar los problemas adversos documentados del medicamento.
+MEDICATION_CONTRAINDICATIONS	¿Qué situaciones impiden utilizar el medicamento según su ficha técnica?
+MEDICATION_CONTRAINDICATIONS	Quiero conocer las contraindicaciones absolutas establecidas para este fármaco.
+MEDICATION_PRECAUTIONS	¿Qué condiciones requieren vigilancia especial con este fármaco?
+MEDICATION_PRECAUTIONS	¿Qué cuidados adicionales se describen al utilizar el medicamento en personas mayores?
+MEDICATION_INTERACTIONS	¿Qué interferencias pueden ocurrir entre este fármaco y otros productos?
+MEDICATION_INTERACTIONS	Me interesa saber qué medicamentos modifican la acción de esta sustancia.
+MEDICATION_FORMULATIONS	¿Qué distingue las formulaciones y rutas de administración de este fármaco?
+MEDICATION_FORMULATIONS	Quiero comprender las presentaciones farmacéuticas disponibles del medicamento.
+MEDICATION_CONSULTATION	¿Qué asuntos sobre el medicamento puedo anotar para tratar en la consulta?
+MEDICATION_CONSULTATION	Ayuda a organizar dudas del fármaco para conversar con el profesional de salud.

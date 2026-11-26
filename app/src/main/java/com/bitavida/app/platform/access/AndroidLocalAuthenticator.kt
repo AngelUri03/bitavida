@@ -13,63 +13,112 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import com.bitavida.app.domain.access.LocalAuthenticationAvailability
 import com.bitavida.app.domain.access.LocalAuthenticationError
+import com.bitavida.app.domain.access.PreferenceVerificationMethod
 
 class AndroidLocalAuthenticator(
     private val activity: FragmentActivity,
     private val callback: Callback,
 ) {
     interface Callback {
+        fun isEntryAuthenticationExpected(): Boolean
         fun onAuthenticationSucceeded()
         fun onAuthenticationAttemptRejected()
         fun onAuthenticationError(error: LocalAuthenticationError)
+        fun pendingPreferenceRequestId(): String?
+        fun onPreferenceAuthenticationSucceeded(id: String, method: PreferenceVerificationMethod)
+        fun onPreferenceAuthenticationAttemptRejected(id: String)
+        fun onPreferenceAuthenticationError(id: String, method: PreferenceVerificationMethod, error: LocalAuthenticationError)
     }
 
     private val keyguardManager =
         activity.getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
     private val biometricManager = BiometricManager.from(activity)
     private var credentialFallbackInProgress = false
+    private var entryGeneration = 0L
+    private var entryInFlight = callback.isEntryAuthenticationExpected()
+    private var credentialGeneration: Long? = if (entryInFlight) entryGeneration else null
+
+    private fun isCurrentEntry(generation: Long): Boolean =
+        entryInFlight && generation == entryGeneration && callback.isEntryAuthenticationExpected()
 
     private val credentialConfirmationLauncher = activity.registerForActivityResult(
         ActivityResultContracts.StartActivityForResult(),
     ) { result ->
         credentialFallbackInProgress = false
-        if (result.resultCode == Activity.RESULT_OK) {
-            callback.onAuthenticationSucceeded()
-        } else {
-            callback.onAuthenticationError(LocalAuthenticationError.CANCELLED)
+        val generation = credentialGeneration
+        credentialGeneration = null
+        if (generation != null && isCurrentEntry(generation)) {
+            entryInFlight = false
+            if (result.resultCode == Activity.RESULT_OK) callback.onAuthenticationSucceeded()
+            else callback.onAuthenticationError(LocalAuthenticationError.CANCELLED)
         }
     }
 
-    private val biometricPrompt = BiometricPrompt(
+    private var preferenceCredentialId: String? = callback.pendingPreferenceRequestId()
+    private val preferenceCredentialLauncher = activity.registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult(),
+    ) { result ->
+        val id = preferenceCredentialId
+        preferenceCredentialId = null
+        if (id != null) {
+            if (result.resultCode == Activity.RESULT_OK) callback.onPreferenceAuthenticationSucceeded(id, PreferenceVerificationMethod.DEVICE_CREDENTIAL)
+            else callback.onPreferenceAuthenticationError(id, PreferenceVerificationMethod.DEVICE_CREDENTIAL, LocalAuthenticationError.CANCELLED)
+        }
+    }
+
+    // The callback is bound to an immutable purpose and operation ID, including after recreation.
+    private fun createBiometricPrompt(preferenceId: String?, generation: Long): BiometricPrompt = BiometricPrompt(
         activity,
         ContextCompat.getMainExecutor(activity),
         object : BiometricPrompt.AuthenticationCallback() {
-            override fun onAuthenticationSucceeded(
-                result: BiometricPrompt.AuthenticationResult,
-            ) {
-                callback.onAuthenticationSucceeded()
+            override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                if (preferenceId == null) {
+                    if (isCurrentEntry(generation)) {
+                        entryInFlight = false
+                        callback.onAuthenticationSucceeded()
+                    }
+                } else callback.onPreferenceAuthenticationSucceeded(preferenceId, PreferenceVerificationMethod.STRONG_BIOMETRIC)
             }
 
             override fun onAuthenticationFailed() {
-                callback.onAuthenticationAttemptRejected()
+                if (preferenceId == null) {
+                    if (isCurrentEntry(generation)) callback.onAuthenticationAttemptRejected()
+                } else callback.onPreferenceAuthenticationAttemptRejected(preferenceId)
             }
 
-            override fun onAuthenticationError(
-                errorCode: Int,
-                errString: CharSequence,
-            ) {
-                if (
-                    (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) &&
-                    (errorCode == BiometricPrompt.ERROR_NEGATIVE_BUTTON) &&
-                    keyguardManager.isDeviceSecure
-                ) {
-                    authenticateWithDeviceCredential()
+            override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                if (preferenceId != null) {
+                    callback.onPreferenceAuthenticationError(preferenceId, PreferenceVerificationMethod.STRONG_BIOMETRIC, errorCode.toDomainError())
                     return
                 }
+                if (!isCurrentEntry(generation)) return
+                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q &&
+                    errorCode == BiometricPrompt.ERROR_NEGATIVE_BUTTON && keyguardManager.isDeviceSecure) {
+                    authenticateWithDeviceCredential(generation)
+                    return
+                }
+                entryInFlight = false
                 callback.onAuthenticationError(errorCode.toDomainError())
             }
         },
     )
+
+    private var biometricPromptIsEntry = callback.pendingPreferenceRequestId() == null
+    private var biometricPrompt = createBiometricPrompt(callback.pendingPreferenceRequestId(), entryGeneration)
+
+    /** Invalidates callbacks before dismissing a prompt. Credential results are ignored too. */
+    fun cancelEntryAuthentication() {
+        entryInFlight = false
+        entryGeneration++
+        credentialGeneration = null
+        credentialFallbackInProgress = false
+        if (biometricPromptIsEntry) biometricPrompt.cancelAuthentication()
+    }
+
+    fun hasDeviceCredential(): Boolean = keyguardManager.isDeviceSecure
+
+    fun hasStrongBiometric(): Boolean =
+        biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG) == BiometricManager.BIOMETRIC_SUCCESS
 
     fun availability(): LocalAuthenticationAvailability {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -96,7 +145,11 @@ class AndroidLocalAuthenticator(
     }
 
     fun authenticate() {
-        if (credentialFallbackInProgress) return
+        if (credentialFallbackInProgress || !callback.isEntryAuthenticationExpected()) return
+        entryInFlight = true
+        val generation = ++entryGeneration
+        biometricPromptIsEntry = true
+        biometricPrompt = createBiometricPrompt(null, generation)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             if (availability() != LocalAuthenticationAvailability.AVAILABLE) {
                 callback.onAuthenticationError(availability().toDomainError())
@@ -135,10 +188,56 @@ class AndroidLocalAuthenticator(
                         .setConfirmationRequired(true)
                         .build(),
                 )
-            keyguardManager.isDeviceSecure -> authenticateWithDeviceCredential()
+            keyguardManager.isDeviceSecure -> authenticateWithDeviceCredential(generation)
             else -> callback.onAuthenticationError(
                 LocalAuthenticationError.SETUP_REQUIRED,
             )
+        }
+    }
+
+    /** Starts a system prompt. The host routes its terminal callback to the retained request. */
+    fun confirmBiometricPreference(id: String, method: PreferenceVerificationMethod) {
+        if (!hasDeviceCredential()) {
+            callback.onPreferenceAuthenticationError(id, method, LocalAuthenticationError.SETUP_REQUIRED)
+            return
+        }
+        if (method == PreferenceVerificationMethod.DEVICE_CREDENTIAL) {
+            authenticatePreferenceCredential(id)
+            return
+        }
+        if (!hasStrongBiometric()) {
+            callback.onPreferenceAuthenticationError(id, PreferenceVerificationMethod.STRONG_BIOMETRIC, LocalAuthenticationError.SETUP_REQUIRED)
+            return
+        }
+        biometricPromptIsEntry = false
+        biometricPrompt = createBiometricPrompt(id, entryGeneration)
+        biometricPrompt.authenticate(
+            BiometricPrompt.PromptInfo.Builder()
+                .setTitle("Confirmar biometría")
+                .setSubtitle("Confirma para activar la protección de acceso")
+                .setAllowedAuthenticators(BiometricManager.Authenticators.BIOMETRIC_STRONG)
+                .setNegativeButtonText("Cancelar")
+                .setConfirmationRequired(true)
+                .build(),
+        )
+    }
+
+    /** Credential-only recovery cancels an abandoned preference change without applying it. */
+    @Suppress("DEPRECATION")
+    fun authenticatePreferenceCredential(id: String) {
+        val intent = keyguardManager.createConfirmDeviceCredentialIntent(
+            "Confirmar cambio en Bitavida", "Confirma tu PIN, patrón o contraseña del dispositivo.",
+        )
+        if (intent == null) {
+            callback.onPreferenceAuthenticationError(id, PreferenceVerificationMethod.DEVICE_CREDENTIAL, LocalAuthenticationError.SETUP_REQUIRED)
+            return
+        }
+        preferenceCredentialId = id
+        try {
+            preferenceCredentialLauncher.launch(intent)
+        } catch (_: Exception) {
+            preferenceCredentialId = null
+            callback.onPreferenceAuthenticationError(id, PreferenceVerificationMethod.DEVICE_CREDENTIAL, LocalAuthenticationError.TEMPORARILY_UNAVAILABLE)
         }
     }
 
@@ -161,7 +260,8 @@ class AndroidLocalAuthenticator(
     }
 
     @Suppress("DEPRECATION") // Required native fallback for DEVICE_CREDENTIAL on API 26–29.
-    private fun authenticateWithDeviceCredential() {
+    private fun authenticateWithDeviceCredential(generation: Long) {
+        if (!isCurrentEntry(generation)) return
         val intent = keyguardManager.createConfirmDeviceCredentialIntent(
             "Desbloquear Bitavida",
             "Confirma tu PIN, patrón o contraseña del dispositivo.",
@@ -171,7 +271,17 @@ class AndroidLocalAuthenticator(
             return
         }
         credentialFallbackInProgress = true
-        credentialConfirmationLauncher.launch(intent)
+        credentialGeneration = generation
+        try {
+            credentialConfirmationLauncher.launch(intent)
+        } catch (_: Exception) {
+            credentialFallbackInProgress = false
+            credentialGeneration = null
+            if (isCurrentEntry(generation)) {
+                entryInFlight = false
+                callback.onAuthenticationError(LocalAuthenticationError.TEMPORARILY_UNAVAILABLE)
+            }
+        }
     }
 
     private fun LocalAuthenticationAvailability.toDomainError(): LocalAuthenticationError =

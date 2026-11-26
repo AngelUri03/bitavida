@@ -1,0 +1,4539 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 18,
+    "identityHash": "7c7319941fa5dc09018821dacedd29f3",
+    "entities": [
+      {
+        "tableName": "technical_probe",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `value` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value",
+            "columnName": "value",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "caregivers",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `displayName` TEXT NOT NULL, `declarationSource` TEXT NOT NULL, `createdAtEpochMillis` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "displayName",
+            "columnName": "displayName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "declarationSource",
+            "columnName": "declarationSource",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAtEpochMillis",
+            "columnName": "createdAtEpochMillis",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "persons_under_care",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `displayName` TEXT NOT NULL, `declaredByCaregiverId` TEXT NOT NULL, `declarationSource` TEXT NOT NULL, `createdAtEpochMillis` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`declaredByCaregiverId`) REFERENCES `caregivers`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "displayName",
+            "columnName": "displayName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "declaredByCaregiverId",
+            "columnName": "declaredByCaregiverId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "declarationSource",
+            "columnName": "declarationSource",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAtEpochMillis",
+            "columnName": "createdAtEpochMillis",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_persons_under_care_declaredByCaregiverId",
+            "unique": false,
+            "columnNames": [
+              "declaredByCaregiverId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_persons_under_care_declaredByCaregiverId` ON `${TABLE_NAME}` (`declaredByCaregiverId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "caregivers",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "declaredByCaregiverId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "care_relationships",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`profileId` TEXT NOT NULL, `caregiverId` TEXT NOT NULL, `personUnderCareId` TEXT NOT NULL, `usage` TEXT NOT NULL, `createdAtEpochMillis` INTEGER NOT NULL, PRIMARY KEY(`profileId`), FOREIGN KEY(`caregiverId`) REFERENCES `caregivers`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`personUnderCareId`) REFERENCES `persons_under_care`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "profileId",
+            "columnName": "profileId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "caregiverId",
+            "columnName": "caregiverId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "personUnderCareId",
+            "columnName": "personUnderCareId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "usage",
+            "columnName": "usage",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAtEpochMillis",
+            "columnName": "createdAtEpochMillis",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "profileId"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_care_relationships_caregiverId",
+            "unique": false,
+            "columnNames": [
+              "caregiverId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_care_relationships_caregiverId` ON `${TABLE_NAME}` (`caregiverId`)"
+          },
+          {
+            "name": "index_care_relationships_personUnderCareId",
+            "unique": false,
+            "columnNames": [
+              "personUnderCareId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_care_relationships_personUnderCareId` ON `${TABLE_NAME}` (`personUnderCareId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "caregivers",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "caregiverId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "persons_under_care",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "personUnderCareId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "consent_records",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `profileId` TEXT NOT NULL, `caregiverId` TEXT NOT NULL, `personUnderCareId` TEXT NOT NULL, `kind` TEXT NOT NULL, `authorizationDeclaration` TEXT NOT NULL, `status` TEXT NOT NULL, `recordedAtEpochMillis` INTEGER NOT NULL, `revokedAtEpochMillis` INTEGER, PRIMARY KEY(`id`), FOREIGN KEY(`profileId`) REFERENCES `care_relationships`(`profileId`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`caregiverId`) REFERENCES `caregivers`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`personUnderCareId`) REFERENCES `persons_under_care`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "profileId",
+            "columnName": "profileId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "caregiverId",
+            "columnName": "caregiverId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "personUnderCareId",
+            "columnName": "personUnderCareId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "kind",
+            "columnName": "kind",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "authorizationDeclaration",
+            "columnName": "authorizationDeclaration",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "status",
+            "columnName": "status",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "recordedAtEpochMillis",
+            "columnName": "recordedAtEpochMillis",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "revokedAtEpochMillis",
+            "columnName": "revokedAtEpochMillis",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_consent_records_profileId",
+            "unique": false,
+            "columnNames": [
+              "profileId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_consent_records_profileId` ON `${TABLE_NAME}` (`profileId`)"
+          },
+          {
+            "name": "index_consent_records_caregiverId",
+            "unique": false,
+            "columnNames": [
+              "caregiverId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_consent_records_caregiverId` ON `${TABLE_NAME}` (`caregiverId`)"
+          },
+          {
+            "name": "index_consent_records_personUnderCareId",
+            "unique": false,
+            "columnNames": [
+              "personUnderCareId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_consent_records_personUnderCareId` ON `${TABLE_NAME}` (`personUnderCareId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "care_relationships",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "profileId"
+            ],
+            "referencedColumns": [
+              "profileId"
+            ]
+          },
+          {
+            "table": "caregivers",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "caregiverId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "persons_under_care",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "personUnderCareId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "legal_acceptance_records",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `profileId` TEXT NOT NULL, `actorId` TEXT NOT NULL, `document` TEXT NOT NULL, `documentVersion` TEXT NOT NULL, `decision` TEXT NOT NULL, `status` TEXT NOT NULL, `recordedAtEpochMillis` INTEGER NOT NULL, `revokedAtEpochMillis` INTEGER, PRIMARY KEY(`id`), FOREIGN KEY(`profileId`) REFERENCES `care_relationships`(`profileId`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`actorId`) REFERENCES `caregivers`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "profileId",
+            "columnName": "profileId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "actorId",
+            "columnName": "actorId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "document",
+            "columnName": "document",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "documentVersion",
+            "columnName": "documentVersion",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "decision",
+            "columnName": "decision",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "status",
+            "columnName": "status",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "recordedAtEpochMillis",
+            "columnName": "recordedAtEpochMillis",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "revokedAtEpochMillis",
+            "columnName": "revokedAtEpochMillis",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_legal_acceptance_records_profileId",
+            "unique": false,
+            "columnNames": [
+              "profileId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_legal_acceptance_records_profileId` ON `${TABLE_NAME}` (`profileId`)"
+          },
+          {
+            "name": "index_legal_acceptance_records_actorId",
+            "unique": false,
+            "columnNames": [
+              "actorId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_legal_acceptance_records_actorId` ON `${TABLE_NAME}` (`actorId`)"
+          },
+          {
+            "name": "index_legal_acceptance_records_document_documentVersion",
+            "unique": false,
+            "columnNames": [
+              "document",
+              "documentVersion"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_legal_acceptance_records_document_documentVersion` ON `${TABLE_NAME}` (`document`, `documentVersion`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "care_relationships",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "profileId"
+            ],
+            "referencedColumns": [
+              "profileId"
+            ]
+          },
+          {
+            "table": "caregivers",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "actorId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "medical_indications",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `personUnderCareId` TEXT NOT NULL, `origin` TEXT NOT NULL, `createdAtEpochMillis` INTEGER NOT NULL, `createdByActorId` TEXT NOT NULL, `contentMode` TEXT NOT NULL, `currentRevisionNumber` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`personUnderCareId`) REFERENCES `persons_under_care`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`createdByActorId`) REFERENCES `caregivers`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "personUnderCareId",
+            "columnName": "personUnderCareId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "origin",
+            "columnName": "origin",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAtEpochMillis",
+            "columnName": "createdAtEpochMillis",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdByActorId",
+            "columnName": "createdByActorId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "contentMode",
+            "columnName": "contentMode",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "currentRevisionNumber",
+            "columnName": "currentRevisionNumber",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_medical_indications_personUnderCareId",
+            "unique": false,
+            "columnNames": [
+              "personUnderCareId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_medical_indications_personUnderCareId` ON `${TABLE_NAME}` (`personUnderCareId`)"
+          },
+          {
+            "name": "index_medical_indications_createdByActorId",
+            "unique": false,
+            "columnNames": [
+              "createdByActorId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_medical_indications_createdByActorId` ON `${TABLE_NAME}` (`createdByActorId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "persons_under_care",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "personUnderCareId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "caregivers",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "createdByActorId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "medical_indication_revisions",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `indicationId` TEXT NOT NULL, `revisionNumber` INTEGER NOT NULL, `originalText` TEXT NOT NULL, `indicatedOnEpochDay` INTEGER NOT NULL, `capturedAtEpochMillis` INTEGER NOT NULL, `declaredProfessionalOrSource` TEXT, `validFromEpochDay` INTEGER, `validUntilEpochDay` INTEGER, `status` TEXT NOT NULL, `changeKind` TEXT NOT NULL, `changeReason` TEXT, `authorActorId` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`indicationId`) REFERENCES `medical_indications`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`authorActorId`) REFERENCES `caregivers`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "indicationId",
+            "columnName": "indicationId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "revisionNumber",
+            "columnName": "revisionNumber",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "originalText",
+            "columnName": "originalText",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "indicatedOnEpochDay",
+            "columnName": "indicatedOnEpochDay",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "capturedAtEpochMillis",
+            "columnName": "capturedAtEpochMillis",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "declaredProfessionalOrSource",
+            "columnName": "declaredProfessionalOrSource",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "validFromEpochDay",
+            "columnName": "validFromEpochDay",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "validUntilEpochDay",
+            "columnName": "validUntilEpochDay",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "status",
+            "columnName": "status",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "changeKind",
+            "columnName": "changeKind",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "changeReason",
+            "columnName": "changeReason",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "authorActorId",
+            "columnName": "authorActorId",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_medical_indication_revisions_indicationId",
+            "unique": false,
+            "columnNames": [
+              "indicationId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_medical_indication_revisions_indicationId` ON `${TABLE_NAME}` (`indicationId`)"
+          },
+          {
+            "name": "index_medical_indication_revisions_authorActorId",
+            "unique": false,
+            "columnNames": [
+              "authorActorId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_medical_indication_revisions_authorActorId` ON `${TABLE_NAME}` (`authorActorId`)"
+          },
+          {
+            "name": "index_medical_indication_revisions_indicationId_revisionNumber",
+            "unique": true,
+            "columnNames": [
+              "indicationId",
+              "revisionNumber"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_medical_indication_revisions_indicationId_revisionNumber` ON `${TABLE_NAME}` (`indicationId`, `revisionNumber`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "medical_indications",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "indicationId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "caregivers",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "authorActorId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "medication_plans",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `medicationSeriesId` TEXT, `personUnderCareId` TEXT NOT NULL, `medicalIndicationId` TEXT, `medicalContentOrigin` TEXT NOT NULL, `scheduleOrigin` TEXT NOT NULL, `createdAtEpochMillis` INTEGER NOT NULL, `createdByActorId` TEXT NOT NULL, `contentMode` TEXT NOT NULL, `currentRevisionNumber` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`personUnderCareId`) REFERENCES `persons_under_care`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`medicalIndicationId`) REFERENCES `medical_indications`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`createdByActorId`) REFERENCES `caregivers`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "medicationSeriesId",
+            "columnName": "medicationSeriesId",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "personUnderCareId",
+            "columnName": "personUnderCareId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "medicalIndicationId",
+            "columnName": "medicalIndicationId",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "medicalContentOrigin",
+            "columnName": "medicalContentOrigin",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "scheduleOrigin",
+            "columnName": "scheduleOrigin",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAtEpochMillis",
+            "columnName": "createdAtEpochMillis",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdByActorId",
+            "columnName": "createdByActorId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "contentMode",
+            "columnName": "contentMode",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "currentRevisionNumber",
+            "columnName": "currentRevisionNumber",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_medication_plans_personUnderCareId",
+            "unique": false,
+            "columnNames": [
+              "personUnderCareId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_medication_plans_personUnderCareId` ON `${TABLE_NAME}` (`personUnderCareId`)"
+          },
+          {
+            "name": "index_medication_plans_medicalIndicationId",
+            "unique": false,
+            "columnNames": [
+              "medicalIndicationId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_medication_plans_medicalIndicationId` ON `${TABLE_NAME}` (`medicalIndicationId`)"
+          },
+          {
+            "name": "index_medication_plans_createdByActorId",
+            "unique": false,
+            "columnNames": [
+              "createdByActorId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_medication_plans_createdByActorId` ON `${TABLE_NAME}` (`createdByActorId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "persons_under_care",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "personUnderCareId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "medical_indications",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "medicalIndicationId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "caregivers",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "createdByActorId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "medication_plan_revisions",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `medicationPlanId` TEXT NOT NULL, `revisionNumber` INTEGER NOT NULL, `medicationName` TEXT NOT NULL, `doseAsIndicated` TEXT NOT NULL, `unitOrPresentation` TEXT, `frequencyAsIndicated` TEXT, `startsOnEpochDay` INTEGER NOT NULL, `endsOnEpochDay` INTEGER, `originalAdditionalInstructions` TEXT, `capturedAtEpochMillis` INTEGER NOT NULL, `authorActorId` TEXT NOT NULL, `changeKind` TEXT NOT NULL, `changeReason` TEXT, `lifecycleEffectiveAtEpochMillis` INTEGER, PRIMARY KEY(`id`), FOREIGN KEY(`medicationPlanId`) REFERENCES `medication_plans`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`authorActorId`) REFERENCES `caregivers`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "medicationPlanId",
+            "columnName": "medicationPlanId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "revisionNumber",
+            "columnName": "revisionNumber",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "medicationName",
+            "columnName": "medicationName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "doseAsIndicated",
+            "columnName": "doseAsIndicated",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "unitOrPresentation",
+            "columnName": "unitOrPresentation",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "frequencyAsIndicated",
+            "columnName": "frequencyAsIndicated",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "startsOnEpochDay",
+            "columnName": "startsOnEpochDay",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "endsOnEpochDay",
+            "columnName": "endsOnEpochDay",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "originalAdditionalInstructions",
+            "columnName": "originalAdditionalInstructions",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "capturedAtEpochMillis",
+            "columnName": "capturedAtEpochMillis",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "authorActorId",
+            "columnName": "authorActorId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "changeKind",
+            "columnName": "changeKind",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "changeReason",
+            "columnName": "changeReason",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "lifecycleEffectiveAtEpochMillis",
+            "columnName": "lifecycleEffectiveAtEpochMillis",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_medication_plan_revisions_medicationPlanId",
+            "unique": false,
+            "columnNames": [
+              "medicationPlanId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_medication_plan_revisions_medicationPlanId` ON `${TABLE_NAME}` (`medicationPlanId`)"
+          },
+          {
+            "name": "index_medication_plan_revisions_authorActorId",
+            "unique": false,
+            "columnNames": [
+              "authorActorId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_medication_plan_revisions_authorActorId` ON `${TABLE_NAME}` (`authorActorId`)"
+          },
+          {
+            "name": "index_medication_plan_revisions_medicationPlanId_revisionNumber",
+            "unique": true,
+            "columnNames": [
+              "medicationPlanId",
+              "revisionNumber"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_medication_plan_revisions_medicationPlanId_revisionNumber` ON `${TABLE_NAME}` (`medicationPlanId`, `revisionNumber`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "medication_plans",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "medicationPlanId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "caregivers",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "authorActorId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "scheduled_doses",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `medicationPlanRevisionId` TEXT NOT NULL, `localTimeMinutes` INTEGER NOT NULL, `configuredAtEpochMillis` INTEGER NOT NULL, `configuredByActorId` TEXT NOT NULL, `origin` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`medicationPlanRevisionId`) REFERENCES `medication_plan_revisions`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`configuredByActorId`) REFERENCES `caregivers`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "medicationPlanRevisionId",
+            "columnName": "medicationPlanRevisionId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "localTimeMinutes",
+            "columnName": "localTimeMinutes",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "configuredAtEpochMillis",
+            "columnName": "configuredAtEpochMillis",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "configuredByActorId",
+            "columnName": "configuredByActorId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "origin",
+            "columnName": "origin",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_scheduled_doses_medicationPlanRevisionId",
+            "unique": false,
+            "columnNames": [
+              "medicationPlanRevisionId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_scheduled_doses_medicationPlanRevisionId` ON `${TABLE_NAME}` (`medicationPlanRevisionId`)"
+          },
+          {
+            "name": "index_scheduled_doses_configuredByActorId",
+            "unique": false,
+            "columnNames": [
+              "configuredByActorId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_scheduled_doses_configuredByActorId` ON `${TABLE_NAME}` (`configuredByActorId`)"
+          },
+          {
+            "name": "index_scheduled_doses_medicationPlanRevisionId_localTimeMinutes",
+            "unique": true,
+            "columnNames": [
+              "medicationPlanRevisionId",
+              "localTimeMinutes"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_scheduled_doses_medicationPlanRevisionId_localTimeMinutes` ON `${TABLE_NAME}` (`medicationPlanRevisionId`, `localTimeMinutes`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "medication_plan_revisions",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "medicationPlanRevisionId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "caregivers",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "configuredByActorId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "sensitive_data_consents",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `profileId` TEXT NOT NULL, `caregiverId` TEXT NOT NULL, `personUnderCareId` TEXT NOT NULL, `documentVersion` TEXT NOT NULL, `acceptedAtEpochMillis` INTEGER NOT NULL, `status` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`profileId`) REFERENCES `care_relationships`(`profileId`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`caregiverId`) REFERENCES `caregivers`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`personUnderCareId`) REFERENCES `persons_under_care`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "profileId",
+            "columnName": "profileId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "caregiverId",
+            "columnName": "caregiverId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "personUnderCareId",
+            "columnName": "personUnderCareId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "documentVersion",
+            "columnName": "documentVersion",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "acceptedAtEpochMillis",
+            "columnName": "acceptedAtEpochMillis",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "status",
+            "columnName": "status",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_sensitive_data_consents_profileId",
+            "unique": false,
+            "columnNames": [
+              "profileId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_sensitive_data_consents_profileId` ON `${TABLE_NAME}` (`profileId`)"
+          },
+          {
+            "name": "index_sensitive_data_consents_caregiverId",
+            "unique": false,
+            "columnNames": [
+              "caregiverId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_sensitive_data_consents_caregiverId` ON `${TABLE_NAME}` (`caregiverId`)"
+          },
+          {
+            "name": "index_sensitive_data_consents_personUnderCareId",
+            "unique": false,
+            "columnNames": [
+              "personUnderCareId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_sensitive_data_consents_personUnderCareId` ON `${TABLE_NAME}` (`personUnderCareId`)"
+          },
+          {
+            "name": "index_sensitive_data_consents_profileId_documentVersion",
+            "unique": true,
+            "columnNames": [
+              "profileId",
+              "documentVersion"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_sensitive_data_consents_profileId_documentVersion` ON `${TABLE_NAME}` (`profileId`, `documentVersion`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "care_relationships",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "profileId"
+            ],
+            "referencedColumns": [
+              "profileId"
+            ]
+          },
+          {
+            "table": "caregivers",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "caregiverId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "persons_under_care",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "personUnderCareId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "medication_configurations",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `medicationPlanRevisionId` TEXT NOT NULL, `form` TEXT NOT NULL, `concentrationValue` TEXT, `concentrationUnit` TEXT, `baseAmountValue` TEXT NOT NULL, `baseAmountUnit` TEXT NOT NULL, `frequency` TEXT NOT NULL, `weekdaysMask` INTEGER NOT NULL, `everyNDaysInterval` INTEGER, `everyNDaysReferenceEpochDay` INTEGER, `hourlyInterval` INTEGER, `hourlyMode` TEXT, `hourlyReferenceEpochDay` INTEGER, `hourlyReferenceMinute` INTEGER, `hourlyWindowStartMinute` INTEGER, `hourlyWindowEndMinute` INTEGER, `hourlyWindowEndsNextDay` INTEGER NOT NULL, `hourlyFirstAdministrationMinute` INTEGER, `cycleActiveDays` INTEGER, `cycleRestDays` INTEGER, `cycleReferenceEpochDay` INTEGER, `cycleCount` INTEGER, `asNeededInstruction` TEXT, `asNeededRestrictions` TEXT, `startsOnEpochDay` INTEGER NOT NULL, `endsOnEpochDay` INTEGER, `status` TEXT NOT NULL, `reminderPreference` TEXT NOT NULL, `secondReminderEnabled` INTEGER NOT NULL, `reminderEffectiveState` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`medicationPlanRevisionId`) REFERENCES `medication_plan_revisions`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "medicationPlanRevisionId",
+            "columnName": "medicationPlanRevisionId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "form",
+            "columnName": "form",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "concentrationValue",
+            "columnName": "concentrationValue",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "concentrationUnit",
+            "columnName": "concentrationUnit",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "baseAmountValue",
+            "columnName": "baseAmountValue",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "baseAmountUnit",
+            "columnName": "baseAmountUnit",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "frequency",
+            "columnName": "frequency",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "weekdaysMask",
+            "columnName": "weekdaysMask",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "everyNDaysInterval",
+            "columnName": "everyNDaysInterval",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "everyNDaysReferenceEpochDay",
+            "columnName": "everyNDaysReferenceEpochDay",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "hourlyInterval",
+            "columnName": "hourlyInterval",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "hourlyMode",
+            "columnName": "hourlyMode",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "hourlyReferenceEpochDay",
+            "columnName": "hourlyReferenceEpochDay",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "hourlyReferenceMinute",
+            "columnName": "hourlyReferenceMinute",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "hourlyWindowStartMinute",
+            "columnName": "hourlyWindowStartMinute",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "hourlyWindowEndMinute",
+            "columnName": "hourlyWindowEndMinute",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "hourlyWindowEndsNextDay",
+            "columnName": "hourlyWindowEndsNextDay",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "hourlyFirstAdministrationMinute",
+            "columnName": "hourlyFirstAdministrationMinute",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "cycleActiveDays",
+            "columnName": "cycleActiveDays",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "cycleRestDays",
+            "columnName": "cycleRestDays",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "cycleReferenceEpochDay",
+            "columnName": "cycleReferenceEpochDay",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "cycleCount",
+            "columnName": "cycleCount",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "asNeededInstruction",
+            "columnName": "asNeededInstruction",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "asNeededRestrictions",
+            "columnName": "asNeededRestrictions",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "startsOnEpochDay",
+            "columnName": "startsOnEpochDay",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "endsOnEpochDay",
+            "columnName": "endsOnEpochDay",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "status",
+            "columnName": "status",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "reminderPreference",
+            "columnName": "reminderPreference",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "secondReminderEnabled",
+            "columnName": "secondReminderEnabled",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "reminderEffectiveState",
+            "columnName": "reminderEffectiveState",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_medication_configurations_medicationPlanRevisionId",
+            "unique": true,
+            "columnNames": [
+              "medicationPlanRevisionId"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_medication_configurations_medicationPlanRevisionId` ON `${TABLE_NAME}` (`medicationPlanRevisionId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "medication_plan_revisions",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "medicationPlanRevisionId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "medication_administrations",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `logicalId` TEXT, `medicationPlanRevisionId` TEXT NOT NULL, `timing` TEXT NOT NULL, `exactTimeMinute` INTEGER, `windowStartMinute` INTEGER, `windowEndMinute` INTEGER, `windowEndsNextDay` INTEGER NOT NULL, `noticeTimeMinute` INTEGER, `noticeNextDay` INTEGER NOT NULL, `reminderEnabled` INTEGER, `amountOverrideValue` TEXT, `amountOverrideUnit` TEXT, `activityRelation` TEXT, `customActivity` TEXT, `activityNoticeTimeMinute` INTEGER, PRIMARY KEY(`id`), FOREIGN KEY(`medicationPlanRevisionId`) REFERENCES `medication_plan_revisions`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "logicalId",
+            "columnName": "logicalId",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "medicationPlanRevisionId",
+            "columnName": "medicationPlanRevisionId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "timing",
+            "columnName": "timing",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "exactTimeMinute",
+            "columnName": "exactTimeMinute",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "windowStartMinute",
+            "columnName": "windowStartMinute",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "windowEndMinute",
+            "columnName": "windowEndMinute",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "windowEndsNextDay",
+            "columnName": "windowEndsNextDay",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "noticeTimeMinute",
+            "columnName": "noticeTimeMinute",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "noticeNextDay",
+            "columnName": "noticeNextDay",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "reminderEnabled",
+            "columnName": "reminderEnabled",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "amountOverrideValue",
+            "columnName": "amountOverrideValue",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "amountOverrideUnit",
+            "columnName": "amountOverrideUnit",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "activityRelation",
+            "columnName": "activityRelation",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "customActivity",
+            "columnName": "customActivity",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "activityNoticeTimeMinute",
+            "columnName": "activityNoticeTimeMinute",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_medication_administrations_medicationPlanRevisionId",
+            "unique": false,
+            "columnNames": [
+              "medicationPlanRevisionId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_medication_administrations_medicationPlanRevisionId` ON `${TABLE_NAME}` (`medicationPlanRevisionId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "medication_plan_revisions",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "medicationPlanRevisionId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "medication_intake_records",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `medicationPlanId` TEXT NOT NULL, `createdAtEpochMillis` INTEGER NOT NULL, `createdByActorId` TEXT NOT NULL, `currentRevisionNumber` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`medicationPlanId`) REFERENCES `medication_plans`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`createdByActorId`) REFERENCES `caregivers`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "medicationPlanId",
+            "columnName": "medicationPlanId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAtEpochMillis",
+            "columnName": "createdAtEpochMillis",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdByActorId",
+            "columnName": "createdByActorId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "currentRevisionNumber",
+            "columnName": "currentRevisionNumber",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_medication_intake_records_medicationPlanId",
+            "unique": false,
+            "columnNames": [
+              "medicationPlanId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_medication_intake_records_medicationPlanId` ON `${TABLE_NAME}` (`medicationPlanId`)"
+          },
+          {
+            "name": "index_medication_intake_records_createdByActorId",
+            "unique": false,
+            "columnNames": [
+              "createdByActorId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_medication_intake_records_createdByActorId` ON `${TABLE_NAME}` (`createdByActorId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "medication_plans",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "medicationPlanId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "caregivers",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "createdByActorId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "medication_intake_revisions",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `intakeRecordId` TEXT NOT NULL, `revisionNumber` INTEGER NOT NULL, `outcome` TEXT NOT NULL, `scheduledEpochDay` INTEGER NOT NULL, `scheduledMinute` INTEGER NOT NULL, `actualEpochDay` INTEGER, `actualMinute` INTEGER, `actualAmountValue` TEXT, `actualAmountUnit` TEXT, `scheduledOccurrenceId` TEXT DEFAULT NULL, `observation` TEXT, `changeKind` TEXT NOT NULL, `changeReason` TEXT, `capturedAtEpochMillis` INTEGER NOT NULL, `authorActorId` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`intakeRecordId`) REFERENCES `medication_intake_records`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`authorActorId`) REFERENCES `caregivers`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "intakeRecordId",
+            "columnName": "intakeRecordId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "revisionNumber",
+            "columnName": "revisionNumber",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "outcome",
+            "columnName": "outcome",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "scheduledEpochDay",
+            "columnName": "scheduledEpochDay",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "scheduledMinute",
+            "columnName": "scheduledMinute",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "actualEpochDay",
+            "columnName": "actualEpochDay",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "actualMinute",
+            "columnName": "actualMinute",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "actualAmountValue",
+            "columnName": "actualAmountValue",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "actualAmountUnit",
+            "columnName": "actualAmountUnit",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "scheduledOccurrenceId",
+            "columnName": "scheduledOccurrenceId",
+            "affinity": "TEXT",
+            "defaultValue": "NULL"
+          },
+          {
+            "fieldPath": "observation",
+            "columnName": "observation",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "changeKind",
+            "columnName": "changeKind",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "changeReason",
+            "columnName": "changeReason",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "capturedAtEpochMillis",
+            "columnName": "capturedAtEpochMillis",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "authorActorId",
+            "columnName": "authorActorId",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_medication_intake_revisions_intakeRecordId",
+            "unique": false,
+            "columnNames": [
+              "intakeRecordId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_medication_intake_revisions_intakeRecordId` ON `${TABLE_NAME}` (`intakeRecordId`)"
+          },
+          {
+            "name": "index_medication_intake_revisions_authorActorId",
+            "unique": false,
+            "columnNames": [
+              "authorActorId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_medication_intake_revisions_authorActorId` ON `${TABLE_NAME}` (`authorActorId`)"
+          },
+          {
+            "name": "index_medication_intake_revisions_intakeRecordId_revisionNumber",
+            "unique": true,
+            "columnNames": [
+              "intakeRecordId",
+              "revisionNumber"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_medication_intake_revisions_intakeRecordId_revisionNumber` ON `${TABLE_NAME}` (`intakeRecordId`, `revisionNumber`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "medication_intake_records",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "intakeRecordId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "caregivers",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "authorActorId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "glucose_measurements",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `profileId` TEXT NOT NULL, `caregiverId` TEXT NOT NULL, `personUnderCareId` TEXT NOT NULL, `reading` TEXT NOT NULL, `actualContext` TEXT NOT NULL, `actualAt` TEXT NOT NULL, `capturedAt` TEXT NOT NULL, `origin` TEXT NOT NULL, `entryKind` TEXT NOT NULL, `followUpId` TEXT, `scheduledOccurrenceId` TEXT, `scheduledAt` TEXT, `expectedContext` TEXT, `note` TEXT, `deletedAt` TEXT, `deletedBy` TEXT, PRIMARY KEY(`id`), FOREIGN KEY(`profileId`) REFERENCES `care_relationships`(`profileId`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`caregiverId`) REFERENCES `caregivers`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`personUnderCareId`) REFERENCES `persons_under_care`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "profileId",
+            "columnName": "profileId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "caregiverId",
+            "columnName": "caregiverId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "personUnderCareId",
+            "columnName": "personUnderCareId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "reading",
+            "columnName": "reading",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "actualContext",
+            "columnName": "actualContext",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "actualAt",
+            "columnName": "actualAt",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "capturedAt",
+            "columnName": "capturedAt",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "origin",
+            "columnName": "origin",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "entryKind",
+            "columnName": "entryKind",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "followUpId",
+            "columnName": "followUpId",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "scheduledOccurrenceId",
+            "columnName": "scheduledOccurrenceId",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "scheduledAt",
+            "columnName": "scheduledAt",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "expectedContext",
+            "columnName": "expectedContext",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "note",
+            "columnName": "note",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "deletedAt",
+            "columnName": "deletedAt",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "deletedBy",
+            "columnName": "deletedBy",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_glucose_measurements_profileId",
+            "unique": false,
+            "columnNames": [
+              "profileId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_glucose_measurements_profileId` ON `${TABLE_NAME}` (`profileId`)"
+          },
+          {
+            "name": "index_glucose_measurements_caregiverId",
+            "unique": false,
+            "columnNames": [
+              "caregiverId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_glucose_measurements_caregiverId` ON `${TABLE_NAME}` (`caregiverId`)"
+          },
+          {
+            "name": "index_glucose_measurements_personUnderCareId",
+            "unique": false,
+            "columnNames": [
+              "personUnderCareId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_glucose_measurements_personUnderCareId` ON `${TABLE_NAME}` (`personUnderCareId`)"
+          },
+          {
+            "name": "index_glucose_measurements_personUnderCareId_scheduledOccurrenceId",
+            "unique": true,
+            "columnNames": [
+              "personUnderCareId",
+              "scheduledOccurrenceId"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_glucose_measurements_personUnderCareId_scheduledOccurrenceId` ON `${TABLE_NAME}` (`personUnderCareId`, `scheduledOccurrenceId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "care_relationships",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "profileId"
+            ],
+            "referencedColumns": [
+              "profileId"
+            ]
+          },
+          {
+            "table": "caregivers",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "caregiverId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "persons_under_care",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "personUnderCareId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "glucose_audit",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `recordId` TEXT NOT NULL, `actorId` TEXT NOT NULL, `operation` TEXT NOT NULL, `capturedAt` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`recordId`) REFERENCES `glucose_measurements`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`actorId`) REFERENCES `caregivers`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "recordId",
+            "columnName": "recordId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "actorId",
+            "columnName": "actorId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "operation",
+            "columnName": "operation",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "capturedAt",
+            "columnName": "capturedAt",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_glucose_audit_recordId",
+            "unique": false,
+            "columnNames": [
+              "recordId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_glucose_audit_recordId` ON `${TABLE_NAME}` (`recordId`)"
+          },
+          {
+            "name": "index_glucose_audit_actorId",
+            "unique": false,
+            "columnNames": [
+              "actorId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_glucose_audit_actorId` ON `${TABLE_NAME}` (`actorId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "glucose_measurements",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "recordId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "caregivers",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "actorId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "glucose_revisions",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `recordId` TEXT NOT NULL, `revisionNumber` INTEGER NOT NULL, `actorId` TEXT NOT NULL, `operation` TEXT NOT NULL, `reading` TEXT NOT NULL, `actualContext` TEXT NOT NULL, `actualAt` TEXT NOT NULL, `note` TEXT, `capturedAt` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`recordId`) REFERENCES `glucose_measurements`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`actorId`) REFERENCES `caregivers`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "recordId",
+            "columnName": "recordId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "revisionNumber",
+            "columnName": "revisionNumber",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "actorId",
+            "columnName": "actorId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "operation",
+            "columnName": "operation",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "reading",
+            "columnName": "reading",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "actualContext",
+            "columnName": "actualContext",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "actualAt",
+            "columnName": "actualAt",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "note",
+            "columnName": "note",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "capturedAt",
+            "columnName": "capturedAt",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_glucose_revisions_recordId_revisionNumber",
+            "unique": true,
+            "columnNames": [
+              "recordId",
+              "revisionNumber"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_glucose_revisions_recordId_revisionNumber` ON `${TABLE_NAME}` (`recordId`, `revisionNumber`)"
+          },
+          {
+            "name": "index_glucose_revisions_actorId",
+            "unique": false,
+            "columnNames": [
+              "actorId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_glucose_revisions_actorId` ON `${TABLE_NAME}` (`actorId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "glucose_measurements",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "recordId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "caregivers",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "actorId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "glucose_follow_ups",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `profileId` TEXT NOT NULL, `caregiverId` TEXT NOT NULL, `personUnderCareId` TEXT NOT NULL, `createdAt` TEXT NOT NULL, `createdByActorId` TEXT NOT NULL, `currentRevisionNumber` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "profileId",
+            "columnName": "profileId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "caregiverId",
+            "columnName": "caregiverId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "personUnderCareId",
+            "columnName": "personUnderCareId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "createdAt",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdByActorId",
+            "columnName": "createdByActorId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "currentRevisionNumber",
+            "columnName": "currentRevisionNumber",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_glucose_follow_ups_personUnderCareId",
+            "unique": true,
+            "columnNames": [
+              "personUnderCareId"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_glucose_follow_ups_personUnderCareId` ON `${TABLE_NAME}` (`personUnderCareId`)"
+          }
+        ]
+      },
+      {
+        "tableName": "glucose_follow_up_revisions",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `followUpId` TEXT NOT NULL, `revisionNumber` INTEGER NOT NULL, `indication` TEXT NOT NULL, `frequency` TEXT NOT NULL, `weekdaysMask` INTEGER NOT NULL, `everyNDaysInterval` INTEGER, `everyNDaysReferenceEpochDay` INTEGER, `startsOnEpochDay` INTEGER NOT NULL, `endsOnEpochDay` INTEGER, `effectiveFromEpochDay` INTEGER NOT NULL, `remindersEnabled` INTEGER NOT NULL, `changeKind` TEXT NOT NULL, `changeReason` TEXT, `capturedAt` TEXT NOT NULL, `authorActorId` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`followUpId`) REFERENCES `glucose_follow_ups`(`id`) ON UPDATE NO ACTION ON DELETE RESTRICT )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "followUpId",
+            "columnName": "followUpId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "revisionNumber",
+            "columnName": "revisionNumber",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "indication",
+            "columnName": "indication",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "frequency",
+            "columnName": "frequency",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "weekdaysMask",
+            "columnName": "weekdaysMask",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "everyNDaysInterval",
+            "columnName": "everyNDaysInterval",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "everyNDaysReferenceEpochDay",
+            "columnName": "everyNDaysReferenceEpochDay",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "startsOnEpochDay",
+            "columnName": "startsOnEpochDay",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "endsOnEpochDay",
+            "columnName": "endsOnEpochDay",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "effectiveFromEpochDay",
+            "columnName": "effectiveFromEpochDay",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "remindersEnabled",
+            "columnName": "remindersEnabled",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "changeKind",
+            "columnName": "changeKind",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "changeReason",
+            "columnName": "changeReason",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "capturedAt",
+            "columnName": "capturedAt",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "authorActorId",
+            "columnName": "authorActorId",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_glucose_follow_up_revisions_followUpId_revisionNumber",
+            "unique": true,
+            "columnNames": [
+              "followUpId",
+              "revisionNumber"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_glucose_follow_up_revisions_followUpId_revisionNumber` ON `${TABLE_NAME}` (`followUpId`, `revisionNumber`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "glucose_follow_ups",
+            "onDelete": "RESTRICT",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "followUpId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "glucose_follow_up_slots",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `logicalId` TEXT NOT NULL, `followUpRevisionId` TEXT NOT NULL, `localTimeMinute` INTEGER NOT NULL, `timingType` TEXT NOT NULL, `windowEndMinute` INTEGER, `endsNextDay` INTEGER NOT NULL, `suggestedContext` TEXT NOT NULL, `reminderEnabled` INTEGER NOT NULL, `reminderMinute` INTEGER, `reminderNextDay` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`followUpRevisionId`) REFERENCES `glucose_follow_up_revisions`(`id`) ON UPDATE NO ACTION ON DELETE RESTRICT )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "logicalId",
+            "columnName": "logicalId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "followUpRevisionId",
+            "columnName": "followUpRevisionId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "localTimeMinute",
+            "columnName": "localTimeMinute",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "timingType",
+            "columnName": "timingType",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "windowEndMinute",
+            "columnName": "windowEndMinute",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "endsNextDay",
+            "columnName": "endsNextDay",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "suggestedContext",
+            "columnName": "suggestedContext",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "reminderEnabled",
+            "columnName": "reminderEnabled",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "reminderMinute",
+            "columnName": "reminderMinute",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "reminderNextDay",
+            "columnName": "reminderNextDay",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_glucose_follow_up_slots_followUpRevisionId",
+            "unique": false,
+            "columnNames": [
+              "followUpRevisionId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_glucose_follow_up_slots_followUpRevisionId` ON `${TABLE_NAME}` (`followUpRevisionId`)"
+          },
+          {
+            "name": "index_glucose_follow_up_slots_followUpRevisionId_localTimeMinute",
+            "unique": true,
+            "columnNames": [
+              "followUpRevisionId",
+              "localTimeMinute"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_glucose_follow_up_slots_followUpRevisionId_localTimeMinute` ON `${TABLE_NAME}` (`followUpRevisionId`, `localTimeMinute`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "glucose_follow_up_revisions",
+            "onDelete": "RESTRICT",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "followUpRevisionId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "glucose_occurrence_decisions",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `followUpId` TEXT NOT NULL, `followUpRevisionId` TEXT NOT NULL, `occurrenceId` TEXT NOT NULL, `scheduledAt` TEXT NOT NULL, `kind` TEXT NOT NULL, `reason` TEXT, `capturedAt` TEXT NOT NULL, `actorId` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`followUpId`) REFERENCES `glucose_follow_ups`(`id`) ON UPDATE NO ACTION ON DELETE RESTRICT )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "followUpId",
+            "columnName": "followUpId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "followUpRevisionId",
+            "columnName": "followUpRevisionId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "occurrenceId",
+            "columnName": "occurrenceId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "scheduledAt",
+            "columnName": "scheduledAt",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "kind",
+            "columnName": "kind",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "reason",
+            "columnName": "reason",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "capturedAt",
+            "columnName": "capturedAt",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "actorId",
+            "columnName": "actorId",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_glucose_occurrence_decisions_followUpId",
+            "unique": false,
+            "columnNames": [
+              "followUpId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_glucose_occurrence_decisions_followUpId` ON `${TABLE_NAME}` (`followUpId`)"
+          },
+          {
+            "name": "index_glucose_occurrence_decisions_occurrenceId",
+            "unique": true,
+            "columnNames": [
+              "occurrenceId"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_glucose_occurrence_decisions_occurrenceId` ON `${TABLE_NAME}` (`occurrenceId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "glucose_follow_ups",
+            "onDelete": "RESTRICT",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "followUpId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "glucose_occurrence_decision_revisions",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `decisionId` TEXT NOT NULL, `occurrenceId` TEXT NOT NULL, `revisionNumber` INTEGER NOT NULL, `operation` TEXT NOT NULL, `reason` TEXT, `capturedAt` TEXT NOT NULL, `actorId` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`decisionId`) REFERENCES `glucose_occurrence_decisions`(`id`) ON UPDATE NO ACTION ON DELETE RESTRICT )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "decisionId",
+            "columnName": "decisionId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "occurrenceId",
+            "columnName": "occurrenceId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "revisionNumber",
+            "columnName": "revisionNumber",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "operation",
+            "columnName": "operation",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "reason",
+            "columnName": "reason",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "capturedAt",
+            "columnName": "capturedAt",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "actorId",
+            "columnName": "actorId",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_glucose_occurrence_decision_revisions_decisionId",
+            "unique": false,
+            "columnNames": [
+              "decisionId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_glucose_occurrence_decision_revisions_decisionId` ON `${TABLE_NAME}` (`decisionId`)"
+          },
+          {
+            "name": "index_glucose_occurrence_decision_revisions_occurrenceId_revisionNumber",
+            "unique": true,
+            "columnNames": [
+              "occurrenceId",
+              "revisionNumber"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_glucose_occurrence_decision_revisions_occurrenceId_revisionNumber` ON `${TABLE_NAME}` (`occurrenceId`, `revisionNumber`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "glucose_occurrence_decisions",
+            "onDelete": "RESTRICT",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "decisionId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "blood_pressure_measurements",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `profileId` TEXT NOT NULL, `caregiverId` TEXT NOT NULL, `personUnderCareId` TEXT NOT NULL, `systolic` TEXT NOT NULL, `diastolic` TEXT NOT NULL, `actualContext` TEXT NOT NULL, `actualAt` TEXT NOT NULL, `capturedAt` TEXT NOT NULL, `origin` TEXT NOT NULL, `entryKind` TEXT NOT NULL, `followUpId` TEXT, `scheduledOccurrenceId` TEXT, `scheduledAt` TEXT, `expectedContext` TEXT, `note` TEXT, `deletedAt` TEXT, `deletedBy` TEXT, PRIMARY KEY(`id`), FOREIGN KEY(`profileId`) REFERENCES `care_relationships`(`profileId`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`caregiverId`) REFERENCES `caregivers`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`personUnderCareId`) REFERENCES `persons_under_care`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "profileId",
+            "columnName": "profileId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "caregiverId",
+            "columnName": "caregiverId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "personUnderCareId",
+            "columnName": "personUnderCareId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "systolic",
+            "columnName": "systolic",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "diastolic",
+            "columnName": "diastolic",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "actualContext",
+            "columnName": "actualContext",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "actualAt",
+            "columnName": "actualAt",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "capturedAt",
+            "columnName": "capturedAt",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "origin",
+            "columnName": "origin",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "entryKind",
+            "columnName": "entryKind",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "followUpId",
+            "columnName": "followUpId",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "scheduledOccurrenceId",
+            "columnName": "scheduledOccurrenceId",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "scheduledAt",
+            "columnName": "scheduledAt",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "expectedContext",
+            "columnName": "expectedContext",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "note",
+            "columnName": "note",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "deletedAt",
+            "columnName": "deletedAt",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "deletedBy",
+            "columnName": "deletedBy",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_blood_pressure_measurements_profileId",
+            "unique": false,
+            "columnNames": [
+              "profileId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_blood_pressure_measurements_profileId` ON `${TABLE_NAME}` (`profileId`)"
+          },
+          {
+            "name": "index_blood_pressure_measurements_caregiverId",
+            "unique": false,
+            "columnNames": [
+              "caregiverId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_blood_pressure_measurements_caregiverId` ON `${TABLE_NAME}` (`caregiverId`)"
+          },
+          {
+            "name": "index_blood_pressure_measurements_personUnderCareId",
+            "unique": false,
+            "columnNames": [
+              "personUnderCareId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_blood_pressure_measurements_personUnderCareId` ON `${TABLE_NAME}` (`personUnderCareId`)"
+          },
+          {
+            "name": "index_blood_pressure_measurements_personUnderCareId_scheduledOccurrenceId",
+            "unique": true,
+            "columnNames": [
+              "personUnderCareId",
+              "scheduledOccurrenceId"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_blood_pressure_measurements_personUnderCareId_scheduledOccurrenceId` ON `${TABLE_NAME}` (`personUnderCareId`, `scheduledOccurrenceId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "care_relationships",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "profileId"
+            ],
+            "referencedColumns": [
+              "profileId"
+            ]
+          },
+          {
+            "table": "caregivers",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "caregiverId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "persons_under_care",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "personUnderCareId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "blood_pressure_audit",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `recordId` TEXT NOT NULL, `actorId` TEXT NOT NULL, `operation` TEXT NOT NULL, `capturedAt` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`recordId`) REFERENCES `blood_pressure_measurements`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`actorId`) REFERENCES `caregivers`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "recordId",
+            "columnName": "recordId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "actorId",
+            "columnName": "actorId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "operation",
+            "columnName": "operation",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "capturedAt",
+            "columnName": "capturedAt",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_blood_pressure_audit_recordId",
+            "unique": false,
+            "columnNames": [
+              "recordId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_blood_pressure_audit_recordId` ON `${TABLE_NAME}` (`recordId`)"
+          },
+          {
+            "name": "index_blood_pressure_audit_actorId",
+            "unique": false,
+            "columnNames": [
+              "actorId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_blood_pressure_audit_actorId` ON `${TABLE_NAME}` (`actorId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "blood_pressure_measurements",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "recordId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "caregivers",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "actorId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "blood_pressure_revisions",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `recordId` TEXT NOT NULL, `revisionNumber` INTEGER NOT NULL, `actorId` TEXT NOT NULL, `operation` TEXT NOT NULL, `systolic` TEXT NOT NULL, `diastolic` TEXT NOT NULL, `actualContext` TEXT NOT NULL, `actualAt` TEXT NOT NULL, `note` TEXT, `capturedAt` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`recordId`) REFERENCES `blood_pressure_measurements`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`actorId`) REFERENCES `caregivers`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "recordId",
+            "columnName": "recordId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "revisionNumber",
+            "columnName": "revisionNumber",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "actorId",
+            "columnName": "actorId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "operation",
+            "columnName": "operation",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "systolic",
+            "columnName": "systolic",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "diastolic",
+            "columnName": "diastolic",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "actualContext",
+            "columnName": "actualContext",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "actualAt",
+            "columnName": "actualAt",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "note",
+            "columnName": "note",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "capturedAt",
+            "columnName": "capturedAt",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_blood_pressure_revisions_recordId_revisionNumber",
+            "unique": true,
+            "columnNames": [
+              "recordId",
+              "revisionNumber"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_blood_pressure_revisions_recordId_revisionNumber` ON `${TABLE_NAME}` (`recordId`, `revisionNumber`)"
+          },
+          {
+            "name": "index_blood_pressure_revisions_actorId",
+            "unique": false,
+            "columnNames": [
+              "actorId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_blood_pressure_revisions_actorId` ON `${TABLE_NAME}` (`actorId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "blood_pressure_measurements",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "recordId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "caregivers",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "actorId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "blood_pressure_follow_ups",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `profileId` TEXT NOT NULL, `caregiverId` TEXT NOT NULL, `personUnderCareId` TEXT NOT NULL, `createdAt` TEXT NOT NULL, `createdByActorId` TEXT NOT NULL, `currentRevisionNumber` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "profileId",
+            "columnName": "profileId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "caregiverId",
+            "columnName": "caregiverId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "personUnderCareId",
+            "columnName": "personUnderCareId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "createdAt",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdByActorId",
+            "columnName": "createdByActorId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "currentRevisionNumber",
+            "columnName": "currentRevisionNumber",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_blood_pressure_follow_ups_personUnderCareId",
+            "unique": true,
+            "columnNames": [
+              "personUnderCareId"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_blood_pressure_follow_ups_personUnderCareId` ON `${TABLE_NAME}` (`personUnderCareId`)"
+          }
+        ]
+      },
+      {
+        "tableName": "blood_pressure_follow_up_revisions",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `followUpId` TEXT NOT NULL, `revisionNumber` INTEGER NOT NULL, `indication` TEXT NOT NULL, `frequency` TEXT NOT NULL, `weekdaysMask` INTEGER NOT NULL, `everyNDaysInterval` INTEGER, `everyNDaysReferenceEpochDay` INTEGER, `startsOnEpochDay` INTEGER NOT NULL, `endsOnEpochDay` INTEGER, `effectiveFromEpochDay` INTEGER NOT NULL, `remindersEnabled` INTEGER NOT NULL, `changeKind` TEXT NOT NULL, `changeReason` TEXT, `capturedAt` TEXT NOT NULL, `authorActorId` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`followUpId`) REFERENCES `blood_pressure_follow_ups`(`id`) ON UPDATE NO ACTION ON DELETE RESTRICT )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "followUpId",
+            "columnName": "followUpId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "revisionNumber",
+            "columnName": "revisionNumber",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "indication",
+            "columnName": "indication",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "frequency",
+            "columnName": "frequency",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "weekdaysMask",
+            "columnName": "weekdaysMask",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "everyNDaysInterval",
+            "columnName": "everyNDaysInterval",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "everyNDaysReferenceEpochDay",
+            "columnName": "everyNDaysReferenceEpochDay",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "startsOnEpochDay",
+            "columnName": "startsOnEpochDay",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "endsOnEpochDay",
+            "columnName": "endsOnEpochDay",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "effectiveFromEpochDay",
+            "columnName": "effectiveFromEpochDay",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "remindersEnabled",
+            "columnName": "remindersEnabled",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "changeKind",
+            "columnName": "changeKind",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "changeReason",
+            "columnName": "changeReason",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "capturedAt",
+            "columnName": "capturedAt",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "authorActorId",
+            "columnName": "authorActorId",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_blood_pressure_follow_up_revisions_followUpId_revisionNumber",
+            "unique": true,
+            "columnNames": [
+              "followUpId",
+              "revisionNumber"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_blood_pressure_follow_up_revisions_followUpId_revisionNumber` ON `${TABLE_NAME}` (`followUpId`, `revisionNumber`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "blood_pressure_follow_ups",
+            "onDelete": "RESTRICT",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "followUpId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "blood_pressure_follow_up_slots",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `logicalId` TEXT NOT NULL, `followUpRevisionId` TEXT NOT NULL, `localTimeMinute` INTEGER NOT NULL, `timingType` TEXT NOT NULL, `windowEndMinute` INTEGER, `endsNextDay` INTEGER NOT NULL, `suggestedContext` TEXT NOT NULL, `reminderEnabled` INTEGER NOT NULL, `reminderMinute` INTEGER, `reminderNextDay` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`followUpRevisionId`) REFERENCES `blood_pressure_follow_up_revisions`(`id`) ON UPDATE NO ACTION ON DELETE RESTRICT )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "logicalId",
+            "columnName": "logicalId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "followUpRevisionId",
+            "columnName": "followUpRevisionId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "localTimeMinute",
+            "columnName": "localTimeMinute",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "timingType",
+            "columnName": "timingType",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "windowEndMinute",
+            "columnName": "windowEndMinute",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "endsNextDay",
+            "columnName": "endsNextDay",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "suggestedContext",
+            "columnName": "suggestedContext",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "reminderEnabled",
+            "columnName": "reminderEnabled",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "reminderMinute",
+            "columnName": "reminderMinute",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "reminderNextDay",
+            "columnName": "reminderNextDay",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_blood_pressure_follow_up_slots_followUpRevisionId",
+            "unique": false,
+            "columnNames": [
+              "followUpRevisionId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_blood_pressure_follow_up_slots_followUpRevisionId` ON `${TABLE_NAME}` (`followUpRevisionId`)"
+          },
+          {
+            "name": "index_blood_pressure_follow_up_slots_followUpRevisionId_localTimeMinute",
+            "unique": true,
+            "columnNames": [
+              "followUpRevisionId",
+              "localTimeMinute"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_blood_pressure_follow_up_slots_followUpRevisionId_localTimeMinute` ON `${TABLE_NAME}` (`followUpRevisionId`, `localTimeMinute`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "blood_pressure_follow_up_revisions",
+            "onDelete": "RESTRICT",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "followUpRevisionId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "blood_pressure_occurrence_decisions",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `followUpId` TEXT NOT NULL, `followUpRevisionId` TEXT NOT NULL, `occurrenceId` TEXT NOT NULL, `scheduledAt` TEXT NOT NULL, `kind` TEXT NOT NULL, `reason` TEXT, `capturedAt` TEXT NOT NULL, `actorId` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`followUpId`) REFERENCES `blood_pressure_follow_ups`(`id`) ON UPDATE NO ACTION ON DELETE RESTRICT )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "followUpId",
+            "columnName": "followUpId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "followUpRevisionId",
+            "columnName": "followUpRevisionId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "occurrenceId",
+            "columnName": "occurrenceId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "scheduledAt",
+            "columnName": "scheduledAt",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "kind",
+            "columnName": "kind",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "reason",
+            "columnName": "reason",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "capturedAt",
+            "columnName": "capturedAt",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "actorId",
+            "columnName": "actorId",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_blood_pressure_occurrence_decisions_followUpId",
+            "unique": false,
+            "columnNames": [
+              "followUpId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_blood_pressure_occurrence_decisions_followUpId` ON `${TABLE_NAME}` (`followUpId`)"
+          },
+          {
+            "name": "index_blood_pressure_occurrence_decisions_occurrenceId",
+            "unique": true,
+            "columnNames": [
+              "occurrenceId"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_blood_pressure_occurrence_decisions_occurrenceId` ON `${TABLE_NAME}` (`occurrenceId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "blood_pressure_follow_ups",
+            "onDelete": "RESTRICT",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "followUpId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "blood_pressure_occurrence_decision_revisions",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `decisionId` TEXT NOT NULL, `occurrenceId` TEXT NOT NULL, `revisionNumber` INTEGER NOT NULL, `operation` TEXT NOT NULL, `reason` TEXT, `capturedAt` TEXT NOT NULL, `actorId` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`decisionId`) REFERENCES `blood_pressure_occurrence_decisions`(`id`) ON UPDATE NO ACTION ON DELETE RESTRICT )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "decisionId",
+            "columnName": "decisionId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "occurrenceId",
+            "columnName": "occurrenceId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "revisionNumber",
+            "columnName": "revisionNumber",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "operation",
+            "columnName": "operation",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "reason",
+            "columnName": "reason",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "capturedAt",
+            "columnName": "capturedAt",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "actorId",
+            "columnName": "actorId",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_blood_pressure_occurrence_decision_revisions_decisionId",
+            "unique": false,
+            "columnNames": [
+              "decisionId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_blood_pressure_occurrence_decision_revisions_decisionId` ON `${TABLE_NAME}` (`decisionId`)"
+          },
+          {
+            "name": "index_blood_pressure_occurrence_decision_revisions_occurrenceId_revisionNumber",
+            "unique": true,
+            "columnNames": [
+              "occurrenceId",
+              "revisionNumber"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_blood_pressure_occurrence_decision_revisions_occurrenceId_revisionNumber` ON `${TABLE_NAME}` (`occurrenceId`, `revisionNumber`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "blood_pressure_occurrence_decisions",
+            "onDelete": "RESTRICT",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "decisionId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "weight_measurements",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `profileId` TEXT NOT NULL, `caregiverId` TEXT NOT NULL, `personUnderCareId` TEXT NOT NULL, `kilograms` TEXT NOT NULL, `heightMeters` TEXT, `actualContext` TEXT NOT NULL, `actualAt` TEXT NOT NULL, `capturedAt` TEXT NOT NULL, `origin` TEXT NOT NULL, `entryKind` TEXT NOT NULL, `followUpId` TEXT, `scheduledOccurrenceId` TEXT, `scheduledAt` TEXT, `expectedContext` TEXT, `note` TEXT, `deletedAt` TEXT, `deletedBy` TEXT, PRIMARY KEY(`id`), FOREIGN KEY(`profileId`) REFERENCES `care_relationships`(`profileId`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`caregiverId`) REFERENCES `caregivers`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`personUnderCareId`) REFERENCES `persons_under_care`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "profileId",
+            "columnName": "profileId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "caregiverId",
+            "columnName": "caregiverId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "personUnderCareId",
+            "columnName": "personUnderCareId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "kilograms",
+            "columnName": "kilograms",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "heightMeters",
+            "columnName": "heightMeters",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "actualContext",
+            "columnName": "actualContext",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "actualAt",
+            "columnName": "actualAt",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "capturedAt",
+            "columnName": "capturedAt",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "origin",
+            "columnName": "origin",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "entryKind",
+            "columnName": "entryKind",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "followUpId",
+            "columnName": "followUpId",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "scheduledOccurrenceId",
+            "columnName": "scheduledOccurrenceId",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "scheduledAt",
+            "columnName": "scheduledAt",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "expectedContext",
+            "columnName": "expectedContext",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "note",
+            "columnName": "note",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "deletedAt",
+            "columnName": "deletedAt",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "deletedBy",
+            "columnName": "deletedBy",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_weight_measurements_profileId",
+            "unique": false,
+            "columnNames": [
+              "profileId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_weight_measurements_profileId` ON `${TABLE_NAME}` (`profileId`)"
+          },
+          {
+            "name": "index_weight_measurements_caregiverId",
+            "unique": false,
+            "columnNames": [
+              "caregiverId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_weight_measurements_caregiverId` ON `${TABLE_NAME}` (`caregiverId`)"
+          },
+          {
+            "name": "index_weight_measurements_personUnderCareId",
+            "unique": false,
+            "columnNames": [
+              "personUnderCareId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_weight_measurements_personUnderCareId` ON `${TABLE_NAME}` (`personUnderCareId`)"
+          },
+          {
+            "name": "index_weight_measurements_personUnderCareId_scheduledOccurrenceId",
+            "unique": true,
+            "columnNames": [
+              "personUnderCareId",
+              "scheduledOccurrenceId"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_weight_measurements_personUnderCareId_scheduledOccurrenceId` ON `${TABLE_NAME}` (`personUnderCareId`, `scheduledOccurrenceId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "care_relationships",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "profileId"
+            ],
+            "referencedColumns": [
+              "profileId"
+            ]
+          },
+          {
+            "table": "caregivers",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "caregiverId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "persons_under_care",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "personUnderCareId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "weight_targets",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`personUnderCareId` TEXT NOT NULL, `profileId` TEXT NOT NULL, `caregiverId` TEXT NOT NULL, `kilograms` TEXT NOT NULL, PRIMARY KEY(`personUnderCareId`), FOREIGN KEY(`profileId`) REFERENCES `care_relationships`(`profileId`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`caregiverId`) REFERENCES `caregivers`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`personUnderCareId`) REFERENCES `persons_under_care`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "personUnderCareId",
+            "columnName": "personUnderCareId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "profileId",
+            "columnName": "profileId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "caregiverId",
+            "columnName": "caregiverId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "kilograms",
+            "columnName": "kilograms",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "personUnderCareId"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_weight_targets_profileId",
+            "unique": false,
+            "columnNames": [
+              "profileId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_weight_targets_profileId` ON `${TABLE_NAME}` (`profileId`)"
+          },
+          {
+            "name": "index_weight_targets_caregiverId",
+            "unique": false,
+            "columnNames": [
+              "caregiverId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_weight_targets_caregiverId` ON `${TABLE_NAME}` (`caregiverId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "care_relationships",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "profileId"
+            ],
+            "referencedColumns": [
+              "profileId"
+            ]
+          },
+          {
+            "table": "caregivers",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "caregiverId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "persons_under_care",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "personUnderCareId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "weight_audit",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `recordId` TEXT NOT NULL, `actorId` TEXT NOT NULL, `operation` TEXT NOT NULL, `capturedAt` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`recordId`) REFERENCES `weight_measurements`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`actorId`) REFERENCES `caregivers`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "recordId",
+            "columnName": "recordId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "actorId",
+            "columnName": "actorId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "operation",
+            "columnName": "operation",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "capturedAt",
+            "columnName": "capturedAt",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_weight_audit_recordId",
+            "unique": false,
+            "columnNames": [
+              "recordId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_weight_audit_recordId` ON `${TABLE_NAME}` (`recordId`)"
+          },
+          {
+            "name": "index_weight_audit_actorId",
+            "unique": false,
+            "columnNames": [
+              "actorId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_weight_audit_actorId` ON `${TABLE_NAME}` (`actorId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "weight_measurements",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "recordId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "caregivers",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "actorId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "weight_revisions",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `recordId` TEXT NOT NULL, `revisionNumber` INTEGER NOT NULL, `actorId` TEXT NOT NULL, `operation` TEXT NOT NULL, `kilograms` TEXT NOT NULL, `heightMeters` TEXT, `actualContext` TEXT NOT NULL, `actualAt` TEXT NOT NULL, `note` TEXT, `capturedAt` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`recordId`) REFERENCES `weight_measurements`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`actorId`) REFERENCES `caregivers`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "recordId",
+            "columnName": "recordId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "revisionNumber",
+            "columnName": "revisionNumber",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "actorId",
+            "columnName": "actorId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "operation",
+            "columnName": "operation",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "kilograms",
+            "columnName": "kilograms",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "heightMeters",
+            "columnName": "heightMeters",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "actualContext",
+            "columnName": "actualContext",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "actualAt",
+            "columnName": "actualAt",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "note",
+            "columnName": "note",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "capturedAt",
+            "columnName": "capturedAt",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_weight_revisions_recordId_revisionNumber",
+            "unique": true,
+            "columnNames": [
+              "recordId",
+              "revisionNumber"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_weight_revisions_recordId_revisionNumber` ON `${TABLE_NAME}` (`recordId`, `revisionNumber`)"
+          },
+          {
+            "name": "index_weight_revisions_actorId",
+            "unique": false,
+            "columnNames": [
+              "actorId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_weight_revisions_actorId` ON `${TABLE_NAME}` (`actorId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "weight_measurements",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "recordId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "caregivers",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "actorId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "weight_follow_ups",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `profileId` TEXT NOT NULL, `caregiverId` TEXT NOT NULL, `personUnderCareId` TEXT NOT NULL, `createdAt` TEXT NOT NULL, `createdByActorId` TEXT NOT NULL, `currentRevisionNumber` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "profileId",
+            "columnName": "profileId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "caregiverId",
+            "columnName": "caregiverId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "personUnderCareId",
+            "columnName": "personUnderCareId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "createdAt",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdByActorId",
+            "columnName": "createdByActorId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "currentRevisionNumber",
+            "columnName": "currentRevisionNumber",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_weight_follow_ups_personUnderCareId",
+            "unique": true,
+            "columnNames": [
+              "personUnderCareId"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_weight_follow_ups_personUnderCareId` ON `${TABLE_NAME}` (`personUnderCareId`)"
+          }
+        ]
+      },
+      {
+        "tableName": "weight_follow_up_revisions",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `followUpId` TEXT NOT NULL, `revisionNumber` INTEGER NOT NULL, `indication` TEXT NOT NULL, `frequency` TEXT NOT NULL, `weekdaysMask` INTEGER NOT NULL, `everyNDaysInterval` INTEGER, `everyNDaysReferenceEpochDay` INTEGER, `startsOnEpochDay` INTEGER NOT NULL, `endsOnEpochDay` INTEGER, `effectiveFromEpochDay` INTEGER NOT NULL, `remindersEnabled` INTEGER NOT NULL, `changeKind` TEXT NOT NULL, `changeReason` TEXT, `capturedAt` TEXT NOT NULL, `authorActorId` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`followUpId`) REFERENCES `weight_follow_ups`(`id`) ON UPDATE NO ACTION ON DELETE RESTRICT )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "followUpId",
+            "columnName": "followUpId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "revisionNumber",
+            "columnName": "revisionNumber",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "indication",
+            "columnName": "indication",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "frequency",
+            "columnName": "frequency",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "weekdaysMask",
+            "columnName": "weekdaysMask",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "everyNDaysInterval",
+            "columnName": "everyNDaysInterval",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "everyNDaysReferenceEpochDay",
+            "columnName": "everyNDaysReferenceEpochDay",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "startsOnEpochDay",
+            "columnName": "startsOnEpochDay",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "endsOnEpochDay",
+            "columnName": "endsOnEpochDay",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "effectiveFromEpochDay",
+            "columnName": "effectiveFromEpochDay",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "remindersEnabled",
+            "columnName": "remindersEnabled",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "changeKind",
+            "columnName": "changeKind",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "changeReason",
+            "columnName": "changeReason",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "capturedAt",
+            "columnName": "capturedAt",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "authorActorId",
+            "columnName": "authorActorId",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_weight_follow_up_revisions_followUpId_revisionNumber",
+            "unique": true,
+            "columnNames": [
+              "followUpId",
+              "revisionNumber"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_weight_follow_up_revisions_followUpId_revisionNumber` ON `${TABLE_NAME}` (`followUpId`, `revisionNumber`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "weight_follow_ups",
+            "onDelete": "RESTRICT",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "followUpId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "weight_follow_up_slots",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `logicalId` TEXT NOT NULL, `followUpRevisionId` TEXT NOT NULL, `localTimeMinute` INTEGER NOT NULL, `timingType` TEXT NOT NULL, `windowEndMinute` INTEGER, `endsNextDay` INTEGER NOT NULL, `suggestedContext` TEXT NOT NULL, `reminderEnabled` INTEGER NOT NULL, `reminderMinute` INTEGER, `reminderNextDay` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`followUpRevisionId`) REFERENCES `weight_follow_up_revisions`(`id`) ON UPDATE NO ACTION ON DELETE RESTRICT )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "logicalId",
+            "columnName": "logicalId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "followUpRevisionId",
+            "columnName": "followUpRevisionId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "localTimeMinute",
+            "columnName": "localTimeMinute",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "timingType",
+            "columnName": "timingType",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "windowEndMinute",
+            "columnName": "windowEndMinute",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "endsNextDay",
+            "columnName": "endsNextDay",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "suggestedContext",
+            "columnName": "suggestedContext",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "reminderEnabled",
+            "columnName": "reminderEnabled",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "reminderMinute",
+            "columnName": "reminderMinute",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "reminderNextDay",
+            "columnName": "reminderNextDay",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_weight_follow_up_slots_followUpRevisionId",
+            "unique": false,
+            "columnNames": [
+              "followUpRevisionId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_weight_follow_up_slots_followUpRevisionId` ON `${TABLE_NAME}` (`followUpRevisionId`)"
+          },
+          {
+            "name": "index_weight_follow_up_slots_followUpRevisionId_localTimeMinute",
+            "unique": true,
+            "columnNames": [
+              "followUpRevisionId",
+              "localTimeMinute"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_weight_follow_up_slots_followUpRevisionId_localTimeMinute` ON `${TABLE_NAME}` (`followUpRevisionId`, `localTimeMinute`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "weight_follow_up_revisions",
+            "onDelete": "RESTRICT",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "followUpRevisionId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "weight_occurrence_decisions",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `followUpId` TEXT NOT NULL, `followUpRevisionId` TEXT NOT NULL, `occurrenceId` TEXT NOT NULL, `scheduledAt` TEXT NOT NULL, `kind` TEXT NOT NULL, `reason` TEXT, `capturedAt` TEXT NOT NULL, `actorId` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`followUpId`) REFERENCES `weight_follow_ups`(`id`) ON UPDATE NO ACTION ON DELETE RESTRICT )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "followUpId",
+            "columnName": "followUpId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "followUpRevisionId",
+            "columnName": "followUpRevisionId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "occurrenceId",
+            "columnName": "occurrenceId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "scheduledAt",
+            "columnName": "scheduledAt",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "kind",
+            "columnName": "kind",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "reason",
+            "columnName": "reason",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "capturedAt",
+            "columnName": "capturedAt",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "actorId",
+            "columnName": "actorId",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_weight_occurrence_decisions_followUpId",
+            "unique": false,
+            "columnNames": [
+              "followUpId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_weight_occurrence_decisions_followUpId` ON `${TABLE_NAME}` (`followUpId`)"
+          },
+          {
+            "name": "index_weight_occurrence_decisions_occurrenceId",
+            "unique": true,
+            "columnNames": [
+              "occurrenceId"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_weight_occurrence_decisions_occurrenceId` ON `${TABLE_NAME}` (`occurrenceId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "weight_follow_ups",
+            "onDelete": "RESTRICT",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "followUpId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "weight_occurrence_decision_revisions",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `decisionId` TEXT NOT NULL, `occurrenceId` TEXT NOT NULL, `revisionNumber` INTEGER NOT NULL, `operation` TEXT NOT NULL, `reason` TEXT, `capturedAt` TEXT NOT NULL, `actorId` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`decisionId`) REFERENCES `weight_occurrence_decisions`(`id`) ON UPDATE NO ACTION ON DELETE RESTRICT )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "decisionId",
+            "columnName": "decisionId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "occurrenceId",
+            "columnName": "occurrenceId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "revisionNumber",
+            "columnName": "revisionNumber",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "operation",
+            "columnName": "operation",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "reason",
+            "columnName": "reason",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "capturedAt",
+            "columnName": "capturedAt",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "actorId",
+            "columnName": "actorId",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_weight_occurrence_decision_revisions_decisionId",
+            "unique": false,
+            "columnNames": [
+              "decisionId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_weight_occurrence_decision_revisions_decisionId` ON `${TABLE_NAME}` (`decisionId`)"
+          },
+          {
+            "name": "index_weight_occurrence_decision_revisions_occurrenceId_revisionNumber",
+            "unique": true,
+            "columnNames": [
+              "occurrenceId",
+              "revisionNumber"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_weight_occurrence_decision_revisions_occurrenceId_revisionNumber` ON `${TABLE_NAME}` (`occurrenceId`, `revisionNumber`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "weight_occurrence_decisions",
+            "onDelete": "RESTRICT",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "decisionId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7c7319941fa5dc09018821dacedd29f3')"
+    ]
+  }
+}
